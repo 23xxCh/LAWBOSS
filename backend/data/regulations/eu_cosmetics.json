@@ -1,0 +1,32 @@
+{
+  "market": "EU",
+  "category": "化妆品",
+  "regulations": [
+    {
+      "id": "ec_1223_2009",
+      "name": "欧盟化妆品法规 (EC) No 1223/2009",
+      "description": "欧盟化妆品核心法规，规定安全要求、标签、宣称限制等",
+      "key_articles": [
+        {"article": "第20条", "content": "化妆品不得宣称具有治疗、预防疾病的功能"},
+        {"article": "第19条", "content": "标签必须包含：名称、生产商、净含量、使用期限、注意事项、成分表、批次号"},
+        {"article": "附件II", "content": "禁用物质清单"},
+        {"article": "附件III", "content": "限用物质清单"}
+      ]
+    },
+    {
+      "id": "ec_655_2013",
+      "name": "欧盟化妆品宣称法规 (EC) No 655/2013",
+      "description": "规定化妆品宣称的通用标准，要求宣称真实、有证据支持",
+      "key_articles": [
+        {"article": "第1条", "content": "宣称必须真实，不得误导消费者"},
+        {"article": "第2条", "content": "功效宣称必须有充分证据支持"},
+        {"article": "第4条", "content": "不得使用具体时限保证效果"}
+      ]
+    },
+    {
+      "id": "directive_2005_29_ec",
+      "name": "欧盟不公平商业行为指令 2005/29/EC",
+      "description": "禁止误导性广告和夸大宣传"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "title": "某跨境电商面霜医疗宣称被下架",
+    "market": "EU",
+    "category": "化妆品",
+    "description": "某中国跨境电商在Amazon EU销售面霜，产品描述中包含'治疗痘痘'、'消炎'等医疗宣称，被平台下架并收到欧盟消费者保护机构警告。",
+    "violations": ["治疗", "消炎", "痘痘"],
+    "penalty": "产品下架，需修改描述后重新上架",
+    "source": "Amazon Seller Central 通知"
+  },
+  {
+    "title": "某品牌绝对化用语被FTC处罚",
+    "market": "US",
+    "category": "化妆品",
+    "description": "某护肤品牌在广告中使用'100% guaranteed results'、'best anti-aging cream'等绝对化用语，被FTC调查并要求签署同意令。",
+    "violations": ["100% guaranteed", "best"],
+    "penalty": "FTC同意令，罚款$500,000，需修改所有广告宣称",
+    "source": "FTC Consent Order"
+  },
+  {
+    "title": "某美白产品含禁用成分被CPNP通报",
+    "market": "EU",
+    "category": "化妆品",
+    "description": "某美白面霜含有hydroquinone（对苯二酚），该成分在EU化妆品中禁用。产品被CPNP通报后召回。",
+    "violations": ["hydroquinone", "美白"],
+    "penalty": "产品召回，生产商被列入监管黑名单",
+    "source": "RAPEX通报系统"
+  },
+  {
+    "title": "某膳食补充剂宣称治疗疾病被FDA警告",
+    "market": "US",
+    "category": "膳食补充剂",
+    "description": "某膳食补充剂在Amazon宣称'cures diabetes'、'treats heart disease'，被FDA发出警告信，要求15天内整改。",
+    "violations": ["cures", "treats", "disease"],
+    "penalty": "FDA Warning Letter，不整改将面临产品扣押和禁令",
+    "source": "FDA Warning Letters"
+  }
+]

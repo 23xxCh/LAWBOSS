@@ -1,0 +1,27 @@
+{
+  "market": "SEA",
+  "category": "化妆品",
+  "replacements": {
+    "治疗": "舒缓",
+    "治愈": "改善",
+    "预防": "呵护",
+    "最好": "优质",
+    "最佳": "精选",
+    "第一": "优选",
+    "唯一": "独特",
+    "100%": "高品质",
+    "7天见效": "持续使用，效果更佳",
+    "美白": "提亮肤色",
+    "抗衰老": "抗初老",
+    "抗皱": "紧致",
+    "漂白": "均匀肤色",
+    "祛斑": "淡化色素",
+    "treat": "soothe",
+    "cure": "improve",
+    "prevent": "care for",
+    "best": "premium",
+    "whitening": "brightening",
+    "anti-aging": "youth-preserving",
+    "bleaching": "even-toning"
+  }
+}

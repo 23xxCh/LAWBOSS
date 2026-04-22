@@ -1,0 +1,42 @@
+# 东南亚化妆品禁用成分
+# 基于 ASEAN Cosmetic Directive (ACD) Annex II
+# 新加坡 HSA、泰国 Thai FDA、马来西亚 NPRA 共同禁用
+
+# === 重金属 ===
+mercury
+lead
+arsenic
+cadmium
+汞
+铅
+砷
+镉
+
+# === 禁用化学物 ===
+formaldehyde
+hydroquinone
+glutaraldehyde
+甲醛
+对苯二酚
+戊二醛
+
+# === 禁用防腐剂 ===
+methylisothiazolinone
+MIT
+甲基异噻唑啉酮
+
+# === 禁用香料（ACD 特有） ===
+musk ambrette
+musk tibetene
+葵子麝香
+西藏麝香
+
+# === 东南亚特有禁用 ===
+betel nut
+areca nut
+槟榔
+
+# === 美白剂（东南亚严格限制） ===
+hydrogen peroxide
+过氧化氢
+双氧水

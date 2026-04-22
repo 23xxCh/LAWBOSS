@@ -1,0 +1,92 @@
+# 东南亚化妆品医疗宣称禁用词（新加坡/泰国/马来西亚通用）
+# 基于 ASEAN Cosmetic Directive (ACD) 及各国法规
+# 新加坡: Health Sciences Authority (HSA) Medicines Act
+# 泰国: Thai FDA Cosmetics Act B.E. 2558
+# 马来西亚: National Pharmaceutical Regulatory Agency (NPRA) Sale of Drugs Act 1952
+
+# === 治疗类 ===
+treat
+cure
+heal
+治疗
+治愈
+医治
+治愈
+医好
+治好
+
+# === 预防类 ===
+prevent
+预防
+防止
+防治
+
+# === 疾病类 ===
+disease
+illness
+infection
+疾病
+感染
+病变
+
+# === 皮肤疾病 ===
+acne
+eczema
+psoriasis
+dermatitis
+rosacea
+痘痘
+痤疮
+湿疹
+皮炎
+银屑病
+酒渣鼻
+
+# === 疼痛 ===
+pain
+ache
+疼痛
+止痛
+镇痛
+消炎
+
+# === 医学术语 ===
+diagnosis
+prescription
+clinical
+therapy
+therapeutic
+诊断
+处方
+临床
+治疗性
+疗法
+
+# === 效果宣称（ACD 禁止） ===
+anti-aging
+anti-wrinkle
+whitening
+skin-bleaching
+抗衰老
+抗皱
+美白
+漂白
+祛斑
+淡斑
+
+# === 药品暗示 ===
+drug
+medicine
+pharmaceutical
+药品
+药物
+药效
+药用
+
+# === 东南亚特有 ===
+halal-certified-healing
+traditional-medicine
+jamu
+传统药物
+草药治疗
+偏方治疗

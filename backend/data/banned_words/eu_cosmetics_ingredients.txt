@@ -1,0 +1,35 @@
+# EU 化妆品禁用成分
+# 欧盟化妆品法规(EC) No 1223/2009 附件II 禁用物质（常见）
+
+# 重金属
+铅
+汞
+砷
+镉
+lead
+mercury
+arsenic
+cadmium
+
+# 禁用化学物
+hydroquinone
+对苯二酚
+formaldehyde
+甲醛
+paraphenylenediamine
+对苯二胺
+
+# 禁用防腐剂（部分限用，此处列严格禁用）
+methylisothiazolinone
+MIT
+
+# 禁用香料
+musk ambrette
+musk xylene
+musk ketone
+
+# 纳米材料（需特别评估）
+nano
+nanoparticle
+纳米
+纳米颗粒

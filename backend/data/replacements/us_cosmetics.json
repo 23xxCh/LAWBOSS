@@ -1,0 +1,22 @@
+{
+  "market": "US",
+  "category": "化妆品",
+  "replacements": {
+    "treat": "soothe",
+    "treatment": "care",
+    "cure": "improve",
+    "heal": "nourish",
+    "best": "premium",
+    "guaranteed": "trusted",
+    "perfect": "excellent",
+    "miracle": "remarkable",
+    "anti-aging": "age-defying",
+    "whitening": "brightening",
+    "anti-wrinkle": "wrinkle-reducing",
+    "sunscreen": "sun protection",
+    "100%": "high-quality",
+    "治疗": "舒缓",
+    "最好": "优质",
+    "完美": "出色"
+  }
+}

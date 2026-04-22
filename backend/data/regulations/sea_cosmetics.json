@@ -1,0 +1,56 @@
+{
+  "market": "SEA",
+  "market_name": "东南亚",
+  "category": "化妆品",
+  "regulations": [
+    {
+      "name": "ASEAN Cosmetic Directive (ACD)",
+      "description": "东盟化妆品指令，统一东盟成员国化妆品监管框架",
+      "key_provisions": [
+        "化妆品不得宣称具有治疗或预防疾病功能",
+        "禁用成分清单（Annex II）",
+        "限用成分清单（Annex III）",
+        "允许使用的着色剂（Annex IV）",
+        "产品通报要求（AC Notification）"
+      ]
+    },
+    {
+      "name": "Singapore HSA - Medicines Act & Health Products Act",
+      "description": "新加坡卫生科学局药品法和健康产品法",
+      "key_provisions": [
+        "化妆品产品通报（AC Notification）",
+        "禁止医疗宣称",
+        "GMP 要求",
+        "标签语言：英文"
+      ]
+    },
+    {
+      "name": "Thailand Thai FDA - Cosmetics Act B.E. 2558",
+      "description": "泰国FDA化妆品法",
+      "key_provisions": [
+        "化妆品通报（CB Notification）",
+        "禁止医疗宣称",
+        "标签语言：泰文",
+        "清真认证（Halal）推荐"
+      ]
+    },
+    {
+      "name": "Malaysia NPRA - Sale of Drugs Act 1952",
+      "description": "马来西亚国家药品监管局药品销售法",
+      "key_provisions": [
+        "化妆品通报（NOT Notification）",
+        "禁止医疗宣称",
+        "标签语言：马来文/英文",
+        "清真认证（Halal）对穆斯林市场重要"
+      ]
+    }
+  ],
+  "common_violations": [
+    "医疗宣称（治疗、预防疾病）",
+    "美白宣称（whitening 在东南亚敏感）",
+    "缺少产品通报编号",
+    "缺少成分表（INCI）",
+    "禁用成分（重金属、氢醌等）",
+    "缺少清真认证（针对穆斯林市场）"
+  ]
+}

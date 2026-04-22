@@ -1,0 +1,121 @@
+# US 化妆品医疗宣称禁用词 (FDA)
+# FD&C Act: 化妆品不得宣称具有治疗或预防疾病的功能
+# 否则需按药品(OTC/New Drug)监管
+
+# 治疗类
+treat
+treatment
+cure
+heal
+healing
+treats
+cures
+medical
+medicinal
+therapeutic
+therapy
+medication
+medicine
+drug
+pharmaceutical
+prescription
+Rx
+
+# 预防类
+prevent
+prevention
+protects against
+prevents
+protect from
+
+# 疾病/症状类
+disease
+illness
+sickness
+condition
+symptom
+diagnose
+diagnosis
+
+# 皮肤疾病
+acne
+pimple
+pimples
+blackhead
+blackheads
+eczema
+psoriasis
+rosacea
+dermatitis
+rash
+rashes
+
+# 感染/炎症
+infection
+bacterial
+antibacterial
+anti-bacterial
+viral
+antiviral
+anti-viral
+fungal
+antifungal
+anti-fungal
+inflammation
+anti-inflammatory
+inflammatory
+
+# 疼痛
+pain
+painful
+ache
+aching
+sore
+soreness
+
+# 过敏
+allergy
+allergies
+allergic
+
+# 医学术语
+clinical
+clinically
+clinical trial
+clinical study
+FDA approved
+FDA approval
+prescription strength
+
+# 效果宣称
+100% effective
+guaranteed results
+instant cure
+miracle
+miraculous
+cures all
+
+# 抗衰老（FDA 敏感）
+anti-aging
+reverse aging
+age reversal
+look younger
+younger looking
+anti-wrinkle
+wrinkle free
+eliminate wrinkles
+
+# 美白（FDA 敏感）
+skin bleaching
+skin whitening
+lightening
+bleaching agent
+hydroquinone
+
+# 防晒（FDA 特殊监管，需 OTC 药品注册）
+sunscreen
+sun block
+sunblock
+SPF
+UV protection
+broad spectrum

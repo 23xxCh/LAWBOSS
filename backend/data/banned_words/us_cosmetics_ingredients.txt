@@ -1,0 +1,31 @@
+# US 化妆品禁用成分 (FDA)
+# FDA 21 CFR 和 FD&C Act 规定的禁用/限用成分
+
+# 重金属
+lead
+mercury
+arsenic
+cadmium
+铅
+汞
+砷
+
+# 禁用化学物
+hydroquinone
+bithionol
+mercury compounds
+chloroform
+vinyl chloride
+halogenated salicylanilides
+zirconium
+fluorocarbons
+
+# 禁用色素（部分）
+coal tar
+煤焦油
+
+# 纳米材料
+nano
+nanoparticle
+纳米
+纳米颗粒
