@@ -102,5 +102,29 @@
     "submit": "ส่ง",
     "back": "กลับ",
     "language": "ภาษา"
+  },
+  "llm": {
+    "title": "กำหนดค่า AI Model",
+    "description": "กำหนดค่าโมเดลภาษาสำหรับการตรวจสอบเชิงความหมายด้วย AI จะเปิดใช้งานการตรวจสอบเชิงลึกอัตโนมัติ",
+    "provider_label": "ผู้ให้บริการ",
+    "provider_placeholder": "เลือกผู้ให้บริการ AI",
+    "api_key_label": "API Key",
+    "api_key_placeholder": "ป้อน API Key",
+    "api_key_masked": "กำหนดค่า密钥แล้ว ป้อนค่าใหม่เพื่อเปลี่ยน",
+    "api_base_label": "API Base URL",
+    "api_base_placeholder": "ป้อน API Base URL ที่กำหนดเอง",
+    "model_label": "โมเดล",
+    "model_placeholder": "เลือกหรือป้อนชื่อโมเดล",
+    "test_connection": "ทดสอบการเชื่อมต่อ",
+    "testing": "กำลังทดสอบ...",
+    "save": "บันทึกการกำหนดค่า",
+    "saving": "กำลังบันทึก...",
+    "save_success": "บันทึกการกำหนดค่า AI Model แล้ว",
+    "save_failure": "บันทึกการกำหนดค่าไม่สำเร็จ",
+    "delete": "ลบการกำหนดค่า",
+    "delete_confirm": "ลบการกำหนดค่า AI? จะกลับไปใช้ตัวแปรสภาพแวดล้อม",
+    "test_success": "การเชื่อมต่อสำเร็จ",
+    "test_failure": "การเชื่อมต่อล้มเหลว",
+    "not_configured": "ไม่ได้กำหนดค่า AI Model"
   }
 }

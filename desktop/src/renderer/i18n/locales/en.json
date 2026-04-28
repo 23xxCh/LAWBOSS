@@ -102,5 +102,29 @@
     "submit": "Submit",
     "back": "Back",
     "language": "Language"
+  },
+  "llm": {
+    "title": "AI Model Configuration",
+    "description": "Configure the AI model for semantic compliance checking. AI deep checking will be enabled automatically.",
+    "provider_label": "Provider",
+    "provider_placeholder": "Select AI provider",
+    "api_key_label": "API Key",
+    "api_key_placeholder": "Enter API key",
+    "api_key_masked": "Key configured. Enter new value to replace.",
+    "api_base_label": "API Base URL",
+    "api_base_placeholder": "Enter custom API base URL",
+    "model_label": "Model",
+    "model_placeholder": "Select or enter model name",
+    "test_connection": "Test Connection",
+    "testing": "Testing...",
+    "save": "Save Configuration",
+    "saving": "Saving...",
+    "save_success": "AI model configuration saved",
+    "save_failure": "Failed to save configuration",
+    "delete": "Delete Configuration",
+    "delete_confirm": "Delete AI configuration? Will fall back to environment variables.",
+    "test_success": "Connection successful",
+    "test_failure": "Connection failed",
+    "not_configured": "No AI model configured"
   }
 }

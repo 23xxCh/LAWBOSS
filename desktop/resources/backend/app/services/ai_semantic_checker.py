@@ -45,6 +45,19 @@ class AISemanticChecker(BaseChecker):
         else:
             logger.info("AI 语义检测未启用（未配置 LLM_API_KEY 或 LLM_ENABLED）")
 
+    def reconfigure(self, api_key: str, api_base: str, model: str, max_tokens: int, temperature: float):
+        """运行时热重载 LLM 配置，无需重新实例化"""
+        self.api_key = api_key
+        self.api_base = api_base
+        self.model = model
+        self.max_tokens = max_tokens
+        self.temperature = temperature
+        self.enabled = bool(api_key)
+        if self.enabled:
+            logger.info(f"AI 语义检测器已热重载: model={model}, api_base={api_base}")
+        else:
+            logger.info("AI 语义检测器已热重载: 已禁用（未提供 API Key）")
+
     def check(self, description: str, category: str, market: str) -> List[Violation]:
         """执行 AI 语义检测"""
         if not self.enabled:

@@ -45,6 +45,9 @@ async def check_compliance(request: CheckRequest, http_request: Request, db: Ses
     _validate_market_category(request.market, request.category)
     checker = _get_checker(http_request)
 
+    # 同步当前用户的 LLM 配置到 AI 检测器
+    checker.sync_ai_config_for_user(current_user.id, db)
+
     report = await asyncio.to_thread(
         checker.check_text,
         description=request.description,

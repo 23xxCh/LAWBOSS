@@ -566,6 +566,26 @@ class ComplianceChecker:
             suggestions=suggestions,
         )
 
+    def update_ai_config(self, api_key: str, api_base: str, model: str, max_tokens: int, temperature: float):
+        """运行时热重载 AI 语义检测器配置"""
+        for checker in self.checkers:
+            if hasattr(checker, "reconfigure"):
+                checker.reconfigure(api_key, api_base, model, max_tokens, temperature)
+                return
+
+    def sync_ai_config_for_user(self, user_id: str, db):
+        """检测前同步用户 LLM 配置到 AI 检测器"""
+        from .llm_config_service import get_active_config_for_user
+        config = get_active_config_for_user(db, user_id)
+        if config:
+            self.update_ai_config(
+                api_key=config["api_key"],
+                api_base=config["api_base"],
+                model=config["model"],
+                max_tokens=config["max_tokens"],
+                temperature=config["temperature"],
+            )
+
     def _calculate_risk_score(self, violations: List[Violation]) -> int:
         """计算风险评分"""
         base_score = sum(v.score for v in violations)

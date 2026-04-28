@@ -262,3 +262,74 @@ export async function triggerPatrol(request: PatrolRequest): Promise<unknown> {
   const { data } = await api.post('/patrol', request, { timeout: 120000 });
   return data;
 }
+
+// ===== LLM Configuration =====
+
+export interface LLMProviderInfo {
+  id: string;
+  name: string;
+  default_api_base: string;
+  default_model: string;
+  models: string[];
+  requires_api_key: boolean;
+}
+
+export interface LLMConfigRequest {
+  provider: string;
+  api_key: string;
+  api_base: string;
+  model: string;
+  max_tokens?: number;
+  temperature?: number;
+}
+
+export interface LLMConfigResponse {
+  provider: string;
+  api_key_masked: string;
+  api_base: string;
+  model: string;
+  max_tokens: number;
+  temperature: number;
+  is_active: boolean;
+  updated_at: string;
+}
+
+export interface LLMTestRequest {
+  provider: string;
+  api_key: string;
+  api_base: string;
+  model: string;
+  max_tokens?: number;
+  temperature?: number;
+}
+
+export interface LLMTestResponse {
+  success: boolean;
+  message: string;
+  latency_ms?: number;
+  model_info?: string;
+}
+
+export async function getLLMProviders(): Promise<LLMProviderInfo[]> {
+  const { data } = await api.get<LLMProviderInfo[]>('/llm/providers');
+  return data;
+}
+
+export async function getLLMConfig(): Promise<LLMConfigResponse> {
+  const { data } = await api.get<LLMConfigResponse>('/llm/config');
+  return data;
+}
+
+export async function saveLLMConfig(config: LLMConfigRequest): Promise<LLMConfigResponse> {
+  const { data } = await api.put<LLMConfigResponse>('/llm/config', config);
+  return data;
+}
+
+export async function deleteLLMConfig(): Promise<void> {
+  await api.delete('/llm/config');
+}
+
+export async function testLLMConnection(request: LLMTestRequest): Promise<LLMTestResponse> {
+  const { data } = await api.post<LLMTestResponse>('/llm/test', request);
+  return data;
+}

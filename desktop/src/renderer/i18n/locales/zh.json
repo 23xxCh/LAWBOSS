@@ -102,5 +102,29 @@
     "submit": "提交",
     "back": "返回",
     "language": "语言"
+  },
+  "llm": {
+    "title": "AI 模型配置",
+    "description": "配置 AI 语义检测使用的语言模型。配置后将自动启用 AI 深度检测。",
+    "provider_label": "模型提供商",
+    "provider_placeholder": "选择 AI 模型提供商",
+    "api_key_label": "API 密钥",
+    "api_key_placeholder": "输入 API 密钥",
+    "api_key_masked": "密钥已配置，如需更换请重新输入",
+    "api_base_label": "API 地址",
+    "api_base_placeholder": "输入自定义 API 地址",
+    "model_label": "模型名称",
+    "model_placeholder": "选择或输入模型名称",
+    "test_connection": "测试连接",
+    "testing": "测试中...",
+    "save": "保存配置",
+    "saving": "保存中...",
+    "save_success": "AI 模型配置已保存",
+    "save_failure": "保存失败",
+    "delete": "删除配置",
+    "delete_confirm": "确定删除 AI 模型配置？删除后将恢复为环境变量配置。",
+    "test_success": "连接成功",
+    "test_failure": "连接失败",
+    "not_configured": "未配置 AI 模型"
   }
 }
