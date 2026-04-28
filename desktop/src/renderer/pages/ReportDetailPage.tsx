@@ -25,10 +25,9 @@ import {
   InboxOutlined,
 } from '@ant-design/icons';
 import { getReportDetail, exportReportPdf, submitFeedback, type ReportDetailResponse, type ViolationItem, type CheckResponse } from '../api';
+import { getCachedResultById } from '../utils/cache';
 
 const { Text, Paragraph } = Typography;
-
-const CACHE_KEY = 'detection_cache';
 
 const severityColor: Record<string, string> = {
   high: 'red',
@@ -57,19 +56,15 @@ export default function ReportDetailPage() {
         .catch(async () => {
           // 后端不可用，尝试从本地缓存读取
           try {
-            const api = (window as any).api;
-            if (api?.store) {
-              const cached: any[] = (await api.store.get(CACHE_KEY)) || [];
-              const item = cached.find((c: any) => c.id === id);
-              if (item) {
-                setData({
-                  id: item.id,
-                  description: item.description,
-                  result: item.result as CheckResponse,
-                  created_at: item.created_at,
-                });
-                setIsOffline(true);
-              }
+            const item = await getCachedResultById(id!);
+            if (item) {
+              setData({
+                id: item.id,
+                description: item.description,
+                result: item.result as CheckResponse,
+                created_at: item.created_at,
+              });
+              setIsOffline(true);
             }
           } catch {
             // 缓存也没有，保持 null

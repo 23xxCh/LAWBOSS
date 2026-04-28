@@ -1,7 +1,8 @@
-import type { ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Layout, Menu, Dropdown, Avatar, Space, Tag } from 'antd';
 import {
+  HomeOutlined,
   SafetyCertificateOutlined,
   HistoryOutlined,
   BookOutlined,
@@ -9,6 +10,7 @@ import {
   UserOutlined,
   LogoutOutlined,
   DashboardOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../api/auth';
 import { useTranslation } from 'react-i18next';
@@ -21,8 +23,14 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const { user, isAdmin, clearAuth } = useAuth();
   const { t } = useTranslation();
+  const [appVersion, setAppVersion] = useState('');
+
+  useEffect(() => {
+    (window as any).api?.app?.getVersion?.().then(setAppVersion).catch(() => {});
+  }, []);
 
   const menuItems = [
+    { key: '/', icon: <HomeOutlined />, label: '首页' },
     { key: '/check', icon: <SafetyCertificateOutlined />, label: t('nav.check') },
     { key: '/batch', icon: <ThunderboltOutlined />, label: t('nav.batch') },
     { key: '/reports', icon: <HistoryOutlined />, label: t('nav.reports') },
@@ -40,6 +48,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   };
 
   const userMenuItems = [
+    { key: 'preferences', icon: <SettingOutlined />, label: '设置' },
     { key: 'profile', icon: <UserOutlined />, label: `${user?.username || '用户'} (${user?.role || '-'})` },
     { key: 'logout', icon: <LogoutOutlined />, label: '退出登录', danger: true },
   ];
@@ -76,6 +85,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             items: userMenuItems,
             onClick: ({ key }) => {
               if (key === 'logout') handleLogout();
+              else if (key === 'preferences') navigate('/preferences');
             },
           }}
           placement="bottomRight"
@@ -91,7 +101,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
         {children}
       </Content>
       <Footer style={{ textAlign: 'center' }}>
-        {t('app.title')} v0.2.0 — {t('app.subtitle')}
+        {t('app.title')}{appVersion ? ` v${appVersion}` : ''} — {t('app.subtitle')}
       </Footer>
     </Layout>
   );

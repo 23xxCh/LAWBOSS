@@ -52,8 +52,8 @@ async def check_compliance(request: CheckRequest, http_request: Request, db: Ses
         target_market=request.market,
     )
 
-    report_service.save_report(db, request.description, report)
-    return report_to_response(report)
+    db_report = report_service.save_report(db, request.description, report)
+    return report_to_response(report, report_id=db_report.id)
 
 
 @router.post("/check/batch", response_model=BatchCheckResponse, summary="批量合规检测")

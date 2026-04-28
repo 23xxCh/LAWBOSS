@@ -18,9 +18,10 @@ def violation_to_item(v) -> ViolationItem:
     )
 
 
-def report_to_response(report) -> CheckResponse:
+def report_to_response(report, report_id: str = "") -> CheckResponse:
     """将 ComplianceReport dataclass 转为 CheckResponse"""
     return CheckResponse(
+        report_id=report_id,
         risk_score=report.risk_score,
         risk_level=report.risk_level,
         risk_description=report.risk_description,

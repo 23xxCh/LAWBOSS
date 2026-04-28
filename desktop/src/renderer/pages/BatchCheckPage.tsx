@@ -290,7 +290,7 @@ export default function BatchCheckPage() {
           {importing ? (
             <Spin tip="正在读取文件..." />
           ) : (
-            <Space direction="vertical" size="small">
+            <Space orientation="vertical" size="small">
               <UploadOutlined style={{ fontSize: 32, color: '#1890ff' }} />
               <Text strong>导入 CSV 文件</Text>
               <Text type="secondary" style={{ fontSize: 12 }}>

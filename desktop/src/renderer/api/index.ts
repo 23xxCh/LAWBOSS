@@ -21,6 +21,7 @@ export interface CheckRequest {
 }
 
 export interface CheckResponse {
+  report_id: string;
   risk_score: number;
   risk_level: string;
   risk_description: string;
@@ -260,5 +261,41 @@ export interface PatrolRequest {
 
 export async function triggerPatrol(request: PatrolRequest): Promise<unknown> {
   const { data } = await api.post('/patrol', request, { timeout: 120000 });
+  return data;
+}
+
+// ===== Dashboard & Patrol History =====
+
+export interface DashboardStatsResponse {
+  weekly_volume: { date: string; count: number }[];
+  violation_type_distribution: Record<string, number>;
+  risk_score_trend: { date: string; avg_score: number }[];
+  total_reports: number;
+  high_risk_count: number;
+  medium_risk_count: number;
+  low_risk_count: number;
+}
+
+export async function getDashboardStats(): Promise<DashboardStatsResponse> {
+  const { data } = await api.get<DashboardStatsResponse>('/dashboard/stats');
+  return data;
+}
+
+export interface PatrolSummary {
+  id: string;
+  patrol_time: string;
+  platform: string;
+  market: string;
+  total_listings: number;
+  checked_listings: number;
+  high_risk_count: number;
+  medium_risk_count: number;
+  low_risk_count: number;
+  compliant_count: number;
+  alert_count: number;
+}
+
+export async function getPatrolHistory(params?: { platform?: string; limit?: number }): Promise<PatrolSummary[]> {
+  const { data } = await api.get<PatrolSummary[]>('/patrol/history', { params });
   return data;
 }

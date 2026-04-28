@@ -38,32 +38,10 @@ import {
   type ViolationItem,
   type MarketResponse,
 } from '../api';
+import { addCachedResult } from '../utils/cache';
 
 const { TextArea } = Input;
 const { Text, Paragraph } = Typography;
-
-const CACHE_KEY = 'detection_cache';
-const MAX_CACHE_SIZE = 50;
-
-/** 本地缓存检测结果 */
-async function cacheResult(description: string, result: CheckResponse): Promise<void> {
-  try {
-    const api = (window as any).api;
-    if (!api?.store) return;
-    const cached = (await api.store.get(CACHE_KEY)) || [];
-    cached.unshift({
-      id: crypto.randomUUID?.() || Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
-      description,
-      result,
-      created_at: new Date().toISOString(),
-    });
-    // 只保留最新的 MAX_CACHE_SIZE 条
-    if (cached.length > MAX_CACHE_SIZE) cached.length = MAX_CACHE_SIZE;
-    await api.store.set(CACHE_KEY, cached);
-  } catch {
-    // 缓存失败不影响主流程
-  }
-}
 
 const severityColor: Record<string, string> = {
   high: 'red',
@@ -77,7 +55,7 @@ const riskLevelColor: Record<string, string> = {
   '低风险': 'green',
 };
 
-function ViolationCard({ violation, market, category, onFeedback }: { violation: ViolationItem; market: string; category: string; onFeedback: (type: 'false_positive' | 'correct', violation: ViolationItem) => void }) {
+function ViolationCard({ violation, market, category, onFeedback }: { violation: ViolationItem; market: string; category: string; onFeedback: (type: 'false_positive' | 'false_negative' | 'correct', violation: ViolationItem) => void }) {
   return (
     <Card
       size="small"
@@ -108,6 +86,15 @@ function ViolationCard({ violation, market, category, onFeedback }: { violation:
               icon={<LikeOutlined />}
               style={{ color: '#52c41a' }}
               onClick={() => onFeedback('correct', violation)}
+            />
+          </Tooltip>
+          <Tooltip title="标记为漏报（实际违规但系统未检出）">
+            <Button
+              type="text"
+              size="small"
+              icon={<WarningOutlined />}
+              style={{ color: '#faad14' }}
+              onClick={() => onFeedback('false_negative', violation)}
             />
           </Tooltip>
         </Space>
@@ -257,7 +244,7 @@ export default function CheckPage() {
       setResult(res);
 
       // 本地缓存检测结果
-      await cacheResult(description, res);
+      await addCachedResult(description, res);
 
       // 系统通知
       const api = (window as any).api;
@@ -297,10 +284,10 @@ export default function CheckPage() {
     return false; // prevent auto upload
   };
 
-  const handleFeedback = async (feedbackType: 'false_positive' | 'correct', violation: ViolationItem) => {
+  const handleFeedback = async (feedbackType: 'false_positive' | 'false_negative' | 'correct', violation: ViolationItem) => {
     try {
       await submitFeedback({
-        report_id: 'current',  // 当前检测无持久化ID，使用标记
+        report_id: result?.report_id || 'current',
         feedback_type: feedbackType,
         violation_type: violation.type,
         violation_content: violation.content,

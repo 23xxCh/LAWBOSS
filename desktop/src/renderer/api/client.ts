@@ -58,4 +58,9 @@ api.interceptors.response.use(
   }
 );
 
+export function updateBaseURL(url: string): void {
+  localStorage.setItem('crossguard_api_base', url);
+  api.defaults.baseURL = url + '/api/v1';
+}
+
 export default api;

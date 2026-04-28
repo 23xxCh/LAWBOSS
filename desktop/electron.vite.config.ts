@@ -41,7 +41,12 @@ export default defineConfig({
       proxy: {
         '/api': {
           target: 'http://127.0.0.1:8000',
-          changeOrigin: true
+          changeOrigin: true,
+          bypass: (req) => {
+            if (req.url?.endsWith('.ts') || req.url?.endsWith('.tsx') || req.url?.endsWith('.js') || req.url?.includes('?t=')) {
+              return req.url;
+            }
+          }
         }
       }
     }

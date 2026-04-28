@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "crossguard": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "E:\\WORKS\\LAW\\crossguard\\mcp-server",
+        "crossguard_mcp_server.py"
+      ],
+      "env": {}
+    }
+  }
+}

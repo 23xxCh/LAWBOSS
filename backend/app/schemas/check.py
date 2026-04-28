@@ -25,6 +25,7 @@ class ViolationItem(BaseModel):
 
 class CheckResponse(BaseModel):
     """合规检测响应"""
+    report_id: str = Field(default="", description="保存的报告ID")
     risk_score: int = Field(..., description="风险评分 0-100")
     risk_level: str = Field(..., description="风险等级")
     risk_description: str = Field(..., description="风险描述")

@@ -18,6 +18,7 @@ import {
   deleteReport,
   type ReportItem,
 } from '../api';
+import { getCachedResults } from '../utils/cache';
 
 const { Text, Paragraph } = Typography;
 
@@ -26,19 +27,6 @@ const riskLevelColor: Record<string, string> = {
   '中风险': 'orange',
   '低风险': 'green',
 };
-
-const CACHE_KEY = 'detection_cache';
-
-interface CachedItem {
-  id: string;
-  description: string;
-  result: {
-    risk_score: number;
-    risk_level: string;
-    violations: any[];
-  };
-  created_at: string;
-}
 
 export default function ReportsPage() {
   const navigate = useNavigate();
@@ -65,22 +53,19 @@ export default function ReportsPage() {
     } catch {
       // 后端不可用，尝试读取本地缓存
       try {
-        const api = (window as any).api;
-        if (api?.store) {
-          const cached: CachedItem[] = (await api.store.get(CACHE_KEY)) || [];
-          const items: ReportItem[] = cached.map((c) => ({
-            id: c.id,
-            category: c.result?.category || '',
-            market: c.result?.market || '',
-            risk_score: c.result?.risk_score || 0,
-            risk_level: c.result?.risk_level || '低风险',
-            violation_count: c.result?.violations?.length || 0,
-            created_at: c.created_at,
-          }));
-          setData(items);
-          setTotal(items.length);
-          setIsOffline(true);
-        }
+        const cached = await getCachedResults();
+        const items: ReportItem[] = cached.map((c) => ({
+          id: c.id,
+          category: c.result?.category || '',
+          market: c.result?.market || '',
+          risk_score: c.result?.risk_score || 0,
+          risk_level: c.result?.risk_level || '低风险',
+          violation_count: c.result?.violations?.length || 0,
+          created_at: c.created_at,
+        }));
+        setData(items);
+        setTotal(items.length);
+        setIsOffline(true);
       } catch {
         setData([]);
         setTotal(0);

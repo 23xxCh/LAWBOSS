@@ -1,9 +1,10 @@
 """报告存储与查询服务"""
-import uuid
 import json
+import uuid
 from datetime import datetime, timezone
-from typing import List, Optional
+from typing import Dict, List, Optional
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from ..models.report import CheckReport
@@ -85,6 +86,59 @@ def get_reports(
         .all()
     )
     return items, total
+
+
+def get_dashboard_stats(db: Session) -> Dict:
+    """获取看板统计聚合数据"""
+    total = db.query(CheckReport).count()
+
+    # 周检测量：按日期分组，最近14天
+    weekly = (
+        db.query(
+            func.strftime("%Y-%m-%d", CheckReport.created_at).label("date"),
+            func.count(CheckReport.id).label("count"),
+        )
+        .group_by("date")
+        .order_by("date")
+        .limit(14)
+        .all()
+    )
+
+    # 风险等级分布
+    high = db.query(CheckReport).filter(CheckReport.risk_level == "高风险").count()
+    medium = db.query(CheckReport).filter(CheckReport.risk_level == "中风险").count()
+    low = db.query(CheckReport).filter(CheckReport.risk_level == "低风险").count()
+
+    # 违规类型分布（从所有报告的 violations_json 解析）
+    all_reports = db.query(CheckReport.violations_json).all()
+    type_dist: Dict[str, int] = {}
+    for (vjson,) in all_reports:
+        if vjson:
+            for v in json.loads(vjson):
+                t = v.get("type_label", v.get("type", "unknown"))
+                type_dist[t] = type_dist.get(t, 0) + 1
+
+    # 风险趋势：每日平均分，最近30天
+    trend = (
+        db.query(
+            func.strftime("%Y-%m-%d", CheckReport.created_at).label("date"),
+            func.avg(CheckReport.risk_score).label("avg_score"),
+        )
+        .group_by("date")
+        .order_by("date")
+        .limit(30)
+        .all()
+    )
+
+    return {
+        "weekly_volume": [{"date": w.date, "count": w.count} for w in weekly],
+        "violation_type_distribution": type_dist,
+        "risk_score_trend": [{"date": t.date, "avg_score": round(float(t.avg_score), 1)} for t in trend],
+        "total_reports": total,
+        "high_risk_count": high,
+        "medium_risk_count": medium,
+        "low_risk_count": low,
+    }
 
 
 def delete_report(db: Session, report_id: str) -> bool:
