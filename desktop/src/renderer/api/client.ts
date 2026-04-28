@@ -38,7 +38,7 @@ api.interceptors.response.use(
         // 避免在登录页重复提示
         if (!window.location.pathname.includes('/login')) {
           message.warning('登录已过期，请重新登录');
-          window.location.href = '/login';
+          window.location.hash = '#/login';
         }
       } else if (status === 400) {
         message.warning(detail);

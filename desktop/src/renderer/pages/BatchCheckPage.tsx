@@ -73,6 +73,8 @@ export default function BatchCheckPage() {
         setMarket(data[0].code);
         setCategory(data[0].categories[0] || '');
       }
+    }).catch(() => {
+      message.error('无法连接后端服务');
     });
   }, []);
 
@@ -227,13 +229,13 @@ export default function BatchCheckPage() {
       title: '违规数',
       key: 'violation_count',
       width: 80,
-      render: (_: unknown, r: CheckResponse) => r.violations.length,
+      render: (_: unknown, r: CheckResponse) => (r.violations ?? []).length,
     },
     {
       title: '主要违规',
       key: 'top_violations',
       render: (_: unknown, r: CheckResponse) => {
-        const types = [...new Set(r.violations.map((v) => v.type_label))];
+        const types = [...new Set((r.violations ?? []).map((v) => v.type_label))];
         return types.length > 0
           ? types.slice(0, 3).map((t) => <Tag key={t}>{t}</Tag>)
           : <Tag color="green">合规</Tag>;

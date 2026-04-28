@@ -20,6 +20,8 @@ export default function RulesPage() {
         setMarket(data[0].code);
         setCategory(data[0].categories[0] || '');
       }
+    }).catch(() => {
+      // 后端不可用时静默降级
     });
   }, []);
 
