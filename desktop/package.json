@@ -1,6 +1,6 @@
 {
   "name": "crossguard-desktop",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "出海法盾 CrossGuard - 跨境电商智能合规审查平台桌面客户端",
   "main": "./out/main/index.js",
   "author": "CrossGuard Team",
