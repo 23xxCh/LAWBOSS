@@ -11,6 +11,7 @@ import {
   Progress,
   Table,
   message,
+  Input,
   Upload,
 } from 'antd';
 import {
@@ -302,7 +303,7 @@ export default function BatchCheckPage() {
         <Typography.Text type="secondary" style={{ display: 'block', marginBottom: 8 }}>
           每行输入一条产品描述，最多 100 条
         </Typography.Text>
-        <Typography.TextArea
+        <Input.TextArea
           rows={10}
           value={descriptions}
           onChange={(e) => setDescriptions(e.target.value)}
