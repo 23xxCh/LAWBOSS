@@ -362,7 +362,7 @@ export default function CheckPage() {
       {result.violations.length === 0 && (
         <Alert
           type="success"
-          message="恭喜！未检测到违规内容"
+          title="恭喜！未检测到违规内容"
           description="该产品描述符合目标市场的法规要求。"
           showIcon
           icon={<CheckCircleOutlined />}
@@ -396,7 +396,7 @@ export default function CheckPage() {
       )}
 
       {/* 必需标签 & 认证 */}
-      <Space direction="vertical" style={{ width: '100%' }} size="middle">
+      <Space orientation="vertical" style={{ width: '100%' }} size="middle">
         {result.required_labels.length > 0 && (
           <Card title="必需标签" size="small">
             <Space wrap>
@@ -427,6 +427,15 @@ export default function CheckPage() {
           />
         </Card>
       )}
+
+      {/* 免责声明 */}
+      <Alert
+        type="warning"
+        title="免责声明"
+        description="本工具提供的检测结果和修改建议仅供参考，不构成法律意见，不保证检测的完整性和准确性。产品合规性应以目标市场监管机构的最终判定为准。建议在重要合规决策前咨询专业法律顾问。"
+        showIcon
+        style={{ marginTop: 16, fontSize: 12 }}
+      />
     </>
   );
 
@@ -441,7 +450,7 @@ export default function CheckPage() {
               key: 'text',
               label: <span><SearchOutlined /> 文本检测</span>,
               children: (
-                <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                <Space orientation="vertical" style={{ width: '100%' }} size="middle">
                   <TextArea
                     rows={6}
                     value={description}
@@ -466,7 +475,7 @@ export default function CheckPage() {
               key: 'image',
               label: <span><PictureOutlined /> 图片检测</span>,
               children: (
-                <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                <Space orientation="vertical" style={{ width: '100%' }} size="middle">
                   <Upload
                     beforeUpload={handleImageUpload}
                     accept=".png,.jpg,.jpeg,.webp"
@@ -508,7 +517,7 @@ export default function CheckPage() {
 
       {loading && (
         <Card style={{ textAlign: 'center', padding: 40 }}>
-          <Spin size="large" tip="正在检测..." />
+          <Spin size="large" description="正在检测..." />
         </Card>
       )}
 

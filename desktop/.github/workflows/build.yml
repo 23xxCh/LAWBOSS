@@ -1,0 +1,102 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Target platform (win, mac, linux, all)'
+        required: true
+        default: 'all'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            build-command: build:win
+            artifact-name: crossguard-desktop-*-x64.exe
+          - os: windows-latest
+            build-command: build:win-portable
+            artifact-name: crossguard-desktop-*-x64-portable.exe
+          - os: macos-latest
+            build-command: build:mac
+            artifact-name: crossguard-desktop-*-{x64,arm64}.{dmg,zip}
+          - os: ubuntu-latest
+            build-command: build:linux
+            artifact-name: crossguard-desktop-*-x64.{AppImage,deb,tar.gz}
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: crossguard/desktop/package-lock.json
+
+      - name: Install dependencies
+        working-directory: crossguard/desktop
+        run: npm ci
+
+      - name: Build
+        working-directory: crossguard/desktop
+        run: npm run ${{ matrix.build-command }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}-${{ matrix.build-command }}
+          path: crossguard/desktop/dist/*.exe
+          if-no-files-found: ignore
+
+  create-release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "# CrossGuard Desktop ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "下载对应平台的安装包进行安装。" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "## 安装说明" >> $GITHUB_OUTPUT
+          echo "- **Windows**: 运行 \`.exe\` 安装包" >> $GITHUB_OUTPUT
+          echo "- **macOS**: 打开 \`.dmg\` 并将应用拖入 Applications 文件夹" >> $GITHUB_OUTPUT
+          echo "- **Linux**: 运行 \`.AppImage\` 或通过 \`.deb\` 安装" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.notes.outputs.notes }}
+          files: |
+            **/*.exe
+            **/*.dmg
+            **/*.zip
+            **/*.AppImage
+            **/*.deb
+            **/*.tar.gz
+          generate_release_notes: true

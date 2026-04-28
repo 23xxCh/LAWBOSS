@@ -1,0 +1,264 @@
+import api from './client';
+
+// ===== Types =====
+
+export interface ViolationItem {
+  type: string;
+  type_label: string;
+  content: string;
+  regulation: string;
+  regulation_detail: string;
+  severity: string;
+  severity_label: string;
+  suggestion: string;
+  score: number;
+}
+
+export interface CheckRequest {
+  description: string;
+  category: string;
+  market: string;
+}
+
+export interface CheckResponse {
+  risk_score: number;
+  risk_level: string;
+  risk_description: string;
+  market: string;
+  category: string;
+  violations: ViolationItem[];
+  compliant_version: string;
+  required_labels: string[];
+  required_certifications: string[];
+  suggestions: string[];
+}
+
+export interface BatchCheckRequest {
+  items: CheckRequest[];
+}
+
+export interface BatchCheckResponse {
+  results: CheckResponse[];
+  total: number;
+  high_risk_count: number;
+  medium_risk_count: number;
+  low_risk_count: number;
+}
+
+export interface MarketResponse {
+  code: string;
+  name: string;
+  categories: string[];
+}
+
+export interface LabelResponse {
+  market: string;
+  category: string;
+  labels: string[];
+}
+
+export interface CertificationResponse {
+  market: string;
+  category: string;
+  certifications: string[];
+}
+
+export interface ReportItem {
+  id: string;
+  category: string;
+  market: string;
+  risk_score: number;
+  risk_level: string;
+  violation_count: number;
+  created_at: string;
+}
+
+export interface ReportListResponse {
+  items: ReportItem[];
+  total: number;
+  page: number;
+  page_size: number;
+}
+
+export interface ReportDetailResponse {
+  id: string;
+  description: string;
+  result: CheckResponse;
+  created_at: string;
+}
+
+// ===== API Functions =====
+
+export async function checkCompliance(request: CheckRequest): Promise<CheckResponse> {
+  const { data } = await api.post<CheckResponse>('/check', request);
+  return data;
+}
+
+export async function batchCheckCompliance(request: BatchCheckRequest): Promise<BatchCheckResponse> {
+  const { data } = await api.post<BatchCheckResponse>('/check/batch', request);
+  return data;
+}
+
+export async function getMarkets(): Promise<MarketResponse[]> {
+  const { data } = await api.get<MarketResponse[]>('/markets');
+  return data;
+}
+
+export async function getCategories(market: string): Promise<string[]> {
+  const { data } = await api.get<{ name: string }[]>(`/markets/${market}/categories`);
+  return data.map((d) => d.name);
+}
+
+export async function getLabels(market: string, category: string): Promise<LabelResponse> {
+  const { data } = await api.get<LabelResponse>('/labels', { params: { market, category } });
+  return data;
+}
+
+export async function getCertifications(market: string, category: string): Promise<CertificationResponse> {
+  const { data } = await api.get<CertificationResponse>('/certifications', { params: { market, category } });
+  return data;
+}
+
+export async function getReports(params: {
+  page?: number;
+  page_size?: number;
+  market?: string;
+  category?: string;
+  risk_level?: string;
+}): Promise<ReportListResponse> {
+  const { data } = await api.get<ReportListResponse>('/reports', { params });
+  return data;
+}
+
+export async function getReportDetail(reportId: string): Promise<ReportDetailResponse> {
+  const { data } = await api.get<ReportDetailResponse>(`/reports/${reportId}`);
+  return data;
+}
+
+export async function deleteReport(reportId: string): Promise<void> {
+  await api.delete(`/reports/${reportId}`);
+}
+
+// ===== Image Check =====
+
+export async function checkImage(file: File, category: string, market: string): Promise<CheckResponse> {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('category', category);
+  formData.append('market', market);
+  const { data } = await api.post<CheckResponse>('/check/image', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 60000,
+  });
+  return data;
+}
+
+// ===== Auth =====
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  token_type: string;
+  user: UserInfo;
+}
+
+export interface UserInfo {
+  id: string;
+  username: string;
+  role: string;
+}
+
+export async function login(request: LoginRequest): Promise<LoginResponse> {
+  const { data } = await api.post<LoginResponse>('/auth/login', request);
+  return data;
+}
+
+// ===== Report Export =====
+
+export async function exportReportPdf(reportId: string): Promise<Blob> {
+  const { data } = await api.get(`/reports/${reportId}/export/pdf`, {
+    responseType: 'blob',
+  });
+  return data;
+}
+
+// ===== Feedback (Data Flywheel) =====
+
+export interface FeedbackRequest {
+  report_id: string;
+  feedback_type: 'false_positive' | 'false_negative' | 'correct';
+  violation_type: string;
+  violation_content: string;
+  user_comment?: string;
+  market: string;
+  category: string;
+  original_description?: string;
+  risk_score?: number;
+}
+
+export interface FeedbackResponse {
+  id: string;
+  report_id: string;
+  feedback_type: string;
+  violation_type: string;
+  violation_content: string;
+  user_comment: string;
+  created_at: string;
+}
+
+export async function submitFeedback(request: FeedbackRequest): Promise<FeedbackResponse> {
+  const { data } = await api.post<FeedbackResponse>('/feedback', request);
+  return data;
+}
+
+export interface AccuracyMetrics {
+  total_feedbacks: number;
+  false_positive_count: number;
+  false_negative_count: number;
+  correct_count: number;
+  false_positive_rate: number;
+  false_negative_rate: number;
+  accuracy: number;
+  by_violation_type: Record<string, {
+    total: number;
+    fp: number;
+    fn: number;
+    correct: number;
+    accuracy: number;
+    fp_rate: number;
+    fn_rate: number;
+  }>;
+}
+
+export async function getAccuracyMetrics(): Promise<AccuracyMetrics> {
+  const { data } = await api.get<AccuracyMetrics>('/feedback/accuracy');
+  return data;
+}
+
+// ===== Platform & Patrol =====
+
+export interface PlatformStatus {
+  platform: string;
+  status: string;
+}
+
+export async function getPlatformStatus(): Promise<PlatformStatus[]> {
+  const { data } = await api.get<PlatformStatus[]>('/platforms');
+  return data;
+}
+
+export interface PatrolRequest {
+  platform: string;
+  market: string;
+  category?: string;
+  limit?: number;
+}
+
+export async function triggerPatrol(request: PatrolRequest): Promise<unknown> {
+  const { data } = await api.post('/patrol', request, { timeout: 120000 });
+  return data;
+}

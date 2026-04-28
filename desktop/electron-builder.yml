@@ -1,0 +1,106 @@
+appId: com.crossguard.desktop
+productName: 出海法盾CrossGuard
+copyright: Copyright © 2024 CrossGuard Team
+
+directories:
+  buildResources: resources
+  output: dist
+
+files:
+  - out/**/*
+  - "!out/renderer/**/*"
+  - out/renderer/**/*
+  - node_modules/**/*
+  - package.json
+
+extraResources:
+  - from: resources/icon.png
+    to: icon.png
+  - from: resources/backend
+    to: backend
+    filter:
+      - "**/*"
+      - "!__pycache__/**"
+      - "!*.pyc"
+      - "!db/**"
+
+# Windows 配置
+win:
+  icon: resources/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  artifactName: ${name}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 出海法盾CrossGuard
+  installerIcon: resources/icon.ico
+  uninstallerIcon: resources/icon.ico
+  installerHeaderIcon: resources/icon.ico
+  include: build/installer.nsh
+
+# macOS 配置
+mac:
+  icon: resources/icon.png
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+    - target: zip
+      arch:
+        - x64
+        - arm64
+  category: public.app-category.business
+  artifactName: ${name}-${version}-${arch}.${ext}
+
+dmg:
+  title: ${name} ${version}
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+# Linux 配置
+linux:
+  icon: resources/icon.png
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+    - target: tar.gz
+      arch:
+        - x64
+  category: Business
+  artifactName: ${name}-${version}-${arch}.${ext}
+
+# 自动更新
+publish:
+  provider: github
+  owner: 23xxCh
+  repo: LAWBOSS
+  releaseType: release
+
+# 压缩
+compression: maximum
+nodeGypRebuild: false
+
+# ASAR 打包
+asar: true
+asarUnpack:
+  - node_modules/electron-updater/**

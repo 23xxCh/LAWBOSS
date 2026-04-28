@@ -1,0 +1,166 @@
+# 欧盟化妆品法规(EC) No 1223/2009 医疗宣称禁用词
+# 化妆品不得宣称具有治疗、预防疾病的功能
+
+# 治疗类
+treat
+treatment
+cure
+heal
+healing
+treats
+cures
+medical
+medicinal
+therapeutic
+therapy
+medication
+medicine
+药物
+治疗
+治愈
+医治
+疗效
+药效
+
+# 预防类
+prevent
+prevention
+protects against
+prevents
+预防
+防止
+防护
+免疫
+
+# 疾病类
+disease
+illness
+sickness
+condition
+symptom
+infection
+bacteria
+bacterial
+antibacterial
+anti-bacterial
+virus
+viral
+antiviral
+anti-viral
+fungal
+antifungal
+anti-fungal
+inflammatory
+anti-inflammatory
+inflammation
+疾病
+病症
+症状
+感染
+细菌
+抗菌
+抗病毒
+消炎
+炎症
+
+# 身体部位疾病
+acne
+pimple
+pimples
+blackhead
+blackheads
+eczema
+psoriasis
+rosacea
+dermatitis
+rash
+rashes
+allergy
+allergies
+allergic
+痘痘
+痤疮
+粉刺
+黑头
+湿疹
+银屑病
+皮炎
+皮疹
+过敏
+
+# 疼痛
+pain
+painful
+ache
+aching
+sore
+soreness
+疼痛
+
+# 医学术语
+clinical
+clinically
+clinical trials
+proven
+scientifically
+临床试验
+临床研究
+科学证明
+医学证明
+
+# 效果宣称
+100% effective
+guaranteed results
+instant cure
+miracle
+miraculous
+cures all
+万能
+神效
+奇效
+立竿见影
+药到病除
+根治
+
+# 抗衰老（EU 敏感宣称，需特殊证据）
+anti-aging
+reverse aging
+age reversal
+抗衰老
+抗皱
+去皱
+
+# 美白（EU 严格限制）
+whitening
+skin whitening
+skin bleaching
+bleaching
+美白
+漂白
+
+# 防晒（EU 特殊监管类别）
+sunscreen
+sunblock
+SPF
+防晒
+防晒霜
+
+# 其他医疗相关
+restores
+restoring
+regenerates
+regenerating
+repair
+repairs
+修复
+再生
+重建
+
+# 中国传统医学相关（在欧盟可能被视为医疗宣称）
+中药
+中医
+草本治疗
+草本药物
+Herbal medicine
+Traditional Chinese Medicine
+TCM

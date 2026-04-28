@@ -109,7 +109,7 @@ export default function ReportDetailPage() {
   }
 
   if (!data) {
-    return <Alert type="error" message="报告不存在" />;
+    return <Alert type="error" title="报告不存在" />;
   }
 
   const result = data.result;
@@ -226,7 +226,7 @@ export default function ReportDetailPage() {
       {result.violations.length === 0 && (
         <Alert
           type="success"
-          message="未检测到违规内容"
+          title="未检测到违规内容"
           showIcon
           icon={<CheckCircleOutlined />}
           style={{ marginBottom: 16 }}
@@ -275,6 +275,15 @@ export default function ReportDetailPage() {
           />
         </Card>
       )}
+
+      {/* 免责声明 */}
+      <Alert
+        type="warning"
+        title="免责声明"
+        description="本工具提供的检测结果和修改建议仅供参考，不构成法律意见，不保证检测的完整性和准确性。产品合规性应以目标市场监管机构的最终判定为准。建议在重要合规决策前咨询专业法律顾问。"
+        showIcon
+        style={{ marginTop: 16, fontSize: 12 }}
+      />
     </div>
   );
 }

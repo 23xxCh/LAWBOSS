@@ -1,0 +1,35 @@
+{
+  "market": "US",
+  "category": "化妆品",
+  "regulations": [
+    {
+      "id": "fdc_act",
+      "name": "FD&C Act (Federal Food, Drug, and Cosmetic Act)",
+      "description": "美国食品药品化妆品法，化妆品和药品的区分标准",
+      "key_articles": [
+        {"article": "Section 201(i)", "content": "化妆品定义：通过涂抹、倾倒、喷洒或喷射等方式施用于人体，以清洁、美化、增进吸引力或改变外观为目的的物品"},
+        {"article": "Section 201(g)", "content": "药品定义：旨在诊断、治愈、缓解、治疗或预防疾病的物品"},
+        {"article": "Section 501", "content": "掺假标准：含有有害物质、在不卫生条件下生产等"}
+      ]
+    },
+    {
+      "id": "21cfr_700",
+      "name": "21 CFR 700-740 (化妆品法规)",
+      "description": "FDA化妆品标签和成分要求"
+    },
+    {
+      "id": "ftc_act",
+      "name": "FTC Act Section 5",
+      "description": "联邦贸易委员会法第5条，禁止不公平或欺骗性商业行为",
+      "key_articles": [
+        {"article": "Section 5", "content": "禁止不公平或欺骗性的行为或做法"},
+        {"article": "16 CFR 255", "content": "代言和推荐指南，要求广告宣称有科学依据"}
+      ]
+    },
+    {
+      "id": "mocra_2022",
+      "name": "MoCRA (Modernization of Cosmetics Regulation Act 2022)",
+      "description": "2022年化妆品监管现代化法案，新增设施注册、不良事件报告等要求"
+    }
+  ]
+}

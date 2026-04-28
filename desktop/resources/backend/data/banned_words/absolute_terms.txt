@@ -1,0 +1,74 @@
+# 绝对化用语禁用词
+# 各国广告法普遍禁止使用绝对化用语
+
+# 中文绝对化用语
+最好
+最佳
+第一
+唯一
+顶级
+最先进
+最优秀
+最强
+最大
+最小
+最高
+最低
+最新
+独家
+绝无仅有
+史无前例
+永久
+永远
+万能
+百分百
+百分之百
+100%
+纯天然
+绝对
+完全
+彻底
+完美
+
+# 英文绝对化用语
+guaranteed
+best
+top
+number one
+#1
+only
+exclusive
+perfect
+completely
+absolutely
+totally
+forever
+permanent
+instant
+immediate
+miracle
+revolutionary
+breakthrough
+first and only
+never before
+unbeatable
+irreplaceable
+No.1
+
+# 效果夸大
+神奇
+神效
+奇效
+特效
+立杆见影
+药到病除
+一秒见效
+立即见效
+瞬间
+
+guaranteed results
+instant results
+immediate results
+miracle results
+overnight
+instantly

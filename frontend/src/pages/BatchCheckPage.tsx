@@ -177,7 +177,7 @@ export default function BatchCheckPage() {
 
       {loading && (
         <Card style={{ textAlign: 'center', padding: 40 }}>
-          <Spin size="large" tip="正在批量检测..." />
+          <Spin size="large" description="正在批量检测..." />
         </Card>
       )}
 
@@ -189,7 +189,7 @@ export default function BatchCheckPage() {
                 <Progress type="circle" percent={Math.round((summary.low / summary.total) * 100)} strokeColor="#52c41a" size={80} />
                 <div><Text type="secondary">合规率</Text></div>
               </div>
-              <Space direction="vertical">
+              <Space orientation="vertical">
                 <Text>总计：<Text strong>{summary.total}</Text> 条</Text>
                 <Text>高风险：<Tag color="red">{summary.high}</Tag></Text>
                 <Text>中风险：<Tag color="orange">{summary.medium}</Tag></Text>
@@ -202,7 +202,7 @@ export default function BatchCheckPage() {
             <Table
               columns={columns}
               dataSource={results}
-              rowKey={(_, i) => String(i)}
+              rowKey={(_, index) => `result-${index}`}
               pagination={{ pageSize: 20, showTotal: (t) => `共 ${t} 条` }}
             />
           </Card>

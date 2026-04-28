@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "CrossGuard",
+    "subtitle": "Cross-Border E-Commerce Compliance Platform",
+    "description": "AI-powered compliance checking for cross-border products across EU, US, and Southeast Asia markets"
+  },
+  "nav": {
+    "check": "Compliance Check",
+    "batch": "Batch Check",
+    "dashboard": "Dashboard",
+    "reports": "Reports",
+    "rules": "Regulations",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "check": {
+    "title": "Product Compliance Check",
+    "description_label": "Product Description",
+    "description_placeholder": "Enter product description including name, claims, ingredients...",
+    "category_label": "Product Category",
+    "market_label": "Target Market",
+    "submit": "Start Check",
+    "detecting": "Checking...",
+    "result_title": "Check Results",
+    "risk_level": "Risk Level",
+    "violations": "Violations",
+    "suggestions": "Suggestions",
+    "no_violations": "No compliance risks found!",
+    "has_violations": "{{count}} compliance risk(s) found",
+    "disclaimer": "Disclaimer: The detection results and suggestions are for reference only and do not constitute legal advice. Product compliance should be determined by the target market's regulatory authority. Consult a legal professional before making important compliance decisions."
+  },
+  "batch": {
+    "title": "Batch Compliance Check",
+    "upload_label": "Upload Product List",
+    "upload_hint": "Supports CSV/Excel files, one product description per line",
+    "start": "Start Batch Check",
+    "progress": "Progress",
+    "completed": "Completed",
+    "total": "Total"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "total_checks": "Total Checks",
+    "violation_rate": "Violation Rate",
+    "high_risk": "High Risk Products",
+    "by_market": "Checks by Market",
+    "by_category": "Violations by Category",
+    "trend": "Check Trend"
+  },
+  "reports": {
+    "title": "Reports",
+    "export_pdf": "Export PDF",
+    "export_excel": "Export Excel",
+    "no_reports": "No reports yet"
+  },
+  "rules": {
+    "title": "Regulation Knowledge Base",
+    "eu": "EU Regulations",
+    "us": "US Regulations",
+    "sea": "Southeast Asia Regulations",
+    "banned_ingredients": "Banned Ingredients",
+    "prohibited_claims": "Prohibited Claims",
+    "required_labels": "Required Labels"
+  },
+  "auth": {
+    "login_title": "Login",
+    "register_title": "Register",
+    "username": "Username",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "login_btn": "Login",
+    "register_btn": "Register",
+    "no_account": "Don't have an account?",
+    "has_account": "Already have an account?",
+    "login_success": "Login successful",
+    "register_success": "Registration successful",
+    "demo_account": "Demo: admin / admin123"
+  },
+  "market": {
+    "eu": "European Union",
+    "us": "United States",
+    "sea_sg": "Singapore",
+    "sea_th": "Thailand",
+    "sea_my": "Malaysia"
+  },
+  "category": {
+    "cosmetics": "Cosmetics",
+    "supplement": "Dietary Supplement",
+    "food": "Food",
+    "electronics": "Electronics"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "reset": "Reset",
+    "submit": "Submit",
+    "back": "Back",
+    "language": "Language"
+  }
+}

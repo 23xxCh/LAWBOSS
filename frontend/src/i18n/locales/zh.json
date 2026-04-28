@@ -1,0 +1,106 @@
+{
+  "app": {
+    "title": "出海法盾 CrossGuard",
+    "subtitle": "跨境电商智能合规审查平台",
+    "description": "AI驱动的跨境商品合规检测，覆盖欧盟、美国、东南亚市场"
+  },
+  "nav": {
+    "check": "合规检测",
+    "batch": "批量检测",
+    "dashboard": "数据看板",
+    "reports": "检测报告",
+    "rules": "法规知识",
+    "login": "登录",
+    "register": "注册",
+    "logout": "退出"
+  },
+  "check": {
+    "title": "商品合规检测",
+    "description_label": "商品描述",
+    "description_placeholder": "请输入商品描述文本，包括产品名称、功效宣称、成分等信息...",
+    "category_label": "商品类别",
+    "market_label": "目标市场",
+    "submit": "开始检测",
+    "detecting": "检测中...",
+    "result_title": "检测结果",
+    "risk_level": "风险等级",
+    "violations": "违规项",
+    "suggestions": "修改建议",
+    "no_violations": "恭喜！未发现合规风险",
+    "has_violations": "发现 {{count}} 项合规风险",
+    "disclaimer": "免责声明：本工具提供的检测结果和修改建议仅供参考，不构成法律意见，不保证检测的完整性和准确性。产品合规性应以目标市场监管机构的最终判定为准。建议在重要合规决策前咨询专业法律顾问。"
+  },
+  "batch": {
+    "title": "批量合规检测",
+    "upload_label": "上传商品列表",
+    "upload_hint": "支持 CSV/Excel 文件，每行一个商品描述",
+    "start": "开始批量检测",
+    "progress": "检测进度",
+    "completed": "已完成",
+    "total": "总计"
+  },
+  "dashboard": {
+    "title": "数据看板",
+    "total_checks": "总检测次数",
+    "violation_rate": "违规率",
+    "high_risk": "高风险商品",
+    "by_market": "各市场检测分布",
+    "by_category": "各类别违规分布",
+    "trend": "检测趋势"
+  },
+  "reports": {
+    "title": "检测报告",
+    "export_pdf": "导出PDF",
+    "export_excel": "导出Excel",
+    "no_reports": "暂无检测报告"
+  },
+  "rules": {
+    "title": "法规知识库",
+    "eu": "欧盟法规",
+    "us": "美国法规",
+    "sea": "东南亚法规",
+    "banned_ingredients": "禁用成分",
+    "prohibited_claims": "禁止宣称",
+    "required_labels": "必需标签"
+  },
+  "auth": {
+    "login_title": "登录",
+    "register_title": "注册",
+    "username": "用户名",
+    "password": "密码",
+    "confirm_password": "确认密码",
+    "login_btn": "登录",
+    "register_btn": "注册",
+    "no_account": "还没有账号？",
+    "has_account": "已有账号？",
+    "login_success": "登录成功",
+    "register_success": "注册成功",
+    "demo_account": "演示账号: admin / admin123"
+  },
+  "market": {
+    "eu": "欧盟",
+    "us": "美国",
+    "sea_sg": "新加坡",
+    "sea_th": "泰国",
+    "sea_my": "马来西亚"
+  },
+  "category": {
+    "cosmetics": "化妆品",
+    "supplement": "膳食补充剂",
+    "food": "食品",
+    "electronics": "电子产品"
+  },
+  "common": {
+    "loading": "加载中...",
+    "save": "保存",
+    "cancel": "取消",
+    "confirm": "确认",
+    "delete": "删除",
+    "edit": "编辑",
+    "search": "搜索",
+    "reset": "重置",
+    "submit": "提交",
+    "back": "返回",
+    "language": "语言"
+  }
+}
