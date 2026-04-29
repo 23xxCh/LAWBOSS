@@ -129,6 +129,14 @@ def _is_span_overlapping(start: int, end: int, spans: List[Tuple[int, int]]) -> 
 class MedicalClaimChecker(BaseChecker):
     """医疗宣称检测器"""
 
+    # 英文类别名 -> 中文类别名映射
+    CATEGORY_MAP = {
+        "cosmetics": "化妆品",
+        "food": "食品",
+        "supplement": "膳食补充剂",
+        "electronics": "电子产品",
+    }
+
     # 各市场法规引用
     REGULATIONS = {
         "EU": {
@@ -176,7 +184,9 @@ class MedicalClaimChecker(BaseChecker):
             if len(parts) < 3:
                 continue
             market_raw = parts[0]
-            category = "_".join(parts[1:-1])  # support multi-word categories
+            category_en = "_".join(parts[1:-1])  # support multi-word categories
+            # 映射到中文类别名
+            category = self.CATEGORY_MAP.get(category_en, category_en)
 
             if market_raw == "sea":
                 # SEA 共享文件，展开到三个市场
@@ -489,6 +499,14 @@ class MissingLabelChecker(BaseChecker):
 class BannedIngredientChecker(BaseChecker):
     """禁用成分检测器"""
 
+    # 英文类别名 -> 中文类别名映射
+    CATEGORY_MAP = {
+        "cosmetics": "化妆品",
+        "food": "食品",
+        "supplement": "膳食补充剂",
+        "electronics": "电子产品",
+    }
+
     # 各市场法规引用
     REGULATIONS = {
         "EU": {
@@ -536,7 +554,9 @@ class BannedIngredientChecker(BaseChecker):
             if len(parts) < 3:
                 continue
             market_raw = parts[0]
-            category = "_".join(parts[1:-1])  # support multi-word categories
+            category_en = "_".join(parts[1:-1])  # support multi-word categories
+            # 映射到中文类别名
+            category = self.CATEGORY_MAP.get(category_en, category_en)
 
             if market_raw == "sea":
                 words = _load_word_list(fpath)
@@ -617,11 +637,7 @@ class ComplianceChecker:
         """加载替换映射（从数据文件，回退到内置默认）"""
         replacements_dir = self.data_dir / "replacements"
 
-        # 尝试加载各市场的替换映射
-        for f in replacements_dir.glob("*.json"):
-            self.replacements.update(_load_replacements(f))
-
-        # 内置默认替换（确保即使数据文件缺失也能工作）
+        # 内置默认替换（权威来源，文件加载仅补充）
         defaults = {
             "治疗": "舒缓", "治愈": "改善", "最好": "优质", "最佳": "精选",
             "第一": "优选", "唯一": "独特", "100%": "高品质", "百分百": "高品质",
@@ -629,9 +645,13 @@ class ComplianceChecker:
             "treat": "soothe", "cure": "improve", "best": "premium",
             "guaranteed": "trusted", "perfect": "excellent",
         }
-        for k, v in defaults.items():
-            if k not in self.replacements:
-                self.replacements[k] = v
+        self.replacements = dict(defaults)
+
+        # 从数据文件加载补充映射（不覆盖默认值）
+        for f in replacements_dir.glob("*.json"):
+            for k, v in _load_replacements(f).items():
+                if k not in self.replacements:
+                    self.replacements[k] = v
 
     def check_text(self,
                    description: str,
