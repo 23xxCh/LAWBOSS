@@ -1,0 +1,81 @@
+{
+  "market": "EU",
+  "category": "电子产品",
+  "regulations": [
+    {
+      "id": "eu_2014_53_red",
+      "name": "EU Directive 2014/53/EU 无线电设备指令(RED)",
+      "description": "规定了在欧盟市场销售的无线电子产品的安全、电磁兼容和频谱有效使用要求。设备须符合基本要求并加贴CE标志。",
+      "key_articles": [
+        {"article": "第3条", "content": "基本要求：健康与安全(含SAR限制)、电磁兼容性、频谱有效利用"},
+        {"article": "第5条", "content": "CE标志加贴要求，表示符合RED规定"},
+        {"article": "第10条", "content": "制造商责任：进行合格评定、准备技术文件、贴CE标志、编写EU符合性声明"},
+        {"article": "第17条", "content": "公告机构(Notified Body)的指定和职责"},
+        {"article": "第19条", "content": "机器可读的符合性声明简化要求(2025年起)"},
+        {"article": "附件I", "content": "合格评定程序模块"}
+      ]
+    },
+    {
+      "id": "eu_2011_65_rohs",
+      "name": "EU Directive 2011/65/EU (RoHS) 有害物质限制指令",
+      "description": "限制电子电气设备中使用的有害物质，包括铅、汞、镉、六价铬、多溴联苯(PBB)和多溴二苯醚(PBDE)等。",
+      "key_articles": [
+        {"article": "第4条", "content": "限制物质：铅(0.1%)、汞(0.1%)、镉(0.01%)、六价铬(0.1%)、PBB(0.1%)、PBDE(0.1%)"},
+        {"article": "第5条", "content": "豁免条款：特定应用可获豁免，附于附件III和IV"},
+        {"article": "第7条", "content": "CE标志和EU符合性声明"},
+        {"article": "第15条", "content": "不符合的处罚措施和市场监管"}
+      ]
+    },
+    {
+      "id": "eu_2012_19_weee",
+      "name": "EU Directive 2012/19/EU (WEEE) 废弃电子电气设备指令",
+      "description": "规定了电子电气产品的回收、再循环和处理的延伸生产者责任(EPR)要求。",
+      "key_articles": [
+        {"article": "第7条", "content": "回收率目标：各类产品的收集、回收和再循环率目标"},
+        {"article": "第15条", "content": "WEEE标志要求：带叉的带轮垃圾桶标志"},
+        {"article": "第16条", "content": "生产者注册和报告义务"}
+      ]
+    },
+    {
+      "id": "eu_2019_1020",
+      "name": "EU Regulation 2019/1020 市场监督和产品合规",
+      "description": "欧盟市场监督法规，规定进口产品的合规要求和授权代表制度。",
+      "key_articles": [
+        {"article": "第4条", "content": "非欧盟制造商必须指定欧盟境内的授权代表(Authorized Representative)"},
+        {"article": "第7条", "content": "市场监管机构的权力和职责"},
+        {"article": "第11条", "content": "不符合产品的处理程序"}
+      ]
+    },
+    {
+      "id": "eu_ecodesign_2024",
+      "name": "EU Ecodesign for Sustainable Products Regulation (ESPR) 2024/1781",
+      "description": "规定电子产品的可持续设计、能效标签、可维修性、软件更新和数据共享要求。",
+      "key_articles": [
+        {"article": "第5条", "content": "生态设计要求：能效、耐用性、可维修性、可回收性"},
+        {"article": "第6条", "content": "数字产品护照(Digital Product Passport)要求"},
+        {"article": "第7条", "content": "产品信息提供要求"},
+        {"article": "第11条", "content": "禁止销毁未售出的消费品"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "CE标志/CE marking",
+    "制造商名称和地址/Manufacturer name and address",
+    "产品型号/Model number/type",
+    "批次号或序列号/Batch or serial number",
+    "输入/输出额定值/Rated input/output voltage and current",
+    "WEEE标志（带叉垃圾桶）/WEEE symbol (crossed-out wheelie bin)",
+    "能效标签(如适用)/Energy efficiency label (if applicable)",
+    "原产国/Country of origin",
+    "使用说明书/Instructions for use (需使用目的国语言)",
+    "RF功率信息(无线设备)/RF power output (for radio equipment)"
+  ],
+  "required_certifications": [
+    "CE-RED(无线设备)或CE-LVD(低压设备)/CE-RED or CE-LVD",
+    "RoHS符合性/RoHS compliance",
+    "WEEE生产者注册/WEEE producer registration",
+    "EU符合性声明/EU Declaration of Conformity (DoC)",
+    "技术文件/Technical documentation",
+    "授权代表(非欧盟制造商)/Authorized Representative (for non-EU manufacturers)"
+  ]
+}

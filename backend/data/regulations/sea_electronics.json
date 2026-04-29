@@ -1,0 +1,84 @@
+{
+  "market": "SEA",
+  "category": "电子产品",
+  "regulations": [
+    {
+      "id": "sg_imda_regulations",
+      "name": "Singapore IMDA 电信设备注册法规",
+      "description": "新加坡资讯通信媒体发展局(IMDA)要求所有电信和无线电设备在销售前注册并获得批准。设备须符合电磁兼容和安全标准。",
+      "key_articles": [
+        {"article": "IMDA Reg 4", "content": "电信设备注册要求：所有无线/电信设备须经IMDA批准并加贴IMDA标志"},
+        {"article": "IMDA Reg 6", "content": "技术标准符合性：设备须符合IMDA规定的技术规范(MRA标准)"},
+        {"article": "IMDA Reg 9", "content": "标签要求：设备须加贴IMDA合规标志"},
+        {"article": "IMDA Reg 12", "content": "销售商义务：只能销售已注册的设备"},
+        {"article": "IMDA SS 638", "content": "新加坡安全标准(SS 638: 插头/插座标准)"}
+      ]
+    },
+    {
+      "id": "th_nbtc_regulations",
+      "name": "Thailand NBTC 电信设备认证",
+      "description": "泰国国家广播和电信委员会(NBTC)要求无线电通信设备在泰国市场销售前获得型号认证。",
+      "key_articles": [
+        {"article": "NBTC Section 3", "content": "无线通信设备的强制认证和注册"},
+        {"article": "NBTC Section 8", "content": "设备标签要求：须加贴NBTC认证标志"},
+        {"article": "NBTC Schedule", "content": "特定频段设备的技术标准限制"},
+        {"article": "TIS 1566", "content": "泰国工业标准(TIS)对电气设备安全的基本要求"}
+      ],
+      "market_specific_notes": [
+        "标签和说明书须使用泰文",
+        "NBTC认证有效期为3年"
+      ]
+    },
+    {
+      "id": "my_mcmc_sirim",
+      "name": "Malaysia MCMC + SIRIM 通信设备认证",
+      "description": "马来西亚通信和多媒体委员会(MCMC)要求通信设备通过SIRIM的认证测试并获得型式批准。",
+      "key_articles": [
+        {"article": "CMA 1998 Section 169", "content": "通信设备的型式批准(Type Approval)要求"},
+        {"article": "MCMC Technical Spec", "content": "技术规范符合性要求"},
+        {"article": "SIRIM认证", "content": "SIRIM QAS International负责测试和认证"},
+        {"article": "标签要求", "content": "SIRIM认证标志须加贴于产品上"},
+        {"article": "MS IEC 62368-1", "content": "马来西亚安全标准（基于IEC 62368-1）"}
+      ],
+      "market_specific_notes": [
+        "SIRIM标志需显示认证编号",
+        "插头须符合MS 589标准（英式三脚插头BS 1363）"
+      ]
+    },
+    {
+      "id": "asean_electrical_safety",
+      "name": "ASEAN电气安全互认协议(ASEAN EE MRA)",
+      "description": "东盟电气和电子设备安全标准的互认协议，旨在减少贸易壁垒同时确保产品安全。已采纳IECEE CB体系。",
+      "key_articles": [
+        {"article": "Annex A", "content": "涵盖的产品类别（家电、IT设备、音视频设备等）"},
+        {"article": "Annex B", "content": "适用安全标准清单（基于IEC标准）"},
+        {"article": "Article 6", "content": "互认条件和流程"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "产品名称/Product name",
+    "型号/Model number",
+    "制造商名称和地址/Manufacturer name and address",
+    "电气额定值/Electrical ratings (Voltage, Current, Frequency, Power)",
+    "IMDA标志(新加坡)/IMDA label (Singapore)",
+    "NBTC标志(泰国)/NBTC label (Thailand)",
+    "SIRIM标志(马来西亚)/SIRIM label (Malaysia)",
+    "原产国/Country of origin",
+    "使用说明书（目的国语言）/User manual in local language",
+    "警告和安全说明/Warnings and safety instructions",
+    "插头类型/Plug type compatible with local standard"
+  ],
+  "required_certifications": [
+    "IMDA注册(新加坡)/IMDA Registration (Singapore)",
+    "NBTC认证(泰国)/NBTC Certification (Thailand)",
+    "SIRIM型式批准(马来西亚)/SIRIM Type Approval (Malaysia)",
+    "IECEE CB测试报告/IECEE CB Test Report (推荐互认)",
+    "ISO 9001质量管理体系(推荐)/ISO 9001 Quality Management (recommended)"
+  ],
+  "market_specific_notes": {
+    "新加坡": "插头标准：BS 1363 (英式三脚)；电压：230V/50Hz；标签需英文",
+    "泰国": "插头标准：TIS 166-2549 (两脚扁型)；电压：220V/50Hz；标签需泰文",
+    "马来西亚": "插头标准：MS 589 (英式三脚)；电压：240V/50Hz；标签需马来文/英文"
+  }
+}

@@ -61,15 +61,17 @@ class TestAuth:
         assert resp.status_code == 401
 
     def test_register_and_login(self, client):
+        import uuid
+        unique_user = f"testuser_{uuid.uuid4().hex[:8]}"
         # 注册新用户
         resp = client.post("/api/v1/auth/register", json={
-            "username": "testuser_feedback",
+            "username": unique_user,
             "password": "test123456",
         })
         assert resp.status_code == 200
         # 登录
         resp = client.post("/api/v1/auth/login", json={
-            "username": "testuser_feedback",
+            "username": unique_user,
             "password": "test123456",
         })
         assert resp.status_code == 200

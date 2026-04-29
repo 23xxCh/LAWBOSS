@@ -1,0 +1,96 @@
+{
+  "market": "US",
+  "category": "膳食补充剂",
+  "regulations": [
+    {
+      "id": "dshea_1994",
+      "name": "DSHEA 1994 (膳食补充剂健康与教育法案)",
+      "description": "美国膳食补充剂监管的核心法律。将补充剂归类为食品类别（而非药品），但赋予FDA特定的监管权力。明确区分补充剂的合格健康宣称和未经批准的药品宣称。",
+      "key_articles": [
+        {"article": "Section 3", "content": "膳食补充剂定义：旨在补充膳食、含一种或多种膳食成分（维生素、矿物质、草本、氨基酸等）的口服产品"},
+        {"article": "Section 4", "content": "安全性要求：含有新膳食成分(NDI)须在上市前75天向FDA提交安全信息"},
+        {"article": "Section 5", "content": "标签和宣称类型区分：健康宣称、结构/功能宣称、营养含量宣称"},
+        {"article": "Section 6", "content": "结构/功能宣称的要求：须基于科学证据、不得宣称治疗/预防疾病、须附免责声明"},
+        {"article": "Section 8", "content": "cGMP（现行良好生产规范）要求"},
+        {"article": "Section 9", "content": "FDA可证明产品不安全时将其从市场上撤下（举证责任在FDA）"}
+      ]
+    },
+    {
+      "id": "21cfr_111",
+      "name": "21 CFR Part 111 膳食补充剂cGMP",
+      "description": "膳食补充剂的现行良好生产规范(cGMP)，涵盖生产、包装、标签和储存的质量控制标准。所有国内和国外生产商均须遵守。",
+      "key_articles": [
+        {"article": "21 CFR 111.8", "content": "人员要求：质量控制人员需具备适当的教育和经验"},
+        {"article": "21 CFR 111.23", "content": "生产车间和设备的设计和维护要求"},
+        {"article": "21 CFR 111.70", "content": "成分、包装和标签的鉴定和规格测试要求"},
+        {"article": "21 CFR 111.75", "content": "成品的实验室测试要求（含量、污染物、崩解等）"},
+        {"article": "21 CFR 111.95", "content": "主生产记录(Master Manufacturing Record)和批次生产记录(Batch Production Record)的要求"},
+        {"article": "21 CFR 111.103", "content": "投诉处理和产品召回程序"},
+        {"article": "21 CFR 111.123", "content": "退货产品的处理"}
+      ]
+    },
+    {
+      "id": "21cfr_101_supplement",
+      "name": "21 CFR Part 101 - 补充剂标签特殊规定",
+      "description": "膳食补充剂的标签要求，包括Supplement Facts面板格式、成分声称、结构/功能宣称和免责声明。",
+      "key_articles": [
+        {"article": "21 CFR 101.36", "content": "Supplement Facts面板的格式和内容要求"},
+        {"article": "21 CFR 101.93", "content": "结构/功能宣称的免责声明示例（如'本声明未经FDA评估。本产品不用于诊断、治疗、治愈或预防任何疾病'）"},
+        {"article": "21 CFR 101.54", "content": "结构/功能宣称（如'钙有助于骨骼健康'）的评估标准"},
+        {"article": "21 CFR 101.70", "content": "健康宣称的申请和授权流程"}
+      ]
+    },
+    {
+      "id": "ftc_supplement_enforcement",
+      "name": "FTC膳食补充剂广告执法政策",
+      "description": "FTC对膳食补充剂广告的监管标准，要求所有宣称（尤其是与健康相关的宣称）必须有可靠的科学证据支持。",
+      "key_articles": [
+        {"article": "FTC Policy", "content": "所有产品宣称必须有相应水平的科学证据支持"},
+        {"article": "FTC Dietary Supplements", "content": "补充剂广告中的结构/功能宣称必须有科学证据，包括人类临床试验（推荐RCT）"},
+        {"article": "FTC Endorsement Guides", "content": "代言人推荐和消费者见证必须有证据支持，不能包含虚假或未经证实的宣称"},
+        {"article": "FTC Health Claims", "content": "治疗疾病的宣称（如'治疗关节炎'）需满足FDA的药品审批标准，不能在广告中出现"}
+      ]
+    },
+    {
+      "id": "fda_ndi_draft_guidance",
+      "name": "FDA新膳食成分(NDI)通知指南",
+      "description": "对于1994年10月15日后未在美国上市的膳食成分，生产商必须在上市前75天向FDA提交NDI通知，包括安全使用历史和毒理学评估。",
+      "key_articles": [
+        {"article": "Section 4", "content": "NDI定义：1994年10月15日后未在美国市场销售的膳食成分"},
+        {"article": "Section 5", "content": "NDI通知的提交内容和格式要求"},
+        {"article": "Section 6", "content": "安全评估要求：包括历史使用数据、毒理研究和GRAS认定"},
+        {"article": "Section 8", "content": "针对含NDI产品的不合格通知和市场拒绝权力"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "产品名称/Statement of identity ('Dietary Supplement')",
+    "净含量/Net quantity of contents",
+    "Supplement Facts面板/Supplement Facts panel (包括份量、每份含量、%DV)",
+    "成分表/Ingredients list (非活性成分，降序排列)",
+    "建议用法/Directions for use (建议的每日服用量)",
+    "警告和注意事项/Warnings and precautions (含特定人群警告)",
+    "生产商/分销商名称和地址/Name and address of manufacturer/distributor",
+    "结构/功能宣称免责声明/Structure/function claim disclaimer ('This statement has not been evaluated by the FDA...')",
+    "过敏原标注/Allergen labeling (FALCPA)",
+    "非活性成分/Other ingredients (excipients, fillers, binders, coatings)"
+  ],
+  "required_certifications": [
+    "FDA设施注册/FDA Facility Registration (DSHEA要求)",
+    "cGMP合规/cGMP Compliance (21 CFR Part 111)",
+    "NDI通知(对于新成分)/NDI Notification (for new dietary ingredients)",
+    "第三方认证(推荐)/Third-party certification (USP, NSF, ConsumerLab - recommended)",
+    "有机认证(如宣称)/USDA Organic (if claiming organic)",
+    "非转基因认证(如宣称)/Non-GMO Project Verified (if claiming)",
+    "清真/犹太洁食认证(如宣称)/Halal/Kosher certification (if claiming)"
+  ],
+  "allowed_structure_function_claims": [
+    "支持心血管健康/Supports cardiovascular health",
+    "促进骨骼健康/Promotes bone health",
+    "支持免疫功能/Supports immune function",
+    "帮助维持健康血糖/Helps maintain healthy blood sugar levels",
+    "促进消化健康/Promotes digestive health",
+    "支持健康衰老/Supports healthy aging"
+  ],
+  "note": "以上结构/功能宣称须有科学证据支持，且须附带FDA要求的免责声明"
+}

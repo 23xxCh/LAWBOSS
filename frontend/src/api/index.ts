@@ -333,3 +333,100 @@ export async function testLLMConnection(request: LLMTestRequest): Promise<LLMTes
   const { data } = await api.post<LLMTestResponse>('/llm/test', request);
   return data;
 }
+
+// ===== Multi-Market Comparison (Demo Mode) =====
+
+export interface MultiMarketResult {
+  market: string;
+  market_name: string;
+  risk_score: number;
+  risk_level: string;
+  risk_description: string;
+  violations: ViolationItem[];
+  violation_count: number;
+  compliant_version: string;
+  required_labels: string[];
+  required_certifications: string[];
+  suggestions: string[];
+}
+
+export interface MultiMarketCheckResponse {
+  description: string;
+  category: string;
+  results: MultiMarketResult[];
+  best_market: string;
+  worst_market: string;
+}
+
+export async function checkMultiMarket(request: CheckRequest): Promise<MultiMarketCheckResponse> {
+  const { data } = await api.post<MultiMarketCheckResponse>('/check/multi-market', request);
+  return data;
+}
+
+// ===== Multi-LLM Comparison =====
+
+export interface LLMComparisonResult {
+  provider: string;
+  provider_name: string;
+  model: string;
+  risk_score: number;
+  risk_level: string;
+  violations: ViolationItem[];
+  violation_count: number;
+  latency_ms: number | null;
+}
+
+export interface LLMComparisonRequest {
+  description: string;
+  category: string;
+  market: string;
+  providers: string[];
+}
+
+export interface LLMComparisonResponse {
+  description: string;
+  category: string;
+  market: string;
+  results: LLMComparisonResult[];
+}
+
+export async function checkLLMComparison(request: LLMComparisonRequest): Promise<LLMComparisonResponse> {
+  const { data } = await api.post<LLMComparisonResponse>('/check/llm-comparison', request);
+  return data;
+}
+
+// ===== Cost Savings Calculator =====
+
+export interface PenaltyEstimate {
+  market: string;
+  market_label: string;
+  min_penalty: number;
+  max_penalty: number;
+  currency: string;
+  estimated_penalty: number;
+  violation_count: number;
+  risk_level: string;
+}
+
+export interface CostEstimateItem {
+  scenario: string;
+  estimated_loss: number;
+  probability: number;
+  expected_loss: number;
+  source: string;
+}
+
+export interface CostSavingsResponse {
+  total_risk_exposure: number;
+  annual_check_cost: number;
+  annual_savings: number;
+  savings_per_check: number;
+  market_penalties: PenaltyEstimate[];
+  case_losses: CostEstimateItem[];
+  disclaimer: string;
+}
+
+export async function getCostSavings(): Promise<CostSavingsResponse> {
+  const { data } = await api.get<CostSavingsResponse>('/compliance/cost-savings');
+  return data;
+}

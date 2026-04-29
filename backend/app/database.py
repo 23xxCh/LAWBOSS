@@ -44,4 +44,49 @@ def get_db():
 
 def init_db():
     """初始化数据库，创建所有表"""
+    # 本地导入确保所有模型注册到 Base.metadata
+    from . import models  # noqa: F401
     Base.metadata.create_all(bind=engine)
+
+    # SQLite 迁移：为现有表添加新列
+    if _is_sqlite:
+        _migrate_sqlite_schema()
+
+
+def _migrate_sqlite_schema():
+    """SQLite 模式迁移：添加缺失的列"""
+    from sqlalchemy import text, inspect
+
+    inspector = inspect(engine)
+    tables = inspector.get_table_names()
+
+    if "users" in tables:
+        existing_columns = {col["name"] for col in inspector.get_columns("users")}
+        new_columns = [
+            ("stripe_customer_id", "VARCHAR(100)"),
+            ("subscription_status", "VARCHAR(20) DEFAULT 'free'"),
+            ("subscription_tier", "VARCHAR(20) DEFAULT 'free'"),
+            ("trial_ends_at", "DATETIME"),
+            ("quota_checks_monthly", "INTEGER DEFAULT 50"),
+        ]
+
+        with engine.connect() as conn:
+            for col_name, col_type in new_columns:
+                if col_name not in existing_columns:
+                    conn.execute(text(f"ALTER TABLE users ADD COLUMN {col_name} {col_type}"))
+            conn.commit()
+
+    if "stripe_events" not in tables:
+        with engine.connect() as conn:
+            conn.execute(text("""
+                CREATE TABLE stripe_events (
+                    id VARCHAR(100) PRIMARY KEY,
+                    event_type VARCHAR(50) NOT NULL,
+                    processed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    customer_id VARCHAR(100),
+                    subscription_id VARCHAR(100)
+                )
+            """))
+            conn.execute(text("CREATE INDEX ix_stripe_events_customer_id ON stripe_events(customer_id)"))
+            conn.execute(text("CREATE INDEX ix_stripe_events_subscription_id ON stripe_events(subscription_id)"))
+            conn.commit()

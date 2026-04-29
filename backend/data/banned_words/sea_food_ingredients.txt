@@ -1,0 +1,178 @@
+# SEA(新加坡/泰国/马来西亚)食品禁用成分
+# 参考法规：
+#   Singapore: Sale of Food Act + Food Regulations (Part III - 禁用成分)
+#   Thailand: Food Act B.E. 2522 + Ministry of Public Health notifications
+#   Malaysia: Food Act 1983 + Food Regulations 1985 (Schedule 7 - 禁用成分)
+# 更新日期：2026-04
+
+# 通用禁用添加剂（All SEA markets）
+borax
+boric acid
+硼砂
+硼酸
+formaldehyde
+formalin
+甲醛
+福尔马林
+formaldehyde solution
+福尔马林溶液
+salicylic acid (非作为药物允许时)
+水杨酸
+coumarin
+香豆素
+dulcin
+甘精
+dulein
+P-4000
+5-nitro-2-propoxyaniline
+nitrofuran
+硝基呋喃
+nitrofurazone
+呋喃西林
+furazolidone
+呋喃唑酮
+furaltadone
+呋喃它酮
+chloramphenicol
+氯霉素
+malachite green
+孔雀石绿
+leucomalachite green
+无色孔雀石绿
+crystal violet
+结晶紫
+
+# 禁用色素
+sudan red I
+苏丹红I号
+sudan red II
+苏丹红II号
+sudan red III
+苏丹红III号
+sudan red IV
+苏丹红IV号
+sudan red B
+苏丹红B号
+sudan black B
+苏丹黑B
+sudan orange G
+苏丹橙G
+rhodamine B
+罗丹明B
+罗丹明
+pararosaniline
+副品红
+auramine
+碱性嫩黄
+butter yellow
+butter yellow
+orange II
+橙黄II
+metanil yellow
+间胺黄
+auran
+金胺
+oil orange SS
+oil orange XO
+ponceau 3R
+丽春红3R
+ponceau SX
+丽春红SX
+
+# 禁用甜味剂
+cyclamate (在某些SEA国家有限制)
+环己基氨基磺酸
+cyclamic acid
+甜蜜素
+dulcin
+甘精
+saccharin (允许，但需标注警告)
+糖精
+
+# 禁用漂白剂/增白剂
+benzoyl peroxide
+过氧化苯甲酰
+chlorine bleach (用于面粉)
+过氧化苯甲酰
+chlorine dioxide
+二氧化氯
+potassium bromate
+溴酸钾
+bromated flour
+溴酸盐面粉
+
+# 禁用防腐剂
+hexamine
+六亚甲基四胺
+hexamethylenetetramine
+formaldehyde-releasing preservatives
+甲醛释放型防腐剂
+sodium dithionite
+连二亚硫酸钠
+sodium formaldehyde sulfoxylate
+甲醛合次硫酸氢钠
+
+# 禁用农药/兽药残留相关
+clenbuterol
+克伦特罗
+瘦肉精
+ractopamine
+莱克多巴胺
+β-agonist
+β-激动剂
+chloramphenicol
+氯霉素
+nitrofurans
+硝基呋喃类
+malachite green
+孔雀石绿
+leucomalachite green
+无色孔雀石绿
+
+# 禁用增白剂（面粉/食品加工）
+benzoyl peroxide
+过氧化苯甲酰
+potassium bromate
+溴酸钾
+azodicarbonamide
+偶氮二甲酰胺
+
+# 禁用加工助剂
+ethylene oxide
+环氧乙烷
+propylene oxide
+环氧丙烷
+methyl bromide
+溴甲烷
+trichloroethylene
+三氯乙烯
+
+# 禁用染色剂（食品中）
+lead chromate
+铬酸铅
+lead oxide
+氧化铅
+mercury sulfide
+硫化汞
+copper sulfate (在某些应用中禁用)
+硫酸铜
+
+# 禁用防腐剂/保鲜剂
+borax
+硼砂
+boric acid
+硼酸
+formalin
+福尔马林
+salicylic acid
+水杨酸
+beta-naphthol
+β-萘酚
+
+# 禁用增香剂
+coumarin
+香豆素
+safrole
+黄樟素
+agaric acid
+琼脂酸

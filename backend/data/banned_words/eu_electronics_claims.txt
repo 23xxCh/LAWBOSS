@@ -1,0 +1,100 @@
+# 欧盟电子产品误导性宣称禁用词
+# 依据：EU Directive 2005/29/EC (不公平商业行为指令)
+#        EU Directive 2014/53/EU (RED - 无线电设备指令)
+#        EU Directive 2011/65/EU (RoHS)
+#        EU Directive 2012/19/EU (WEEE)
+#        EU Regulation 2019/1020 (市场监督)
+
+# 安全宣称类（需CE认证支持）
+radiation-free
+radiation safe
+100% safe
+completely safe
+perfectly safe
+totally safe
+zero radiation
+no radiation
+radiation protection
+radiation shield
+零辐射
+无辐射
+完全安全
+绝对安全
+
+# 认证/合规宣称（虚假或暗示未持有的认证）
+CE certified
+CE approved
+EU certified
+EU approved
+RoHS certified
+RoHS approved
+WEEE compliant
+REACH compliant
+fully certified
+officially certified
+government approved
+EU standard certified
+认证
+欧盟认证
+CE认证
+政府认证
+
+# 夸张产品宣称
+perfect compatibility
+universal compatibility
+compatible with all devices
+works with everything
+perfect quality
+military-grade
+military spec
+bombproof
+indestructible
+unbreakable
+waterproof
+完全兼容
+全兼容
+军工级
+军规
+完美品质
+永不损坏
+防水
+
+# 性能夸大
+100% accurate
+perfect accuracy
+zero error
+never fails
+guaranteed performance
+best in class
+world's best
+industry leading
+revolutionary
+breakthrough technology
+最精准
+零误差
+性能最佳
+颠覆性技术
+
+# 环保宣称（Greenwashing风险）
+100% eco-friendly
+100% green
+completely sustainable
+carbon neutral
+zero waste
+fully recyclable
+biodegradable
+environmentally friendly
+绿色环保
+100%环保
+完全可回收
+可生物降解
+
+# 来源/质量暗示
+premium quality
+highest quality
+superior quality
+德国制造
+德国品质
+原装进口
+最高品质
+顶级品质

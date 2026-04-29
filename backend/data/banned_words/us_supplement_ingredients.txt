@@ -1,0 +1,239 @@
+# 美国膳食补充剂禁用/限用成分
+# 依据：DSHEA 1994
+#        FDA膳食补充剂警告清单
+#        FDA禁用膳食成分清单 (21 CFR 119)
+#        FTC执法案例中的违法成分
+# 更新日期：2026-04
+
+# === FDA明确禁用的膳食成分（21 CFR 119）===
+ephedrine alkaloids
+ephedra
+ma huang
+麻黄
+麻黄碱
+麻黃
+ephedra sinica
+ephedra extract
+ephedrine
+pseudoephedrine
+norephedrine
+
+# === 合成类兴奋剂/刺激性物质 ===
+DMAA (1,3-dimethylamylamine)
+1,3-dimethylamylamine
+dimethylamylamine
+methylhexanamine
+geranamine
+geranium extract
+天竺葵提取物
+DMBA (1,3-dimethylbutylamine)
+1,3-dimethylbutylamine
+dimethylbutylamine
+AMP citrate
+AMP citrate
+AMP
+beta-methylphenylethylamine
+BMPEA
+beta-methylphenylethylamine
+phenpromethamine
+methyl synephrine
+oxilofrine
+methylhexaneamine
+
+# === 精神活性/神经系统成分 ===
+picamilon
+pikamilon
+nicotinoyl GABA
+phenibut
+phenibut HCl
+beta-phenyl-GABA
+phenibut HCL
+phenibut FAA
+tianeptine
+tianeptine sodium
+镇泰瑞
+selective serotonin reuptake inhibitor
+SSRI
+kratom
+mitragyna speciosa
+mitragynine
+7-hydroxymitragynine
+卡痛
+卡痛叶
+kava kava
+piper methysticum
+卡瓦
+卡瓦胡椒
+kava extract
+
+# === 激素/前体激素类 ===
+androstenedione
+androstene
+4-androstene-3,17-dione
+androstenediol
+norandrostenedione
+norandrostenediol
+DHEA (dehydroepiandrosterone) - FDA警告
+普拉睾酮
+脱氢表雄酮
+7-keto DHEA
+7-keto
+pregnenolone
+孕烯醇酮
+bolasterone
+boldenone
+bolderone
+equilin
+estradiol
+雌激素
+testosterone precursors
+testosterone prohormone
+睾酮前体
+prohormone
+前体激素
+SARMs
+selective androgen receptor modulators
+选择性雄激素受体调节剂
+ostarine
+MK-2866
+ligandrol
+LGD-4033
+rad-140
+testolone
+andarine
+S-4
+cardarine
+GW-501516
+YK-11
+
+# === 隐藏药物成分（常见于减肥补充剂）===
+sibutramine
+西布曲明
+meridia
+reductil
+phentermine
+芬特明
+fenfluramine
+芬氟拉明
+dexfenfluramine
+右芬氟拉明
+phenolphthalein
+酚酞
+fluoxetine
+氟西汀
+氟苯氧丙胺
+rimonabant
+利莫那班
+topiramate
+托吡酯
+zonisamide
+唑尼沙胺
+cetilistat
+thyroid hormone
+甲状腺激素
+T3
+T4
+triiodothyronine
+liothyronine
+dinitrophenol
+DNP
+二硝基苯酚
+clenbuterol
+克伦特罗
+瘦肉精
+yohimbine (高剂量时受FDA警告)
+育亨宾
+
+# === 隐藏药物成分（常见于增肌补充剂）===
+anabolic steroids
+合成代谢类固醇
+anabolic
+类固醇
+steroid analogs
+steroid isomers
+designer steroids
+超级类固醇
+methasterone
+superdrol
+methylstenbolone
+methyl-1-testosterone
+halodrol
+turinabol
+oral turinabol
+oxandrolone
+oxymetholone
+stanozolol
+康力龙
+nandrolone
+诺龙
+boldenone
+宝丹酮
+trenbolone
+群勃龙
+
+# === 隐藏药物成分（常见于性功能补充剂）===
+sildenafil
+西地那非
+万艾可
+伟哥
+tadalafil
+他达拉非
+vardenafil
+伐地那非
+avanafil
+阿伐那非
+udenafil
+mirodenafil
+dapoxetine
+达泊西汀
+sulfoaildenafil
+desmethyl carbodenafil
+acetaminophen
+对乙酰氨基酚
+ibuprofen
+布洛芬
+diclofenac
+双氯芬酸
+
+# === 禁用兴奋剂（运动员禁用成分）===
+synephrine (bitter orange extract) - FDA警告
+辛弗林
+苦橙提取物
+p-synephrine
+hordenine
+大麦芽碱
+octopamine
+章胺
+phenethylamine
+苯乙胺
+phenylethylamine
+PEA
+
+# === 被FDA发出警告的成分 ===
+vinpocetine (不适用于孕妇/哺乳期)
+长春西汀
+methylsulfonylmethane (MSM) (在某些宣称中有问题)
+dimethyl sulfone
+二甲基砜
+chaparral
+creosote bush
+lily of the desert
+comfrey
+symphytum
+聚合草
+germander
+石蚕
+pennyroyal oil
+薄荷油（唇萼薄荷油）
+sassafras
+檫木
+bitter orange (synephrine)高剂量
+苦橙
+usnic acid
+松萝酸
+borage oil (含PAs)
+琉璃苣油
+lobelia
+北美山梗菜
+lobeline
+山梗菜碱

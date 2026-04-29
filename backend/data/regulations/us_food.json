@@ -1,0 +1,82 @@
+{
+  "market": "US",
+  "category": "食品",
+  "regulations": [
+    {
+      "id": "fdc_act_201_food",
+      "name": "FD&C Act (联邦食品、药品和化妆品法) - 食品章节",
+      "description": "美国食品监管核心法律，定义食品、药品的区分标准，禁止掺假和错误标签。",
+      "key_articles": [
+        {"article": "Section 201(f)", "content": "食品定义：用于人或动物的食品、饮料、口香糖及其成分"},
+        {"article": "Section 201(g)", "content": "药品定义与食品的区分：宣称治疗/预防疾病的食品将被视为未批准药品"},
+        {"article": "Section 402", "content": "掺假食品：含有有害物质、在不卫生条件下生产、含有未经批准的食品添加剂"},
+        {"article": "Section 403", "content": "错误标签：虚假或误导性标签、未标注必要信息、成分表不合格"},
+        {"article": "Section 409", "content": "食品添加剂：任何未获GRAS认定或未经FDA批准的添加剂均视为不安全"},
+        {"article": "Section 403(r)", "content": "健康宣称和营养含量宣称需符合FDA规定"}
+      ]
+    },
+    {
+      "id": "21cfr_101",
+      "name": "21 CFR Part 101 食品标签法规",
+      "description": "详细的食品标签要求，包括营养标签格式、成分声明、过敏原标注、健康宣称标准等。",
+      "key_articles": [
+        {"article": "21 CFR 101.9", "content": "营养成分表(Nutrition Facts)的格式、内容和要求"},
+        {"article": "21 CFR 101.12", "content": "份量( Serving Size )的确定规则"},
+        {"article": "21 CFR 101.13", "content": "营养含量宣称（如'低脂'、'低钠'、'高纤维'等的量化标准）"},
+        {"article": "21 CFR 101.14", "content": "健康宣称标准：必须建立在显著科学一致基础上，需FDA批准"},
+        {"article": "21 CFR 101.17", "content": "特定食品的警告语（含阿斯巴甜、苯丙酮尿症等）"},
+        {"article": "21 CFR 101.22", "content": "食品名称、成分声明格式、调味品标注规则"},
+        {"article": "21 CFR 101.36", "content": "膳食补充剂的营养成分标签格式(Supplement Facts)"},
+        {"article": "21 CFR 101.54", "content": "结构/功能宣称（如'钙有助于骨骼健康'）的标注要求"}
+      ]
+    },
+    {
+      "id": "ftc_section_5_food",
+      "name": "FTC Act Section 5 + FTC Policy Statement on Food Advertising",
+      "description": "联邦贸易委员会监管食品广告，要求所有声称必须有科学证据支持，禁止不公平或欺骗性商业行为。",
+      "key_articles": [
+        {"article": "Section 5", "content": "禁止不公平或欺骗性的行为或做法"},
+        {"article": "FTC Food Policy", "content": "食品广告中的健康声明必须符合FDA标准并有可靠的科学证据"},
+        {"article": "FTC Enforcement Policy", "content": "减肥/体重管理产品广告需有随机临床试验(RCT)证据支持"}
+      ]
+    },
+    {
+      "id": "fda_fsma_2011",
+      "name": "FDA食品安全现代化法案(FSMA)",
+      "description": "2011年签署的全面食品安全改革法案，从事前预防、检测和响应三个维度加强食品安全监管。",
+      "key_articles": [
+        {"article": "Section 103", "content": "要求所有食品企业实施基于危害分析的预防控制措施(HARPC)"},
+        {"article": "Section 204", "content": "食品追溯规则，提高对污染食品的快速定位能力"},
+        {"article": "Section 301", "content": "外国供应商验证计划(FSVP)，进口食品需满足美国安全标准"},
+        {"article": "Section 302", "content": "第三方认证机构的认可计划"},
+        {"article": "Section 402", "content": "FDA强制召回授权"}
+      ]
+    },
+    {
+      "id": "fda_fair_packaging_labeling",
+      "name": "公平包装与标签法(FPLA)",
+      "description": "规定消费品（包括食品）的标签必须诚实、清晰地说明产品内容、数量和制造商信息。",
+      "key_articles": [
+        {"article": "Section 4", "content": "标签必须包含：产品标识、生产商/分销商名称和地址、净含量"},
+        {"article": "Section 5", "content": "禁止使用欺诈性或误导性的包装和标签"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "食品名称/Statement of identity",
+    "净含量/Net quantity of contents",
+    "营养成分表/Nutrition Facts panel",
+    "成分表/Ingredients list (降序排列)",
+    "过敏原标注/Allergen labeling (FALCPA: 9大过敏原)",
+    "生产商/分销商名称和地址/Name and address of manufacturer/packer/distributor",
+    "份量/Serving size",
+    "热量/Calories (强制在营养面板上)"
+  ],
+  "required_certifications": [
+    "FDA食品设施注册/FDA Food Facility Registration",
+    "HACCP(特定产品强制如海产品/果汁)/HACCP (mandatory for seafood/juice)",
+    "有机认证(如宣称有机)/USDA Organic certification (if claiming)",
+    "非转基因认证(如宣称)/Non-GMO certification (if claiming)",
+    "清真/犹太洁食认证(如宣称)/Halal/Kosher certification (if claiming)"
+  ]
+}

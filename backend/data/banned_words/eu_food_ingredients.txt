@@ -1,0 +1,133 @@
+# 欧盟食品禁用/限用成分
+# 依据：EC Regulation 1333/2008 (食品添加剂)
+#        EC Regulation 396/2005 (农药残留)
+#        EC Regulation 1881/2006 (污染物)
+#        Novel Food Regulation (EU) 2015/2283
+# 更新日期：2026-04
+
+# 禁用食品添加剂
+potassium bromate
+溴酸钾
+azodicarbonamide
+偶氮二甲酰胺
+propyl gallate
+没食子酸丙酯
+propyl paraben
+对羟基苯甲酸丙酯
+butylparaben
+对羟基苯甲酸丁酯
+red 2G
+红色2G
+sudan red I
+苏丹红I号
+sudan red II
+苏丹红II号
+sudan red III
+苏丹红III号
+sudan red IV
+苏丹红IV号
+sudan red
+苏丹红
+pararosaniline
+副品红
+auramine
+碱性嫩黄
+malachite green
+孔雀石绿
+rhodamine B
+罗丹明B
+brominated vegetable oil
+溴化植物油
+BVO
+brominated oil
+calcium bromate
+溴酸钙
+iodate
+碘酸盐
+calcium iodate
+碘酸钙
+nitrofuran
+硝基呋喃
+chloramphenicol
+氯霉素
+furaltadone
+呋喃它酮
+furazolidone
+呋喃唑酮
+
+# 限用食品添加剂（有最大使用量限制）
+BHA (butylated hydroxyanisole)
+丁基羟基茴香醚
+BHT (butylated hydroxytoluene)
+二丁基羟基甲苯
+butylated hydroxyanisole
+butylated hydroxytoluene
+sodium nitrite
+亚硝酸钠
+sodium nitrate
+硝酸钠
+potassium nitrate
+硝酸钾
+potassium nitrite
+亚硝酸钾
+aluminium
+铝
+titanium dioxide
+二氧化钛
+TiO2
+E171
+silicon dioxide (nano)
+纳米二氧化硅
+
+# 禁用色素
+quinoline yellow (在某些食品中禁用)
+E104
+ponceau 4R (在美国禁用)
+E124
+sunset yellow FCF (在某些食品中禁用)
+E110
+azorubine
+E122
+
+# 禁用甜味剂
+cyclamate (美国禁用，欧盟有限使用)
+cyclamic acid
+环己基氨基磺酸
+环己基氨基磺酸钠
+甜蜜素
+
+# 禁用增白剂/漂白剂
+chlorine dioxide
+二氧化氯
+benzoyl peroxide
+过氧化苯甲酰
+chlorine bleach
+氯漂白剂
+
+# 禁用防腐剂
+formaldehyde
+甲醛
+formalin
+福尔马林
+hexamine
+六亚甲基四胺
+borax
+硼砂
+boric acid
+硼酸
+
+# 禁用加工助剂/污染物
+trans fat
+trans fatty acid
+partially hydrogenated oil
+氢化油
+反式脂肪酸
+acrylamide
+丙烯酰胺
+PAH
+polycyclic aromatic hydrocarbons
+多环芳烃
+3-MCPD
+3-氯-1,2-丙二醇
+glycidyl ester
+缩水甘油酯

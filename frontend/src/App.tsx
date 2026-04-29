@@ -10,6 +10,7 @@ import ReportsPage from './pages/ReportsPage';
 import ReportDetailPage from './pages/ReportDetailPage';
 import RulesPage from './pages/RulesPage';
 import DashboardPage from './pages/DashboardPage';
+import CompetitorsPage from './pages/CompetitorsPage';
 import { useAuth } from './api/auth';
 import { Spin } from 'antd';
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/reports/:id" element={<ProtectedRoute><MainLayout><ReportDetailPage /></MainLayout></ProtectedRoute>} />
           <Route path="/rules" element={<ProtectedRoute><MainLayout><RulesPage /></MainLayout></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><MainLayout><DashboardPage /></MainLayout></ProtectedRoute>} />
+          <Route path="/competitors" element={<ProtectedRoute><MainLayout><CompetitorsPage /></MainLayout></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </ConfigProvider>

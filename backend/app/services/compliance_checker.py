@@ -129,55 +129,63 @@ def _is_span_overlapping(start: int, end: int, spans: List[Tuple[int, int]]) -> 
 class MedicalClaimChecker(BaseChecker):
     """医疗宣称检测器"""
 
+    # 各市场法规引用
+    REGULATIONS = {
+        "EU": {
+            "化妆品": ("欧盟化妆品法规(EC) No 1223/2009 第20条", "化妆品不得宣称具有治疗、预防疾病的功能，不得使用医疗术语"),
+            "食品": ("EU Regulation 1924/2006 营养与健康宣称法规", "食品不得宣称治疗、预防疾病，健康宣称须经EFSA批准"),
+            "电子产品": ("EU Electromagnetic Compatibility Directive 2014/30/EU", "电子产品不得宣称未经认证的安全或性能指标"),
+        },
+        "US": {
+            "化妆品": ("FD&C Act, 21 CFR 700-740", "化妆品不得宣称具有治疗或预防疾病的功能，否则需按药品监管"),
+            "食品": ("FDA FD&C Act Section 403(r), 21 CFR 101", "食品健康宣称须经FDA批准，不得宣称治疗疾病"),
+            "膳食补充剂": ("FDA DSHEA 1994, 21 CFR 101.93", "膳食补充剂不得宣称诊断、治疗、治愈或预防疾病"),
+            "电子产品": ("FCC Part 15, FTC Act Section 5", "电子产品不得宣称未经认证的电磁兼容或安全性能"),
+        },
+        "SEA_SG": {
+            "化妆品": ("ASEAN Cosmetic Directive & Singapore HSA Medicines Act", "化妆品不得宣称具有治疗或预防疾病功能，否则需按药品监管"),
+            "食品": ("Singapore SFA Food Regulations", "食品不得宣称治疗或预防疾病功能"),
+            "膳食补充剂": ("Singapore HSA Health Products Act", "补充剂不得宣称治疗或预防疾病"),
+            "电子产品": ("Singapore Consumer Protection (Safety Requirements)", "电子产品需符合安全要求，不得虚假宣称"),
+        },
+        "SEA_TH": {
+            "化妆品": ("ASEAN Cosmetic Directive & Thai FDA Cosmetics Act B.E. 2558", "化妆品不得宣称具有治疗或预防疾病功能，否则需按药品监管"),
+            "食品": ("Thai FDA Food Act B.E. 2522", "食品不得宣称治疗或预防疾病功能"),
+            "膳食补充剂": ("Thai FDA Dietary Supplement Regulations", "补充剂不得宣称治疗或预防疾病"),
+            "电子产品": ("Thai FDA & TIS Standards", "电子产品需符合TIS标准，不得虚假宣称"),
+        },
+        "SEA_MY": {
+            "化妆品": ("ASEAN Cosmetic Directive & Malaysia NPRA Sale of Drugs Act 1952", "化妆品不得宣称具有治疗或预防疾病功能，否则需按药品监管"),
+            "食品": ("Malaysia Food Act 1983 & Food Regulations 1985", "食品不得宣称治疗或预防疾病功能"),
+            "膳食补充剂": ("Malaysia NPRA Control of Drugs and Cosmetics Regulations", "补充剂不得宣称治疗或预防疾病"),
+            "电子产品": ("Malaysia MCMC & SIRIM Standards", "电子产品需符合SIRIM标准，不得虚假宣称"),
+        },
+    }
+
     def __init__(self, data_dir: Path):
         self.word_lists: Dict[str, List[str]] = {}  # key: market_category
-        self.regulations: Dict[str, Dict[str, str]] = {}
         self._load_data(data_dir)
 
     def _load_data(self, data_dir: Path):
         banned_dir = data_dir / "banned_words"
 
-        # EU 化妆品医疗宣称
-        eu_cosmetics_file = banned_dir / "eu_cosmetics_medical.txt"
-        if eu_cosmetics_file.exists():
-            self.word_lists["EU_化妆品"] = _load_word_list(eu_cosmetics_file)
+        # 动态加载所有 {market}_{category}_medical.txt 文件
+        for fpath in sorted(banned_dir.glob("*_medical.txt")):
+            stem = fpath.stem  # e.g. "eu_cosmetics_medical"
+            parts = stem.split("_")
+            if len(parts) < 3:
+                continue
+            market_raw = parts[0]
+            category = "_".join(parts[1:-1])  # support multi-word categories
 
-        # US 化妆品医疗宣称 (FDA)
-        us_cosmetics_file = banned_dir / "us_cosmetics_medical.txt"
-        if us_cosmetics_file.exists():
-            self.word_lists["US_化妆品"] = _load_word_list(us_cosmetics_file)
-
-        # 东南亚化妆品医疗宣称 (ACD)
-        sea_cosmetics_file = banned_dir / "sea_cosmetics_medical.txt"
-        if sea_cosmetics_file.exists():
-            sea_words = _load_word_list(sea_cosmetics_file)
-            self.word_lists["SEA_SG_化妆品"] = sea_words
-            self.word_lists["SEA_TH_化妆品"] = sea_words
-            self.word_lists["SEA_MY_化妆品"] = sea_words
-
-        # 法规引用
-        self.regulations = {
-            "EU": {
-                "regulation": "欧盟化妆品法规(EC) No 1223/2009 第20条",
-                "detail": "化妆品不得宣称具有治疗、预防疾病的功能，不得使用医疗术语",
-            },
-            "US": {
-                "regulation": "FD&C Act, 21 CFR 700-740",
-                "detail": "化妆品不得宣称具有治疗或预防疾病的功能，否则需按药品监管",
-            },
-            "SEA_SG": {
-                "regulation": "ASEAN Cosmetic Directive & Singapore HSA Medicines Act",
-                "detail": "化妆品不得宣称具有治疗或预防疾病功能，否则需按药品监管",
-            },
-            "SEA_TH": {
-                "regulation": "ASEAN Cosmetic Directive & Thai FDA Cosmetics Act B.E. 2558",
-                "detail": "化妆品不得宣称具有治疗或预防疾病功能，否则需按药品监管",
-            },
-            "SEA_MY": {
-                "regulation": "ASEAN Cosmetic Directive & Malaysia NPRA Sale of Drugs Act 1952",
-                "detail": "化妆品不得宣称具有治疗或预防疾病功能，否则需按药品监管",
-            },
-        }
+            if market_raw == "sea":
+                # SEA 共享文件，展开到三个市场
+                words = _load_word_list(fpath)
+                for m in ("SEA_SG", "SEA_TH", "SEA_MY"):
+                    self.word_lists[f"{m}_{category}"] = words
+            else:
+                market = market_raw.upper()
+                self.word_lists[f"{market}_{category}"] = _load_word_list(fpath)
 
     def check(self, description: str, category: str, market: str) -> List[Violation]:
         violations = []
@@ -191,7 +199,10 @@ class MedicalClaimChecker(BaseChecker):
         if not words:
             words = self.word_lists.get(f"{market}_化妆品", [])
 
-        reg_info = self.regulations.get(market, self.regulations["EU"])
+        # 获取法规引用
+        market_regs = self.REGULATIONS.get(market, self.REGULATIONS["EU"])
+        reg_info = market_regs.get(category, market_regs.get("化妆品", ("适用法规", "请勿使用医疗宣称")))
+        regulation, detail = reg_info
 
         for word in words:
             matches = _find_word_matches(word, description)
@@ -203,11 +214,11 @@ class MedicalClaimChecker(BaseChecker):
                     type=ViolationType.MEDICAL_CLAIM,
                     type_label="医疗宣称",
                     content=matched_text,
-                    regulation=reg_info["regulation"],
-                    regulation_detail=reg_info["detail"],
+                    regulation=regulation,
+                    regulation_detail=detail,
                     severity=Severity.HIGH,
                     severity_label="高",
-                    suggestion=f"删除'{matched_text}'，改为化妆品功能描述（如'舒缓'、'保湿'等）",
+                    suggestion=f"删除违规宣称'{matched_text}'，使用客观功能描述替代",
                     score=25,
                 ))
 
@@ -287,13 +298,39 @@ class FalseAdChecker(BaseChecker):
             r'24\s*hours?', r'24\s*小时', r'instant\s*results?',
             r'立即见效', r'\d+\s*天', r'\d+\s*days?',
         ],
+        # 食品类虚假功效宣称
+        ("食品", "EU"): [
+            r'prevents?\s*\w+', r'cures?\s*\w+', r'treats?\s*\w+',
+            r'reduces?\s*cholesterol', r'boosts?\s*immune', r'fights?\s*\w+',
+            r'\d+\s*days?\s*(to\s*)?results?',
+        ],
+        ("食品", "US"): [
+            r'prevents?\s*\w+', r'cures?\s*\w+', r'treats?\s*\w+',
+            r'reduces?\s*cholesterol', r'boosts?\s*immune', r'fights?\s*\w+',
+            r'\d+\s*days?\s*results?', r'clinically\s*proven',
+        ],
+        ("食品", "SEA_SG"): [
+            r'prevents?\s*\w+', r'cures?\s*\w+', r'treats?\s*\w+',
+            r'boosts?\s*immune', r'\d+\s*days?\s*results?',
+        ],
+        ("食品", "SEA_TH"): [
+            r'prevents?\s*\w+', r'cures?\s*\w+', r'treats?\s*\w+',
+            r'boosts?\s*immune', r'\d+\s*days?\s*results?',
+        ],
+        ("食品", "SEA_MY"): [
+            r'prevents?\s*\w+', r'cures?\s*\w+', r'treats?\s*\w+',
+            r'boosts?\s*immune', r'\d+\s*days?\s*results?',
+        ],
+        # 膳食补充剂虚假功效宣称
         ("膳食补充剂", "US"): [
             r'cures?\s*\w+', r'treats?\s*\w+', r'prevents?\s*\w+',
             r'\d+\s*days?\s*results?', r'guaranteed\s*results?',
+            r'clinically\s*proven', r'scientifically\s*proven',
+            r'fights?\s*\w+', r'replaces?\s*\w+',
         ],
         ("膳食补充剂", "SEA_SG"): [
             r'cures?\s*\w+', r'treats?\s*\w+', r'prevents?\s*\w+',
-            r'\d+\s*days?\s*results?',
+            r'\d+\s*days?\s*results?', r'clinically\s*proven',
         ],
         ("膳食补充剂", "SEA_TH"): [
             r'cures?\s*\w+', r'treats?\s*\w+', r'prevents?\s*\w+',
@@ -303,11 +340,56 @@ class FalseAdChecker(BaseChecker):
             r'cures?\s*\w+', r'treats?\s*\w+', r'prevents?\s*\w+',
             r'\d+\s*days?\s*results?',
         ],
+        # 电子产品虚假宣称
+        ("电子产品", "EU"): [
+            r'certified\s*(?!\w+CE)', r'guaranteed\s*safe', r'radiation\s*free',
+            r'100%\s*safe', r'perfect\s*compatibility',
+        ],
+        ("电子产品", "US"): [
+            r'certified\s*(?!\w+FCC)', r'guaranteed\s*safe', r'radiation\s*free',
+            r'100%\s*safe', r'perfect\s*compatibility',
+        ],
+        ("电子产品", "SEA_SG"): [
+            r'certified\s*(?!\w+Safety)', r'guaranteed\s*safe', r'radiation\s*free',
+        ],
+        ("电子产品", "SEA_TH"): [
+            r'certified\s*(?!\w+TIS)', r'guaranteed\s*safe', r'radiation\s*free',
+        ],
+        ("电子产品", "SEA_MY"): [
+            r'certified\s*(?!\w+SIRIM)', r'guaranteed\s*safe', r'radiation\s*free',
+        ],
     }
 
     REGULATION_MAP = {
-        "EU": ("欧盟化妆品宣称法规 (EC) No 655/2013", "化妆品功效宣称必须有充分的证据支持，不得使用具体时限保证效果"),
-        "US": ("FTC Endorsement Guides, 16 CFR 255", "广告宣称必须有科学依据支持，不得使用无法证实的效果保证"),
+        "EU": {
+            "化妆品": ("欧盟化妆品宣称法规 (EC) No 655/2013", "化妆品功效宣称必须有充分的证据支持，不得使用具体时限保证效果"),
+            "食品": ("EU Regulation 1924/2006 营养与健康宣称法规", "食品健康宣称须有科学证据，禁止未经EFSA批准的宣称"),
+            "电子产品": ("EU Consumer Rights Directive 2011/83/EU", "电子产品性能宣称须有技术依据，不得误导消费者"),
+        },
+        "US": {
+            "化妆品": ("FTC Endorsement Guides, 16 CFR 255", "广告宣称必须有科学依据支持，不得使用无法证实的效果保证"),
+            "食品": ("FDA FD&C Act, 21 CFR 101", "食品功效宣称须有科学证据或FDA批准"),
+            "膳食补充剂": ("FDA DSHEA 1994, 21 CFR 101.93", "补充剂结构/功能宣称须有声明依据，不得作疾病宣称"),
+            "电子产品": ("FTC Act Section 5, 15 USC 45", "电子产品性能宣称须有技术测试依据"),
+        },
+        "SEA_SG": {
+            "化妆品": ("Singapore HSA Cosmetics Regulations", "化妆品宣称须符合ACD要求，不得夸大功效"),
+            "食品": ("Singapore SFA Food Regulations", "食品宣称须真实准确，不得误导消费者"),
+            "膳食补充剂": ("Singapore HSA Health Products Act", "补充剂宣称须有科学依据"),
+            "电子产品": ("Singapore Consumer Protection Act", "电子产品宣称须符合安全标准"),
+        },
+        "SEA_TH": {
+            "化妆品": ("Thai FDA Cosmetics Act B.E. 2558", "化妆品宣称须符合ACD要求"),
+            "食品": ("Thai FDA Food Act B.E. 2522", "食品宣称须真实准确"),
+            "膳食补充剂": ("Thai FDA Dietary Supplement Regulations", "补充剂宣称须有科学依据"),
+            "电子产品": ("Thai Consumer Protection Act", "电子产品宣称须符合TIS标准"),
+        },
+        "SEA_MY": {
+            "化妆品": ("Malaysia Cosmetics Regulations 2007", "化妆品宣称须符合ACD要求"),
+            "食品": ("Malaysia Food Act 1983", "食品宣称须真实准确，不得误导消费者"),
+            "膳食补充剂": ("Malaysia NPRA Product Registration Guidelines", "补充剂宣称须有科学依据"),
+            "电子产品": ("Malaysia Consumer Protection Act 1999", "电子产品宣称须符合SIRIM标准"),
+        },
     }
 
     def check(self, description: str, category: str, market: str) -> List[Violation]:
@@ -315,7 +397,9 @@ class FalseAdChecker(BaseChecker):
         matched_spans: List[Tuple[int, int]] = []
 
         patterns = self.EFFICACY_PATTERNS.get((category, market), [])
-        reg, detail = self.REGULATION_MAP.get(market, self.REGULATION_MAP["EU"])
+        # 获取法规引用
+        market_regs = self.REGULATION_MAP.get(market, self.REGULATION_MAP["EU"])
+        reg, detail = market_regs.get(category, market_regs.get("化妆品", ("适用法规", "广告宣称须有充分依据")))
 
         for pattern in patterns:
             for match in re.finditer(pattern, description, re.IGNORECASE):
@@ -405,6 +489,39 @@ class MissingLabelChecker(BaseChecker):
 class BannedIngredientChecker(BaseChecker):
     """禁用成分检测器"""
 
+    # 各市场法规引用
+    REGULATIONS = {
+        "EU": {
+            "化妆品": ("欧盟化妆品法规(EC) No 1223/2009 附件II", "附件II列出了化妆品中禁用的物质"),
+            "食品": ("EU Regulation 1333/2008 食品添加剂法规", "食品中禁用或限用的添加剂和污染物"),
+            "电子产品": ("EU RoHS Directive 2011/65/EU & REACH Regulation", "电子产品中禁用的有害物质"),
+        },
+        "US": {
+            "化妆品": ("FDA 21 CFR 700-740", "FDA 规定了化妆品中禁用或限用的成分"),
+            "食品": ("FDA FD&C Act, 21 CFR 189", "FDA 禁止在食品中使用的物质"),
+            "膳食补充剂": ("FDA DSHEA 1994, 21 CFR 111", "膳食补充剂中禁用或限用的成分"),
+            "电子产品": ("FCC Part 15 & RoHS requirements", "电子产品中禁用的有害物质"),
+        },
+        "SEA_SG": {
+            "化妆品": ("ASEAN Cosmetic Directive & Singapore HSA", "东盟化妆品指令禁用成分列表"),
+            "食品": ("Singapore SFA Food Regulations", "新加坡食品中禁用成分"),
+            "膳食补充剂": ("Singapore HSA Health Products Act", "补充剂中禁用成分"),
+            "电子产品": ("Singapore RoHS & Safety Requirements", "电子产品中禁用物质"),
+        },
+        "SEA_TH": {
+            "化妆品": ("ASEAN Cosmetic Directive & Thai FDA", "东盟化妆品指令禁用成分列表"),
+            "食品": ("Thai FDA Food Act B.E. 2522", "泰国食品中禁用成分"),
+            "膳食补充剂": ("Thai FDA Dietary Supplement Regulations", "补充剂中禁用成分"),
+            "电子产品": ("Thai Industrial Standards", "电子产品中禁用物质"),
+        },
+        "SEA_MY": {
+            "化妆品": ("ASEAN Cosmetic Directive & Malaysia NPRA", "东盟化妆品指令禁用成分列表"),
+            "食品": ("Malaysia Food Act 1983 & Food Regulations 1985", "马来西亚食品中禁用成分"),
+            "膳食补充剂": ("Malaysia NPRA Product Registration", "补充剂中禁用成分"),
+            "电子产品": ("Malaysia SIRIM & MCMC Standards", "电子产品中禁用物质"),
+        },
+    }
+
     def __init__(self, data_dir: Path):
         self.ingredient_lists: Dict[str, List[str]] = {}
         self._load_data(data_dir)
@@ -412,23 +529,22 @@ class BannedIngredientChecker(BaseChecker):
     def _load_data(self, data_dir: Path):
         banned_dir = data_dir / "banned_words"
 
-        # EU 化妆品禁用成分
-        eu_ingredients_file = banned_dir / "eu_cosmetics_ingredients.txt"
-        if eu_ingredients_file.exists():
-            self.ingredient_lists["EU_化妆品"] = _load_word_list(eu_ingredients_file)
+        # 动态加载所有 {market}_{category}_ingredients.txt 文件
+        for fpath in sorted(banned_dir.glob("*_ingredients.txt")):
+            stem = fpath.stem  # e.g. "eu_cosmetics_ingredients"
+            parts = stem.split("_")
+            if len(parts) < 3:
+                continue
+            market_raw = parts[0]
+            category = "_".join(parts[1:-1])  # support multi-word categories
 
-        # US 化妆品禁用成分
-        us_ingredients_file = banned_dir / "us_cosmetics_ingredients.txt"
-        if us_ingredients_file.exists():
-            self.ingredient_lists["US_化妆品"] = _load_word_list(us_ingredients_file)
-
-        # 东南亚化妆品禁用成分 (ACD)
-        sea_ingredients_file = banned_dir / "sea_cosmetics_ingredients.txt"
-        if sea_ingredients_file.exists():
-            sea_ingredients = _load_word_list(sea_ingredients_file)
-            self.ingredient_lists["SEA_SG_化妆品"] = sea_ingredients
-            self.ingredient_lists["SEA_TH_化妆品"] = sea_ingredients
-            self.ingredient_lists["SEA_MY_化妆品"] = sea_ingredients
+            if market_raw == "sea":
+                words = _load_word_list(fpath)
+                for m in ("SEA_SG", "SEA_TH", "SEA_MY"):
+                    self.ingredient_lists[f"{m}_{category}"] = words
+            else:
+                market = market_raw.upper()
+                self.ingredient_lists[f"{market}_{category}"] = _load_word_list(fpath)
 
     def check(self, description: str, category: str, market: str) -> List[Violation]:
         violations = []
@@ -437,11 +553,10 @@ class BannedIngredientChecker(BaseChecker):
         key = f"{market}_{category}"
         ingredients = self.ingredient_lists.get(key, [])
 
-        regulation_map = {
-            "EU": ("欧盟化妆品法规(EC) No 1223/2009 附件II", "附件II列出了化妆品中禁用的物质"),
-            "US": ("FDA 21 CFR 700-740", "FDA 规定了化妆品中禁用或限用的成分"),
-        }
-        reg, detail = regulation_map.get(market, regulation_map["EU"])
+        # 获取法规引用
+        market_regs = self.REGULATIONS.get(market, self.REGULATIONS["EU"])
+        reg_info = market_regs.get(category, market_regs.get("化妆品", ("适用法规", "请检查禁用成分")))
+        regulation, detail = reg_info
 
         for ingredient in ingredients:
             matches = _find_word_matches(ingredient, description)
@@ -453,7 +568,7 @@ class BannedIngredientChecker(BaseChecker):
                     type=ViolationType.BANNED_INGREDIENT,
                     type_label="禁用成分",
                     content=matched_text,
-                    regulation=reg,
+                    regulation=regulation,
                     regulation_detail=detail,
                     severity=Severity.HIGH,
                     severity_label="高",
@@ -521,7 +636,8 @@ class ComplianceChecker:
     def check_text(self,
                    description: str,
                    product_category: str,
-                   target_market: str = "EU") -> ComplianceReport:
+                   target_market: str = "EU",
+                   check_mode: str = "standard") -> ComplianceReport:
         """
         检测产品描述合规性
 
@@ -529,14 +645,20 @@ class ComplianceChecker:
             description: 产品描述
             product_category: 产品类别
             target_market: 目标市场 (EU/US)
+            check_mode: 检测模式 (standard/keyword_only/ai_only)
 
         Returns:
             ComplianceReport: 合规检测报告
         """
         violations = []
 
-        # 执行所有检测器
         for checker in self.checkers:
+            # keyword_only 模式：跳过 AI 检测器
+            if check_mode == "keyword_only" and hasattr(checker, "reconfigure"):
+                continue
+            # ai_only 模式：仅运行 AI 检测器
+            if check_mode == "ai_only" and not hasattr(checker, "reconfigure"):
+                continue
             violations.extend(checker.check(description, product_category, target_market))
 
         # 计算风险评分
@@ -788,10 +910,20 @@ class ComplianceChecker:
             suggestions.append("欧代信息必须在产品标签上清晰标注")
             if category == "化妆品":
                 suggestions.append("建议在销售前进行CPSR安全评估")
+            elif category == "食品":
+                suggestions.append("建议获取EU有机认证（如适用）")
+            elif category == "电子产品":
+                suggestions.append("CE标志是强制性要求，须在产品和包装上清晰可见")
         elif market == "US":
             suggestions.append("确保产品标签使用英文")
             if category == "化妆品":
                 suggestions.append("注意：药品级宣称(如治疗功效)需按OTC药品监管，需NDA或ANDA申请")
+            elif category == "食品":
+                suggestions.append("营养标签(Nutrition Facts)是强制要求，须符合FDA格式")
+            elif category == "膳食补充剂":
+                suggestions.append("须标注'This statement has not been evaluated by the FDA'")
+            elif category == "电子产品":
+                suggestions.append("FCC认证是强制要求，电子产品须标注FCC ID")
         elif market.startswith("SEA_"):
             market_names = {"SEA_SG": "新加坡", "SEA_TH": "泰国", "SEA_MY": "马来西亚"}
             mname = market_names.get(market, "东南亚")
@@ -809,5 +941,11 @@ class ComplianceChecker:
                 suggestions.append("马来西亚穆斯林人口占多数，Halal 认证(JAKIM)对食品和化妆品非常重要")
             if category == "化妆品":
                 suggestions.append("东南亚市场对美白(whitening)宣称敏感，建议使用 brightening/even-toning 替代")
+            elif category == "食品":
+                suggestions.append(f"{mname}对食品标签有严格规定，建议咨询当地法规顾问")
+            elif category == "膳食补充剂":
+                suggestions.append(f"在{mname}销售补充剂需完成当地FDA/NPRA通报或注册")
+            elif category == "电子产品":
+                suggestions.append(f"在{mname}销售电子产品需获得本地安全认证标志")
 
         return suggestions
