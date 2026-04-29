@@ -81,7 +81,7 @@ class TestLLMConfigAPI:
             assert "models" in p
             assert "requires_api_key" in p
 
-    @patch("app.services.llm_config_service.httpx.Client")
+    @patch("httpx.Client")
     def test_test_connection_success(self, mock_client, client, auth_headers):
         mock_response = MagicMock()
         mock_response.status_code = 200

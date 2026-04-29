@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Card,
   Select,
@@ -41,6 +41,8 @@ export default function BatchCheckPage() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<CheckResponse[]>([]);
   const [summary, setSummary] = useState({ total: 0, high: 0, medium: 0, low: 0 });
+  const [batchProgress, setBatchProgress] = useState<{ current: number; total: number; percent: number } | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     getMarkets().then((data) => {
@@ -73,6 +75,24 @@ export default function BatchCheckPage() {
     }));
 
     setLoading(true);
+    setBatchProgress({ current: 0, total: items.length, percent: 0 });
+
+    // 尝试 WebSocket 连接（后端支持时自动接收进度推送）
+    const batchId = `batch-${Date.now()}`;
+    try {
+      const ws = new WebSocket(`ws://localhost:8000/api/v1/ws/batch-check/${batchId}`);
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'progress') {
+            setBatchProgress({ current: msg.current, total: msg.total, percent: msg.percent });
+          }
+        } catch { /* ignore */ }
+      };
+      ws.onerror = () => { /* WebSocket 静默降级 */ };
+      wsRef.current = ws;
+    } catch { /* WebSocket 不可用时静默降级 */ }
+
     try {
       const res = await batchCheckCompliance({ items });
       setResults(res.results);
@@ -82,11 +102,15 @@ export default function BatchCheckPage() {
         medium: res.medium_risk_count,
         low: res.low_risk_count,
       });
+      setBatchProgress({ current: items.length, total: items.length, percent: 100 });
       message.success(`批量检测完成：${res.total} 条`);
     } catch {
       message.error('批量检测失败');
+      setBatchProgress(null);
     } finally {
       setLoading(false);
+      wsRef.current?.close();
+      wsRef.current = null;
     }
   };
 
@@ -178,6 +202,28 @@ export default function BatchCheckPage() {
       {loading && (
         <Card style={{ textAlign: 'center', padding: 40 }}>
           <Spin size="large" description="正在批量检测..." />
+          {batchProgress && batchProgress.total > 0 && (
+            <div style={{ marginTop: 16 }}>
+              <Progress
+                type="circle"
+                percent={batchProgress.percent}
+                format={() => `${batchProgress.current}/${batchProgress.total}`}
+              />
+              <div style={{ marginTop: 8 }}>
+                <Text type="secondary">已检测 {batchProgress.current} / {batchProgress.total} 条</Text>
+              </div>
+            </div>
+          )}
+        </Card>
+      )}
+
+      {/* WebSocket 实时进度 */}
+      {batchProgress && results.length > 0 && batchProgress.percent < 100 && (
+        <Card size="small" style={{ marginBottom: 16 }}>
+          <Space>
+            <Progress type="circle" percent={batchProgress.percent} size={40} />
+            <Text>实时进度：{batchProgress.current} / {batchProgress.total}</Text>
+          </Space>
         </Card>
       )}
 

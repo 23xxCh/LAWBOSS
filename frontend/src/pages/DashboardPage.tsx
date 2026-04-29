@@ -14,6 +14,7 @@ import {
   Select,
   Alert,
   message,
+  Divider,
 } from 'antd';
 import {
   CheckCircleOutlined,
@@ -28,51 +29,27 @@ import {
   getAccuracyMetrics,
   getPlatformStatus,
   triggerPatrol,
+  getCostSavings,
   type AccuracyMetrics,
   type PlatformStatus,
+  type CostSavingsResponse,
 } from '../api';
 import api from '../api/client';
 
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
+  PieChart, Pie, Cell, ResponsiveContainer,
+} from 'recharts';
+
 const { Text, Title, Paragraph } = Typography;
 
-interface AccuracyMetrics {
-  total_feedbacks: number;
-  false_positive_count: number;
-  false_negative_count: number;
-  correct_count: number;
-  false_positive_rate: number;
-  false_negative_rate: number;
-  accuracy: number;
-  by_violation_type: Record<string, {
-    total: number;
-    fp: number;
-    fn: number;
-    correct: number;
-    accuracy: number;
-    fp_rate: number;
-    fn_rate: number;
-  }>;
-}
-
-interface PlatformStatus {
-  platform: string;
-  status: string;
-}
-
-interface OptimizationSuggestion {
-  id: string;
-  violation_type: string;
-  content: string;
-  suggestion_type: string;
-  reason: string;
-  confidence: number;
-  feedback_count: number;
-}
+const PIE_COLORS = ['#ff4d4f', '#faad14', '#52c41a'];
 
 export default function DashboardPage() {
   const [metrics, setMetrics] = useState<AccuracyMetrics | null>(null);
   const [platforms, setPlatforms] = useState<PlatformStatus[]>([]);
   const [suggestions, setSuggestions] = useState<OptimizationSuggestion[]>([]);
+  const [costData, setCostData] = useState<CostSavingsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [patrolLoading, setPatrolLoading] = useState(false);
   const [patrolPlatform, setPatrolPlatform] = useState('amazon');
@@ -93,6 +70,7 @@ export default function DashboardPage() {
       setMetrics(metricsData);
       setPlatforms(platformsData);
       setSuggestions(suggestionsRes.data);
+      getCostSavings().then(setCostData).catch(() => null);
     } catch {
       // 静默处理
     } finally {
@@ -275,6 +253,130 @@ export default function DashboardPage() {
           </Row>
         </Card>
       )}
+
+      {/* 准确率可视化图表 */}
+      <Card title="准确率看板" style={{ marginBottom: 16 }}>
+        <Row gutter={[24, 24]}>
+          <Col xs={24} md={12}>
+            <Title level={5}>反馈分布 (FP / FN / Correct)</Title>
+            <ResponsiveContainer width="100%" height={280}>
+              <PieChart>
+                <Pie
+                  data={[
+                    { name: '误报 (FP)', value: metrics?.false_positive_count || 0 },
+                    { name: '漏报 (FN)', value: metrics?.false_negative_count || 0 },
+                    { name: '正确', value: metrics?.correct_count || 0 },
+                  ]}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  label={({ name, percent }: { name: string; percent: number }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                >
+                  <Cell fill="#ff4d4f" />
+                  <Cell fill="#faad14" />
+                  <Cell fill="#52c41a" />
+                </Pie>
+                <RechartsTooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5}>各类型准确率对比</Title>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart
+                data={Object.entries(metrics?.by_violation_type || {}).map(([type, data]) => ({
+                  name: type,
+                  accuracy: data.accuracy,
+                  fp_rate: data.fp_rate,
+                  fn_rate: data.fn_rate,
+                }))}
+                layout="vertical"
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" domain={[0, 100]} unit="%" />
+                <YAxis type="category" dataKey="name" width={100} fontSize={12} />
+                <RechartsTooltip formatter={(v: number) => `${v}%`} />
+                <Bar dataKey="accuracy" name="准确率" fill="#52c41a" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="fp_rate" name="误报率" fill="#ff4d4f" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="fn_rate" name="漏报率" fill="#faad14" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Col>
+          <Col span={24}>
+            <Title level={5}>精度摘要</Title>
+            <Paragraph>
+              准确率 <Text strong style={{ color: (metrics?.accuracy || 0) >= 90 ? '#52c41a' : '#faad14' }}>{metrics?.accuracy || 0}%</Text> |
+              正确 <Text type="success">{metrics?.correct_count || 0}</Text> 条 |
+              误报 <Text type="danger">{metrics?.false_positive_count || 0}</Text> 条 |
+              漏报 <Text type="warning">{metrics?.false_negative_count || 0}</Text> 条 |
+              <Text type="secondary"> 基于 {metrics?.total_feedbacks || 0} 条用户反馈</Text>
+            </Paragraph>
+          </Col>
+        </Row>
+      </Card>
+
+      {/* 合规成本计算器 */}
+      <Card title="合规成本计算器" style={{ marginBottom: 16 }}>
+        {costData ? (
+          <>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Statistic
+                  title="总风险敞口"
+                  value={costData.total_risk_exposure}
+                  prefix="$"
+                  valueStyle={{ color: '#ff4d4f', fontSize: 28 }}
+                />
+              </Col>
+              <Col span={8}>
+                <Statistic
+                  title="年节省估算"
+                  value={costData.annual_savings}
+                  prefix="$"
+                  valueStyle={{ color: '#52c41a', fontSize: 28 }}
+                />
+              </Col>
+              <Col span={8}>
+                <Statistic
+                  title="每次检测节省"
+                  value={costData.savings_per_check}
+                  prefix="$"
+                  suffix="/次"
+                  valueStyle={{ color: '#1890ff', fontSize: 28 }}
+                />
+              </Col>
+            </Row>
+            <Divider style={{ margin: '12px 0' }} />
+            <Text strong>各市场罚款估算</Text>
+            <Table
+              dataSource={costData.market_penalties}
+              columns={[
+                { title: '市场', dataIndex: 'market_label', key: 'market' },
+                { title: '最低罚款', dataIndex: 'min_penalty', key: 'min', render: (v: number) => `$${v.toLocaleString()}` },
+                { title: '最高罚款', dataIndex: 'max_penalty', key: 'max', render: (v: number) => `$${v.toLocaleString()}` },
+                { title: '估计罚款', dataIndex: 'estimated_penalty', key: 'est', render: (v: number) => `$${v.toLocaleString()}` },
+                { title: '货币', dataIndex: 'currency', key: 'currency' },
+              ]}
+              pagination={false}
+              size="small"
+              rowKey="market"
+              style={{ marginTop: 8 }}
+            />
+            <Paragraph type="secondary" style={{ fontSize: 12, marginTop: 8 }}>
+              {costData.disclaimer}
+            </Paragraph>
+          </>
+        ) : (
+          <Alert
+            type="info"
+            message="合规成本数据"
+            description="完成一次检测后，系统将基于违规项估算潜在罚款风险与合规节省成本。"
+            showIcon
+          />
+        )}
+      </Card>
 
       {/* 规则优化建议 */}
       <Card title="规则优化建议（数据飞轮输出）" style={{ marginBottom: 16 }}>

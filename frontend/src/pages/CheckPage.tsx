@@ -34,9 +34,11 @@ import {
   checkImage,
   getMarkets,
   submitFeedback,
+  checkMultiMarket,
   type CheckResponse,
   type ViolationItem,
   type MarketResponse,
+  type MultiMarketCheckResponse,
 } from '../api';
 
 const { TextArea } = Input;
@@ -210,6 +212,8 @@ export default function CheckPage() {
   const [result, setResult] = useState<CheckResponse | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [multiMarketResult, setMultiMarketResult] = useState<MultiMarketCheckResponse | null>(null);
+  const [multiMarketLoading, setMultiMarketLoading] = useState(false);
 
   useEffect(() => {
     getMarkets().then((data) => {
@@ -259,6 +263,20 @@ export default function CheckPage() {
     reader.readAsDataURL(file);
     setResult(null);
     return false; // prevent auto upload
+  };
+
+  const handleMultiMarket = async () => {
+    if (!description.trim()) return;
+    setMultiMarketLoading(true);
+    setMultiMarketResult(null);
+    try {
+      const res = await checkMultiMarket({ description, category, market });
+      setMultiMarketResult(res);
+    } catch {
+      message.error('跨市场对比请求失败');
+    } finally {
+      setMultiMarketLoading(false);
+    }
   };
 
   const handleFeedback = async (feedbackType: 'false_positive' | 'correct', violation: ViolationItem) => {
@@ -522,6 +540,96 @@ export default function CheckPage() {
       )}
 
       {resultSection}
+
+      {/* Demo 模式区 */}
+      {result && !loading && (
+        <Card title="演示模式" style={{ marginTop: 16 }}>
+          <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <Alert
+              type="info"
+              message="跨市场对比演示 — 同一商品在 EU、US、东南亚市场分别检测"
+              description="一键查看同一商品在不同目标市场的合规差异，快速识别最适合销售的市场。"
+              showIcon
+            />
+            <Button
+              icon={<SearchOutlined />}
+              loading={multiMarketLoading}
+              onClick={handleMultiMarket}
+              size="large"
+              block
+            >
+              跨市场对比演示 (EU / US / SEA)
+            </Button>
+          </Space>
+        </Card>
+      )}
+
+      {/* 跨市场对比结果 */}
+      {multiMarketResult && (
+        <div style={{ marginTop: 16 }}>
+          <Card
+            title={
+              <Space>
+                <WarningOutlined style={{ color: '#faad14' }} />
+                <span>跨市场对比结果</span>
+              </Space>
+            }
+            extra={
+              <Space>
+                <Tag color="green">最佳市场: {multiMarketResult.best_market}</Tag>
+                <Tag color="red">最差市场: {multiMarketResult.worst_market}</Tag>
+              </Space>
+            }
+          >
+            <Space direction="vertical" style={{ width: '100%' }} size="middle">
+              {multiMarketResult.results.map((mr) => (
+                <Card
+                  key={mr.market}
+                  size="small"
+                  type="inner"
+                  title={
+                    <Space>
+                      <Text strong>{mr.market_name} ({mr.market})</Text>
+                      <Tag color={mr.risk_score >= 70 ? 'red' : mr.risk_score >= 40 ? 'orange' : 'green'}>
+                        风险 {mr.risk_score} 分 - {mr.risk_level}
+                      </Tag>
+                    </Space>
+                  }
+                >
+                  {mr.violations.length > 0 ? (
+                    <List
+                      size="small"
+                      dataSource={mr.violations}
+                      renderItem={(v) => (
+                        <List.Item>
+                          <Space>
+                            <Tag color={severityColor[v.severity]}>{v.severity_label}</Tag>
+                            <Text>{v.content}</Text>
+                            <Text type="secondary" style={{ fontSize: 12 }}>{v.type_label}</Text>
+                          </Space>
+                        </List.Item>
+                      )}
+                    />
+                  ) : (
+                    <Text type="success">未检测到违规</Text>
+                  )}
+                </Card>
+              ))}
+            </Space>
+          </Card>
+        </div>
+      )}
+
+      {/* 免责声明（如有结果显示） */}
+      {result && !loading && (
+        <Alert
+          type="warning"
+          title="免责声明"
+          description="本工具提供的检测结果和修改建议仅供参考，不构成法律意见，不保证检测的完整性和准确性。产品合规性应以目标市场监管机构的最终判定为准。建议在重要合规决策前咨询专业法律顾问。"
+          showIcon
+          style={{ marginTop: 16, fontSize: 12 }}
+        />
+      )}
     </div>
   );
 }
