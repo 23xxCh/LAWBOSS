@@ -64,3 +64,4 @@ backend/data/patrols/
 # Temp files
 *.tmp
 *.bak
+.gstack/

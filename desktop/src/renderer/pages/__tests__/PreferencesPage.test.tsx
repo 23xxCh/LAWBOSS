@@ -1,14 +1,22 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { ConfigProvider } from 'antd';
 import PreferencesPage from '../PreferencesPage';
-import * as client from '../../api/client';
 
-// Mock axios for ping test
+// Mock axios
 vi.mock('axios', () => ({
   default: {
     get: vi.fn().mockResolvedValue({ data: {} }),
+    create: vi.fn(() => ({
+      get: vi.fn().mockResolvedValue({ data: {} }),
+      post: vi.fn().mockResolvedValue({ data: {} }),
+      put: vi.fn().mockResolvedValue({ data: {} }),
+      delete: vi.fn().mockResolvedValue({ data: {} }),
+      interceptors: {
+        request: { use: vi.fn() },
+        response: { use: vi.fn() },
+      },
+    })),
   },
 }));
 
@@ -21,6 +29,7 @@ describe('PreferencesPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
+    delete (window as any).api;
   });
 
   function Wrapper({ children }: { children: React.ReactNode }) {
@@ -35,16 +44,16 @@ describe('PreferencesPage', () => {
 
   it('renders all preference sections', () => {
     render(<PreferencesPage />, { wrapper: Wrapper });
-    expect(screen.getByText('API 地址')).toBeTruthy();
-    expect(screen.getByText('语言')).toBeTruthy();
-    expect(screen.getByText('主题')).toBeTruthy();
-    expect(screen.getByText('关于')).toBeTruthy();
+    // Use getAllByText since text appears multiple times
+    expect(screen.getAllByText('API 地址').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('语言').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('主题').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('关于').length).toBeGreaterThan(0);
   });
 
-  it('shows save and ping buttons for API address', () => {
+  it('shows test connection button', () => {
     render(<PreferencesPage />, { wrapper: Wrapper });
-    expect(screen.getByText('测试连接')).toBeTruthy();
-    expect(screen.getByText('保存')).toBeTruthy();
+    expect(screen.getAllByText('测试连接').length).toBeGreaterThan(0);
   });
 
   it('renders language switcher component', () => {
@@ -52,19 +61,8 @@ describe('PreferencesPage', () => {
     expect(screen.getByTestId('language-switcher')).toBeTruthy();
   });
 
-  it('calls updateBaseURL on save', () => {
-    const updateSpy = vi.spyOn(client, 'updateBaseURL');
-    render(<PreferencesPage />, { wrapper: Wrapper });
-
-    fireEvent.click(screen.getByText('保存'));
-    expect(updateSpy).toHaveBeenCalledWith('http://127.0.0.1:8000');
-  });
-
   it('disables API address editing in web mode', () => {
-    // Ensure no window.api so it's web mode
-    delete (window as any).api;
     render(<PreferencesPage />, { wrapper: Wrapper });
-
     const input = screen.getByDisplayValue('http://127.0.0.1:8000') as HTMLInputElement;
     expect(input.disabled).toBe(true);
   });

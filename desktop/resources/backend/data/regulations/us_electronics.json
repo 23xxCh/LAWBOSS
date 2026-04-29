@@ -1,0 +1,83 @@
+{
+  "market": "US",
+  "category": "电子产品",
+  "regulations": [
+    {
+      "id": "fcc_47cfr_part15",
+      "name": "FCC 47 CFR Part 15 射频发射法规",
+      "description": "联邦通信委员会关于无意和有意射频发射器的法规。大多数电子产品必须有FCC测试和符合性声明才能在美国市场销售。",
+      "key_articles": [
+        {"article": "Section 15.5", "content": "有意辐射器的操作条件：不得产生有害干扰，须接受任何干扰"},
+        {"article": "Section 15.19", "content": "标签要求：含FCC标识和合规声明"},
+        {"article": "Section 15.21", "content": "未经FCC明确批准的更改或修改将导致用户操作权限失效"},
+        {"article": "Section 15.107", "content": "无意辐射器的传导发射限值"},
+        {"article": "Section 15.109", "content": "无意辐射器的辐射发射限值"},
+        {"article": "Section 15.247", "content": "工作在902-928 MHz, 2400-2483.5 MHz, 和5725-5850 MHz频段的数字调制设备的操作"},
+        {"article": "Section 15.407", "content": "UNII设备（5 GHz频段WiFi设备）的合规要求"}
+      ]
+    },
+    {
+      "id": "ftc_section_5_electronics",
+      "name": "FTC Act Section 5 - 电子产品广告和标签",
+      "description": "联邦贸易委员会禁止电子产品的虚假或欺骗性广告和标签，包括安全特征、性能指标、原产地和环保宣称。",
+      "key_articles": [
+        {"article": "Section 5", "content": "禁止不公平或欺骗性的行为或做法"},
+        {"article": "16 CFR 255", "content": "代言和推荐指南，要求宣称有科学依据"},
+        {"article": "FTC Dot Com Disclosures", "content": "在线广告披露要求（包括性能指标和安全特征）"},
+        {"article": "FTC Made in USA Policy", "content": "'美国制造'标签要求：产品须全部或几乎全部在美国制造"}
+      ]
+    },
+    {
+      "id": "fda_21cfr_1000",
+      "name": "FDA 21 CFR Chapter I - Subchapter J (电子产品辐射控制)",
+      "description": "FDA对电子产品的辐射安全要求，涵盖X射线设备、激光产品、微波设备、超声设备等。",
+      "key_articles": [
+        {"article": "21 CFR 1000.15", "content": "禁止在电子产品的销售、租赁或广告中做出虚假或误导性的辐射安全声明"},
+        {"article": "21 CFR 1002", "content": "电子产品的辐射性能标准报告要求"},
+        {"article": "21 CFR 1010", "content": "辐射产品的性能标准制定程序"},
+        {"article": "21 CFR 1020", "content": "特定产品的性能标准（电视接收机、微波炉、激光等）"},
+        {"article": "21 CFR 1040", "content": "激光产品的性能和标签要求（I-IV类激光分类）"}
+      ]
+    },
+    {
+      "id": "ul_standards",
+      "name": "UL安全标准（自愿性但市场强制）",
+      "description": "Underwriters Laboratories的安全标准。虽然是自愿性标准，但绝大多数美国零售商要求产品具有UL认证或等效的NRTL认证。",
+      "key_articles": [
+        {"article": "UL 60950-1", "content": "信息技术设备安全标准（正被UL 62368-1取代）"},
+        {"article": "UL 62368-1", "content": "音视频/信息技术和通信技术设备安全标准（最新）"},
+        {"article": "UL 1310", "content": "Class 2电源单元的安全标准"},
+        {"article": "UL 2056", "content": "移动电源安全标准"}
+      ]
+    },
+    {
+      "id": "energy_star",
+      "name": "Energy Star (能源之星) 能效认证",
+      "description": "EPA和DOE联合管理的自愿性能效认证计划，涵盖计算机、显示器、家电等多种电子产品。",
+      "key_articles": [
+        {"article": "Specifications", "content": "产品类别特定能效规范：典型能耗(TEC)和待机功耗要求"},
+        {"article": "Certification", "content": "需经EPA认可的CB（认证机构）测试和认证"},
+        {"article": "Labeling", "content": "Energy Star标志和产品信息标注要求"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "产品标识/Product identity",
+    "制造商/进口商名称和地址/Manufacturer/importer name and address",
+    "FCC合规声明/FCC compliance statement (Part 15.19)",
+    "产品型号/Model number",
+    "序列号或批次号/Serial or batch number",
+    "电气额定值/Electrical ratings (Voltage, Current, Frequency, Power)",
+    "警告和安全说明/Warnings and safety instructions",
+    "原产国/Country of origin (通常标记'Made in XXX')",
+    "能源之星标志(如适用)/Energy Star logo (if applicable)",
+    "UL或NRTL认证标志(如适用)/UL or NRTL mark (if certified)"
+  ],
+  "required_certifications": [
+    "FCC SDoC（供方符合性声明）或FCC认证/FCC Supplier's Declaration of Conformity or FCC Certification",
+    "UL/NRTL安全认证/UL or NRTL safety certification (市场实践强制)",
+    "Energy Star认证(如适用)/Energy Star certification (if claimed)",
+    "加州CEC能效认证(如适用)/California CEC energy efficiency (if applicable)",
+    "FDA辐射产品报告(如适用)/FDA radiation product report (if applicable)"
+  ]
+}

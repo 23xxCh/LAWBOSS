@@ -1,0 +1,150 @@
+# 美国食品禁用/限用成分
+# 依据：21 CFR (FDA食品法规)
+#        FD&C Act Section 409 (食品添加剂)
+#        GRAS认定程序
+#        FDA食品添加剂禁用清单
+# 更新日期：2026-04
+
+# 已禁用/不再认定为GRAS的成分
+partially hydrogenated oil
+partially hydrogenated vegetable oil
+PHO
+trans fat
+partially hydrogenated
+氢化油
+部分氢化油
+反式脂肪
+azodicarbonamide
+偶氮二甲酰胺
+ADA
+brominated vegetable oil
+溴化植物油
+BVO
+brominated oil
+potassium bromate
+溴酸钾
+calcium bromate
+溴酸钙
+iodate
+碘酸盐
+calcium iodate
+碘酸钙
+propylparaben
+对羟基苯甲酸丙酯
+propyl paraben
+sodium aluminum phosphate
+磷酸铝钠
+aluminum phosphate
+aluminum
+铝
+
+# 禁用色素
+red 3
+红色3号
+erythrosine
+赤藓红
+red 40 (在某些人群有争议)
+yellow 5 (在某些食品有限制)
+tartrazine
+柠檬黄
+yellow 6
+日落黄
+sunset yellow
+green 3
+fast green
+blue 1 (在某些人群有争议)
+brilliant blue
+橙黄
+butter yellow
+butter yellow (已禁用)
+oil orange SS
+oil orange XO
+citrus red 1
+citrus red 2 (仅允许用于特定橙皮)
+
+# 禁用甜味剂
+cyclamate
+环己基氨基磺酸
+甜蜜素
+cyclamic acid
+saccharin (曾禁，现允许但有警告标签)
+糖精
+dulcin
+dulein
+甘精
+P-4000
+5-nitro-2-propoxyaniline
+
+# 禁用防腐剂
+chloroform
+氯仿
+carbon tetrachloride
+四氯化碳
+formaldehyde
+甲醛
+borax
+硼砂
+boric acid
+硼酸
+salicylic acid (在某些食品禁用)
+水杨酸
+硫脲
+thiourea
+coumarin
+香豆素
+safrole
+黄樟素
+cobaltous salts
+钴盐
+diethylpyrocarbonate
+DEPC
+
+# 禁用人造香料
+safrole
+黄樟素
+isosafrole
+异黄樟素
+dihydrosafrole
+二氢黄樟素
+calamus oil
+菖蒲油
+cinnamyl anthranilate
+肉桂酸邻氨基苯甲酯
+methyl eugenol
+甲基丁香酚
+
+# 禁用/严格限制的添加剂（食品中）
+caffeine (在某些食品中禁用于儿童)
+caffeine powder (纯咖啡因粉禁用于食品)
+quinine (仅限用于汤力水，有量限制)
+奎宁
+sodium nitrite (有限制)
+亚硝酸钠
+nitrate
+硝酸盐
+potassium nitrate
+硝酸钾
+
+# 禁用加工助剂
+methylene chloride
+二氯甲烷
+trichloroethylene
+三氯乙烯
+ethylene oxide
+环氧乙烷
+benzene
+苯
+acrylonitrile
+丙烯腈
+vinyl chloride
+氯乙烯
+vinylidene chloride
+偏二氯乙烯
+
+# 禁用增稠剂/稳定剂
+coumarin
+香豆素
+tonka bean
+香豆豆
+agartic acid
+琼脂酸

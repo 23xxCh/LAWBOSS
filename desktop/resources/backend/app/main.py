@@ -18,7 +18,7 @@ from .config import (
 )
 from .services.compliance_checker import ComplianceChecker
 from .database import init_db
-from .routers import check, market, report, image, auth, platform, feedback, regulation, erp, dashboard, llm_config
+from .routers import check, market, report, image, auth, platform, feedback, regulation, erp, dashboard, llm_config, compliance, websocket
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +89,8 @@ app.include_router(regulation.router, prefix=API_V1_PREFIX)
 app.include_router(erp.router, prefix=API_V1_PREFIX)
 app.include_router(dashboard.router, prefix=API_V1_PREFIX)
 app.include_router(llm_config.router, prefix=API_V1_PREFIX)
+app.include_router(compliance.router, prefix=API_V1_PREFIX)
+app.include_router(websocket.router)
 
 
 @app.get("/", tags=["系统"])

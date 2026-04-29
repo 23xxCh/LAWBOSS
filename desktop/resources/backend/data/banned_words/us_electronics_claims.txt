@@ -1,0 +1,106 @@
+# 美国电子产品误导性宣称禁用词
+# 依据：FTC Act Section 5 (禁止不公平/欺骗性行为)
+#        FCC 47 CFR Part 15 (电磁兼容)
+#        UL Standards (安全认证)
+#        FDA 21 CFR 1000-1050 (电子产品辐射控制)
+
+# 辐射/安全性宣称（需FCC认证支持）
+radiation-free
+radiation safe
+no radiation
+zero radiation
+radiation protection
+radiation shield
+100% safe
+completely safe
+perfectly safe
+totally safe
+EMF free
+EMF protection
+零辐射
+无辐射
+完全安全
+绝对安全
+
+# 认证相关（虚假宣称FCC/UL/ETL等认证）
+FCC certified
+FCC approved
+FCC registered
+UL certified
+UL approved
+UL listed
+ETL certified
+ETL approved
+FDA approved
+FDA registered
+FCC Part 15 certified
+fully certified
+officially certified
+government approved
+federally approved
+industry certified
+安全认证
+FCC认证
+UL认证
+FDA认证
+
+# 夸张/虚假宣称
+military-grade
+military spec
+mil-spec
+bombproof
+indestructible
+unbreakable
+bulletproof
+waterproof (without standard)
+perfect compatibility
+compatible with all devices
+works with everything
+universal compatibility
+军工级
+军规
+防弹
+永不损坏
+
+# 性能夸大
+100% accurate
+perfect accuracy
+zero error
+never fails
+guaranteed performance
+best in class
+world's best
+industry leading
+revolutionary
+breakthrough technology
+game changing
+state of the art
+最精准
+零误差
+最佳性能
+颠覆性
+
+# 环保虚假宣称（FTC Green Guides）
+100% eco-friendly
+100% green
+completely sustainable
+carbon neutral
+zero waste
+fully recyclable
+biodegradable
+environmentally friendly
+100% recycled
+chemical-free
+toxin-free
+绿色环保
+100%环保
+完全可回收
+无毒
+
+# 来源/原产地虚假宣称
+Made in USA
+American made
+USA made
+Assembled in USA
+美国制造
+原装进口（非进口产品）

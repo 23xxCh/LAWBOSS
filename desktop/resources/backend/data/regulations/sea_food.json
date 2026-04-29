@@ -1,0 +1,88 @@
+{
+  "market": "SEA",
+  "category": "食品",
+  "regulations": [
+    {
+      "id": "sg_sale_of_food_act",
+      "name": "Singapore Sale of Food Act (Chapter 283) + Food Regulations",
+      "description": "新加坡食品销售法，规范食品标签、广告和成分安全，禁止虚假或误导性食品宣称。",
+      "key_articles": [
+        {"article": "第5条", "content": "不得销售掺假或不符合标准的食品"},
+        {"article": "第13条", "content": "标签必须使用英文，包括食品名称、成分表、净含量、保质期、生产商信息"},
+        {"article": "第14条", "content": "禁止虚假或误导性食品标签和广告"},
+        {"article": "Food Reg 40", "content": "营养宣称和健康宣称需获HSA批准"},
+        {"article": "Food Reg 42", "content": "禁止疾病治疗宣称，食品不得暗示具有预防或治疗疾病功能"}
+      ]
+    },
+    {
+      "id": "th_food_act_2522",
+      "name": "Thailand Food Act B.E. 2522 (1979)",
+      "description": "泰国食品法，规定食品注册、标签、广告和成分管制。由泰国食品药品管理局(Thai FDA)执法。",
+      "key_articles": [
+        {"article": "第6条", "content": "食品分类注册制度：特殊控制食品、标准食品等不同注册要求"},
+        {"article": "第25条", "content": "食品标签必须使用泰文，包含食品名称、成分表、净含量、保质期、生产商、进口商信息"},
+        {"article": "第41条", "content": "禁止食品广告中使用治疗或预防疾病的宣称"},
+        {"article": "第42条", "content": "禁止虚假、夸大或误导性食品广告"}
+      ],
+      "market_specific_notes": [
+        "泰文标签法定",
+        "营养标签需符合Thai FDA的Guideline Daily Amounts(GDA)格式",
+        "特定食品需注册号（เลขสารบบอาหาร）"
+      ]
+    },
+    {
+      "id": "my_food_act_1983",
+      "name": "Malaysia Food Act 1983 (Act 281) + Food Regulations 1985",
+      "description": "马来西亚食品法，涵盖食品标签标准、成分安全和广告监管。由卫生部食品安全与质量司执法。",
+      "key_articles": [
+        {"article": "第13条", "content": "禁止销售掺假食品"},
+        {"article": "第14条", "content": "标签要求：食品名称、成分表、净含量、保质期、生产商和进口商信息"},
+        {"article": "第16条", "content": "禁止虚假或误导性标签和广告"},
+        {"article": "Reg 18A", "content": "营养标签和信息宣称（特定营养声明条件）"},
+        {"article": "Reg 18B", "content": "健康宣称需经卫生部批准"},
+        {"article": "Reg 18C", "content": "禁止食品中暗示治疗或预防疾病的宣称"}
+      ],
+      "market_specific_notes": [
+        "标签需使用马来文或英文（马来文优先）",
+        "含猪肉或猪油产品需标注 'Mengandungi Babi'（含猪肉）",
+        "清真认证产品有额外标签要求"
+      ]
+    },
+    {
+      "id": "asean_food_labeling_guidelines",
+      "name": "ASEAN食品标签指南",
+      "description": "东盟成员国统一的食品标签标准，包括营养标签格式和健康宣称原则。",
+      "key_articles": [
+        {"article": "Section 3", "content": "标签预包装食品的通用标签要求"},
+        {"article": "Section 4", "content": "营养标签格式和营养素声明标准"},
+        {"article": "Section 5", "content": "健康宣称须基于科学证据，且不能暗示治疗或预防疾病"},
+        {"article": "Section 6", "content": "过敏原标注要求"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "食品名称/Name of food",
+    "成分表/List of ingredients (降序排列)",
+    "净含量/Net quantity",
+    "保质期/Date marking (use by / best before)",
+    "生产商/分销商名称和地址/Name and address of manufacturer or distributor",
+    "原产国/Country of origin",
+    "储存说明/Storage instructions",
+    "批次号/Batch number",
+    "营养标签/Nutrition information panel",
+    "过敏原标注/Allergen declaration",
+    "清真认证标注(如适用)/Halal logo (where applicable)"
+  ],
+  "required_certifications": [
+    "新加坡食品局注册/SFA Registration",
+    "泰国FDA注册编号/Thai FDA registration number (เลขสารบบอาหาร)",
+    "马来西亚卫生部注册/MOH Malaysia Registration",
+    "清真认证(如适用)/Halal certification (if applicable)",
+    "HACCP/ISO 22000食品安全管理体系/HACCP/ISO 22000 Food Safety Management"
+  ],
+  "market_specific_notes": {
+    "新加坡": "标签必须使用英文；营养标签格式需符合SFA指南",
+    "泰国": "标签必须使用泰文；特定食品需Thai FDA注册号；营养标签按GDA格式",
+    "马来西亚": "标签需使用马来文和/或英文；含猪肉产品必须标注；清真产品需JAKIM认证"
+  }
+}

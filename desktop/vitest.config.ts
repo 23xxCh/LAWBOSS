@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: ['./src/renderer/test-setup.ts'],
+    setupFiles: ['./test-setup.ts'],
     root: './src/renderer',
   },
   resolve: {

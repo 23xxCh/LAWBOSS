@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import { useAuth } from '../api/auth';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../contexts/ThemeContext';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const { Header, Content, Footer } = Layout;
@@ -23,6 +24,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const { user, isAdmin, clearAuth } = useAuth();
   const { t } = useTranslation();
+  const { isDark } = useTheme();
   const [appVersion, setAppVersion] = useState('');
 
   useEffect(() => {
@@ -75,7 +77,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
           selectedKeys={[selectedKey]}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
-          style={{ flex: 1 }}
+          style={{ flex: 1, minWidth: 0 }}
         />
         <div style={{ marginRight: 16 }}>
           <LanguageSwitcher />
@@ -97,7 +99,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
           </Space>
         </Dropdown>
       </Header>
-      <Content style={{ background: '#f5f5f5' }}>
+      <Content style={{ background: isDark ? '#141414' : '#f5f5f5' }}>
         {children}
       </Content>
       <Footer style={{ textAlign: 'center' }}>

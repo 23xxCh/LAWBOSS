@@ -33,17 +33,18 @@
   "devDependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^4.0.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
     "electron": "^35.2.1",
     "electron-builder": "^26.0.12",
     "electron-vite": "^5.0.0",
+    "jsdom": "^26.0.0",
     "typescript": "~6.0.2",
     "vite": "^7.0.0",
-    "vitest": "^3.1.0",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/jest-dom": "^6.6.0",
-    "jsdom": "^26.0.0"
+    "vitest": "^3.1.0"
   }
 }

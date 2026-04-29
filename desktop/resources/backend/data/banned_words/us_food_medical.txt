@@ -1,0 +1,148 @@
+# 美国食品健康宣称禁用词
+# 依据：FD&C Act 21 CFR 101 (食品标签法规) + FTC Act
+# 食品不得宣称治疗、预防、治愈疾病（即药品宣称）
+# 健康宣称需FDA批准或符合NLEA标准
+
+# 医疗治疗类（绝对禁止 - 使产品成为未批准药品）
+cure
+cures
+cured
+treat
+treats
+treatment
+treating
+heal
+heals
+healing
+healed
+prevent
+prevents
+prevention
+preventing
+remedy
+remedies
+medicine
+medication
+medicinal
+therapeutic
+therapy
+diagnose
+diagnosis
+prescription
+drug
+pharmaceutical
+
+# 减肥/体重管理类（FTC严格执法）
+dramatic weight loss
+rapid weight loss
+weight loss miracle
+lose weight fast
+fat burner
+fat burning
+stomach fat loss
+belly fat melt
+appetite suppressant
+metabolism booster
+calorie burner
+weight loss supplement
+skinny
+slimming pills
+抽脂
+减肥特效
+急速瘦身
+
+# 排毒类（FTC重点执法领域）
+detox
+detoxification
+detoxify
+body cleanse
+colon cleanse
+toxin cleanse
+full body detox
+parasite cleanse
+liver cleanse
+kidney cleanse
+blood cleanse
+ detox
+净化排毒
+清除毒素
+
+# 疾病治疗类（使产品成为药品）
+cancer
+cancer-fighting
+anti-cancer
+cancer prevention
+tumor
+anti-tumor
+diabetes cure
+blood sugar control
+diabetic
+heart disease
+cholesterol treatment
+blood pressure treatment
+hypertension
+cardiovascular disease
+arthritis
+joint pain relief
+inflammation reduction
+anti-inflammatory
+immune system
+boost immunity
+strengthen immune
+antibacterial
+antiviral
+antifungal
+抗癌
+抗肿瘤
+治疗糖尿病
+降血压
+抗炎
+增强免疫力
+
+# 临床宣称（需严格证据支持）
+clinically proven
+scientifically proven
+medically proven
+clinical studies show
+clinical trials prove
+FDA approved
+FDA approved treatment
+FDA cleared
+government approved
+doctor recommended
+physician recommended
+medical association
+hospital tested
+university studied
+临床证明
+FDA批准
+医生推荐
+
+# 夸大/虚假宣称
+miracle cure
+miracle treatment
+miraculous
+magic
+wonder drug
+breakthrough
+revolutionary
+secret formula
+ancient remedy
+guaranteed cure
+100% effective
+instant cure
+overnight results
+amazing results
+unbelievable results
+神奇
+奇迹
+特效
+万能
+
+# 药品替代暗示
+natural alternative
+alternative to medication
+代替药物
+替代药品
+纯天然治疗
+无需吃药

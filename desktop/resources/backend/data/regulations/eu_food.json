@@ -1,0 +1,82 @@
+{
+  "market": "EU",
+  "category": "食品",
+  "regulations": [
+    {
+      "id": "ec_1924_2006",
+      "name": "EC Regulation 1924/2006 营养与健康宣称法规",
+      "description": "规定食品营养与健康宣称的使用条件，禁止虚假或误导性宣称。健康宣称必须获得EFSA科学评估并列入欧盟许可清单。",
+      "key_articles": [
+        {"article": "第2条", "content": "定义：'健康宣称'指任何暗示食品与健康之间存在关联的宣称"},
+        {"article": "第5条", "content": "健康宣称需有公认的科学证据支持"},
+        {"article": "第10条", "content": "健康宣称必须经EFSA评估并列入欧盟许可清单后方可使用"},
+        {"article": "第12条", "content": "禁止声称食品能治疗、预防或治愈疾病"},
+        {"article": "第13条", "content": "一般功能宣称（如维生素A有助于视力健康）需符合第13条清单"},
+        {"article": "第14条", "content": "儿童健康宣称和降低疾病风险宣称需单独申请授权"},
+        {"article": "附件", "content": "营养宣称条件（如'低脂'、'高纤维'等定量标准）"}
+      ]
+    },
+    {
+      "id": "ec_1169_2011",
+      "name": "EU Regulation 1169/2011 食品信息提供法规(FIC)",
+      "description": "规定食品标签的统一要求，包括成分表、过敏原、营养标签、原产地等强制信息。",
+      "key_articles": [
+        {"article": "第9条", "content": "强制标签信息清单：名称、成分表、过敏原、净含量、保质期、储存条件、生产商、原产地、营养成分表、酒精含量等"},
+        {"article": "第21条", "content": "过敏原标注：14类过敏原必须在成分表中突出标示"},
+        {"article": "第30条", "content": "营养标签（自2016年12月13日起强制）：能量+脂肪+饱和脂肪+碳水化合物+糖+蛋白质+盐"},
+        {"article": "第36条", "content": "原产地标签：肉类（鲜/冷藏/冷冻）强制标注原产地"},
+        {"article": "第44条", "content": "字体大小：强制信息的最小字体为1.2mm（x-height）"}
+      ]
+    },
+    {
+      "id": "ec_1333_2008",
+      "name": "EU Regulation 1333/2008 食品添加剂法规",
+      "description": "欧盟食品添加剂许可使用清单和使用条件，规定添加剂不得误导消费者。",
+      "key_articles": [
+        {"article": "第4条", "content": "仅允许使用欧盟许可清单中的食品添加剂"},
+        {"article": "第6条", "content": "添加剂使用的通用条件：技术上合理、不误导消费者、不掩盖原料缺陷"},
+        {"article": "附件II", "content": "欧盟许可食品添加剂清单及最大使用量"},
+        {"article": "附件III", "content": "食品添加剂在食品酶和调味料中的使用条件"}
+      ]
+    },
+    {
+      "id": "ec_2015_2283",
+      "name": "EU Regulation 2015/2283 新型食品法规",
+      "description": "规定1997年5月15日前未在欧盟范围内大量消费的新型食品需经上市前授权和安全评估。",
+      "key_articles": [
+        {"article": "第3条", "content": "定义：新型食品指1997年5月15日前未在欧盟大量用于食品消费的食品"},
+        {"article": "第6条", "content": "新型食品上市前需经EFSA安全评估并获欧盟授权"},
+        {"article": "第10条", "content": "新型食品授权申请流程和文件要求"},
+        {"article": "第26条", "content": "传统食品来自第三国：需有安全使用历史证明"}
+      ]
+    },
+    {
+      "id": "ec_1881_2006",
+      "name": "EU Regulation 1881/2006 食品污染物限量",
+      "description": "规定食品中特定污染物的最高含量，包括重金属、霉菌毒素、加工污染物等。",
+      "key_articles": [
+        {"article": "第1条", "content": "适用范围：硝酸盐、黄曲霉毒素、赭曲霉毒素A、脱氧雪腐镰刀菌烯醇、玉米赤霉烯酮、伏马菌素、铅、镉、汞、锡、二噁英、PCB、多环芳烃、三聚氰胺等"},
+        {"article": "附件", "content": "各类食品中各污染物的最大限量值"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "食品名称/Name of the food",
+    "成分表/List of ingredients",
+    "过敏原标注/Allergen declaration (14类强制)",
+    "净含量/Net quantity",
+    "保质期/Date of minimum durability (Best before)",
+    "储存条件和食用说明/Storage conditions and instructions for use",
+    "生产商或进口商名称和地址/Name and address of manufacturer or importer",
+    "原产地/Country of origin (特定肉类强制)",
+    "营养成分表/Nutrition declaration (能量+7项强制)",
+    "酒精含量/Alcoholic strength (酒精含量>1.2%时强制)",
+    "批次号/Batch number"
+  ],
+  "required_certifications": [
+    "HACCP认证/Food safety management",
+    "有机认证(如宣称有机)/Organic certification (if claiming organic)",
+    "欧盟地理标志(如使用)/EU Geographical Indications (if applicable)",
+    "清真认证(如宣称清真)/Halal certification (if claiming halal)"
+  ]
+}

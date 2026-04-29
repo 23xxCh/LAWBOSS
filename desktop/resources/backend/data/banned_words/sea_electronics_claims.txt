@@ -1,0 +1,110 @@
+# SEA(新加坡/泰国/马来西亚)电子产品误导性宣称禁用词
+# 参考法规：
+#   Singapore: Consumer Protection (Fair Trading) Act + IMDA regulations
+#   Thailand: Consumer Protection Act B.E. 2522 + NBTC regulations
+#   Malaysia: Consumer Protection Act 1999 + MCMC regulations
+
+# 安全/辐射宣称
+radiation-free
+radiation safe
+no radiation
+zero radiation
+EMF free
+100% safe
+completely safe
+perfectly safe
+totally safe
+radiation protection
+radiation shield
+零辐射
+无辐射
+完全安全
+绝对安全
+100%安全
+安全无辐射
+
+# 认证/合规宣称
+IMDA approved
+IMDA certified
+SIRIM approved
+SIRIM certified
+NBTC approved
+NBTC certified
+fully certified
+government approved
+officially certified
+certified quality
+新加坡认证
+泰国认证
+马来西亚认证
+政府认证
+官方认证
+SIRIM认证
+IMDA认证
+
+# 夸张质量宣称
+military-grade
+military spec
+bombproof
+indestructible
+unbreakable
+waterproof (unspecified standard)
+perfect quality
+highest quality
+guaranteed quality
+superior quality
+军工级
+军规
+永不损坏
+防水（未标注等级）
+完美品质
+顶级品质
+
+# 性能夸大
+100% accurate
+perfect accuracy
+zero error
+never fails
+best in class
+world's best
+industry leading
+guaranteed performance
+revolutionary
+breakthrough
+最精准
+零误差
+性能最佳
+行业领先
+世界第一
+
+# 兼容性宣称
+perfect compatibility
+compatible with all devices
+works with everything
+universal compatibility
+完全兼容
+全兼容
+所有设备兼容
+
+# 环保/绿色宣称（Greenwashing）
+100% eco-friendly
+100% green
+completely sustainable
+carbon neutral
+fully recyclable
+biodegradable
+environmentally friendly
+绿色环保
+100%环保
+完全可回收
+可生物降解
+
+# 来源误导
+原装进口
+进口品质
+德国技术
+日本技术
+美国技术
+新加坡制造
+泰国制造
+马来西亚制造

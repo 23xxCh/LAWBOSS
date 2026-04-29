@@ -1,0 +1,92 @@
+{
+  "market": "SEA",
+  "category": "膳食补充剂",
+  "regulations": [
+    {
+      "id": "sg_hsa_health_supplements",
+      "name": "Singapore HSA 健康补充剂指南",
+      "description": "新加坡卫生科学局(HSA)将补充剂作为'健康补充剂'监管。产品不得宣称治疗或预防疾病，标签和广告须经HSA审查。",
+      "key_articles": [
+        {"article": "HSA Guideline 2.1", "content": "健康补充剂定义：口服产品，补充日常饮食，含维生素、矿物质、氨基酸等"},
+        {"article": "HSA Guideline 3.0", "content": "禁止的治疗宣称：产品不得声称预防、治疗或治愈任何疾病"},
+        {"article": "HSA Guideline 4.0", "content": "允许的结构/功能宣称需有科学证据支持，不得误导消费者"},
+        {"article": "HSA Guideline 5.0", "content": "标签要求：产品名称、成分表（定量）、建议用量、保质期、警告、生产商信息"},
+        {"article": "HSA Guideline 6.0", "content": "广告限制：不得针对18岁以下儿童做补充剂广告"},
+        {"article": "HSA Guideline 7.0", "content": "不良事件报告要求：生产商必须建立投诉和不良事件监控系统"}
+      ]
+    },
+    {
+      "id": "th_fda_supplement",
+      "name": "Thailand Thai FDA 膳食补充剂法规",
+      "description": "泰国FDA将膳食补充剂列为'食品'类别下的特殊监管产品，需获得产品注册号（เลขสารบบอาหาร）。标签和使用说明须使用泰文。",
+      "key_articles": [
+        {"article": "Notification 368", "content": "膳食补充剂定义和分类标准"},
+        {"article": "Notification 369", "content": "补充剂标签要求：泰文强制，涵盖成分表、营养信息、警告、生产商"},
+        {"article": "Notification 370", "content": "允许的健康宣称类别和限制"},
+        {"article": "Notification 371", "content": "广告监管：禁止虚假、夸大或误导性广告"},
+        {"article": "Section 42", "content": "食品广告需事先获得Thai FDA批准（含补充剂广告）"}
+      ],
+      "market_specific_notes": [
+        "补充剂需标注食品序列号（เลขสารบบอาหาร 或 อย.）",
+        "标签主要语言为泰文",
+        "维生素/矿物质补充剂有每日最高限量"
+      ]
+    },
+    {
+      "id": "my_npra_supplement",
+      "name": "Malaysia NPRA 健康补充剂产品注册指南",
+      "description": "马来西亚国家药品监管局(NPRA)要求健康补充剂注册，并区分传统药物和补充剂。产品须获NPRA批准号方可上市。",
+      "key_articles": [
+        {"article": "Reg 18A", "content": "补充剂的注册类别和分类标准"},
+        {"article": "Reg 18B", "content": "标签要求：产品名称、注册号(NPRA编号MALXXXXXXXXX)、成分表、建议用量、警告"},
+        {"article": "Reg 18C", "content": "允许的宣称范围：与新加坡/HSA类似的限制"},
+        {"article": "Reg 18D", "content": "禁止的治疗宣称和误导性广告"},
+        {"article": "Reg 29", "content": "广告要求：健康补充剂广告须经药品广告委员会(MedAd)批准"}
+      ],
+      "market_specific_notes": [
+        "注册号格式：MALXXXXXXXXX (如MAL20061234X)",
+        "标签须使用马来文和英文",
+        "清真认证对于穆斯林消费市场几乎强制",
+        "含传统草药成分者注册路径不同"
+      ]
+    },
+    {
+      "id": "asean_traditional_medicine",
+      "name": "ASEAN传统药物和健康补充剂协调标准",
+      "description": "东盟传统药物和健康补充剂的统一技术标准和注册要求，旨在促进区域贸易同时确保产品质量和安全。",
+      "key_articles": [
+        {"article": "Section 2", "content": "定义：传统药物 vs. 健康补充剂 vs. 功能性食品的区分标准"},
+        {"article": "Section 5", "content": "产品注册的通用技术要求（稳定性和安全性）"},
+        {"article": "Section 8", "content": "标签要求统一标准"},
+        {"article": "Section 10", "content": "宣称类型和限制的统一标准"}
+      ]
+    }
+  ],
+  "required_labels": [
+    "产品名称/Product name (英文及当地语言)",
+    "产品注册号/Registration number (HSA/NPRA/Thai FDA编号)",
+    "成分表/List of ingredients (活性成分及含量、非活性成分)",
+    "建议用法/Directions for use (建议每日服用量和服用方式)",
+    "净含量/Net quantity (重量/体积/粒数)",
+    "保质期/Expiry date",
+    "储存条件/Storage conditions",
+    "生产商/进口商名称和地址/Manufacturer/importer name and address",
+    "警告和注意事项/Warnings and precautions",
+    "孕妇/哺乳期/儿童警告/Pregnancy, lactation and children warnings",
+    "免责声明/Disclaimer（如适用）",
+    "清真认证(马来西亚)/Halal certification (Malaysia mandatory for Muslim market)"
+  ],
+  "required_certifications": [
+    "新加坡HSA产品通知/Singapore HSA Product Notification",
+    "泰国FDA产品注册编号/Thai FDA product registration number (เลขสารบบอาหาร)",
+    "马来西亚NPRA产品注册/Malaysia NPRA Product Registration (MAL编号)",
+    "cGMP合规/cGMP Compliance (ASEAN GMP标准)",
+    "清真认证(适用于马来西亚市场)/Halal certification (JAKIM for Malaysia)",
+    "稳定性测试报告/Stability testing report"
+  ],
+  "market_specific_notes": {
+    "新加坡": "产品需向HSA通报；不做直接注册但需合规；标签和广告受HSA审查",
+    "泰国": "需获Thai FDA注册号(อย.)；标签主要使用泰文；广告预先审批制",
+    "马来西亚": "需NPRA注册(MAL号)；标签用马来文和英文；清真认证市场要求"
+  }
+}

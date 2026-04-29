@@ -50,3 +50,79 @@ class BatchCheckResponse(BaseModel):
     high_risk_count: int = Field(default=0, description="高风险数量")
     medium_risk_count: int = Field(default=0, description="中风险数量")
     low_risk_count: int = Field(default=0, description="低风险数量")
+
+
+class ComparisonResult(BaseModel):
+    """单一模式的检测结果（用于对比模式）"""
+    risk_score: int
+    risk_level: str
+    risk_description: str
+    violations: List[ViolationItem] = Field(default_factory=list)
+    violation_count: int = 0
+    compliant_version: str = ""
+
+
+class ComparisonCheckResponse(BaseModel):
+    """对比模式检测响应"""
+    report_id: str = Field(default="", description="保存的报告ID")
+    description: str = ""
+    market: str
+    category: str
+    keyword_result: ComparisonResult
+    ai_result: Optional[ComparisonResult] = None
+    hybrid_result: ComparisonResult
+    required_labels: List[str] = Field(default_factory=list)
+    required_certifications: List[str] = Field(default_factory=list)
+    suggestions: List[str] = Field(default_factory=list)
+
+
+class MultiMarketResult(BaseModel):
+    """单个市场的检测结果（用于跨市场对比）"""
+    market: str
+    market_name: str = ""
+    risk_score: int
+    risk_level: str
+    risk_description: str
+    violations: List[ViolationItem] = Field(default_factory=list)
+    violation_count: int = 0
+    compliant_version: str = ""
+    required_labels: List[str] = Field(default_factory=list)
+    required_certifications: List[str] = Field(default_factory=list)
+    suggestions: List[str] = Field(default_factory=list)
+
+
+class MultiMarketCheckResponse(BaseModel):
+    """跨市场对比检测响应"""
+    description: str = ""
+    category: str
+    results: List[MultiMarketResult] = Field(default_factory=list)
+    best_market: str = ""
+    worst_market: str = ""
+
+
+class LLMComparisonResult(BaseModel):
+    """单个 LLM 的检测结果（用于多 LLM 对比）"""
+    provider: str
+    provider_name: str = ""
+    model: str
+    risk_score: int
+    risk_level: str
+    violations: List[ViolationItem] = Field(default_factory=list)
+    violation_count: int = 0
+    latency_ms: Optional[int] = None
+
+
+class LLMComparisonRequest(BaseModel):
+    """多 LLM 对比请求"""
+    description: str = Field(..., min_length=1, max_length=10000)
+    category: str = Field(...)
+    market: str = Field(default="EU")
+    providers: List[str] = Field(default_factory=lambda: ["openai", "deepseek"], description="要对比的提供商列表")
+
+
+class LLMComparisonResponse(BaseModel):
+    """多 LLM 对比响应"""
+    description: str = ""
+    category: str
+    market: str
+    results: List[LLMComparisonResult] = Field(default_factory=list)

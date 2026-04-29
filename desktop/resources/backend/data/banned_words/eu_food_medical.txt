@@ -1,0 +1,115 @@
+# 欧盟食品健康宣称禁用词
+# 依据：EC Regulation 1924/2006 营养与健康宣称法规
+# 食品不得宣称具有治疗、预防疾病的功能
+# 健康宣称必须经EFSA批准并列入许可清单
+
+# 医疗治疗类（绝对禁止）
+cure
+cures
+cured
+treat
+treats
+treatment
+treating
+heal
+heals
+healing
+healed
+prevent
+prevents
+prevention
+preventing
+remedy
+remedies
+medicine
+medication
+medicinal
+therapeutic
+therapy
+diagnose
+diagnosis
+prescription
+drug
+
+# 减肥/体重管理类（严格限制）
+slimming
+weight loss
+lose weight
+fat burner
+fat burning
+calorie burner
+appetite suppressant
+anti-obesity
+waist slimming
+body shaping
+快速减肥
+瘦身
+燃脂
+
+# 排毒类（未经EFSA批准不得宣称）
+detox
+detoxification
+detoxify
+ cleansing
+body cleanse
+colon cleanse
+purify
+purity
+排毒
+净化
+
+# 抗衰老（食品不可宣称）
+anti-aging
+antiageing
+reverse aging
+age reversal
+fountain of youth
+抗衰老
+延缓衰老
+
+# 疾病相关（绝对禁止）
+disease
+illness
+sickness
+infection
+cancer-fighting
+anti-cancer
+cancer prevention
+heart disease
+cholesterol-lowering
+blood sugar lowering
+diabetes
+blood pressure lowering
+cardiovascular
+immune-boosting
+immunity
+strengthen immunity
+抗菌
+抗癌
+抗肿瘤
+降血压
+降血糖
+
+# 夸大效果（违反Regulation 1924/2006第3条）
+clinically proven
+scientifically proven
+medically proven
+100% effective
+guaranteed results
+miraculous
+miracle
+magic
+wonder
+instant results
+临床证明
+医学证明
+科学证明
+神奇
+神效
+
+# 禁止暗示药品替代功能
+alternative to medicine
+drug alternative
+代替药物
+替代药品
+无需吃药

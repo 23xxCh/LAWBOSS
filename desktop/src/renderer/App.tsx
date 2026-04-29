@@ -1,6 +1,5 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/locale/zh_CN';
+import { ThemeProvider } from './contexts/ThemeContext';
 import MainLayout from './components/MainLayout';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoginPage from './pages/LoginPage';
@@ -13,8 +12,8 @@ import ReportDetailPage from './pages/ReportDetailPage';
 import RulesPage from './pages/RulesPage';
 import DashboardPage from './pages/DashboardPage';
 import PreferencesPage from './pages/PreferencesPage';
+import CompetitorsPage from './pages/CompetitorsPage';
 import { useAuth } from './api/auth';
-import { Spin } from 'antd';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isLoggedIn } = useAuth();
@@ -26,7 +25,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <ConfigProvider locale={zhCN}>
+    <ThemeProvider>
       <ErrorBoundary>
         <HashRouter>
         <Routes>
@@ -40,10 +39,11 @@ function App() {
           <Route path="/rules" element={<ProtectedRoute><MainLayout><ErrorBoundary><RulesPage /></ErrorBoundary></MainLayout></ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute><MainLayout><ErrorBoundary><DashboardPage /></ErrorBoundary></MainLayout></ProtectedRoute>} />
           <Route path="/preferences" element={<ProtectedRoute><MainLayout><ErrorBoundary><PreferencesPage /></ErrorBoundary></MainLayout></ProtectedRoute>} />
+          <Route path="/competitors" element={<ProtectedRoute><MainLayout><ErrorBoundary><CompetitorsPage /></ErrorBoundary></MainLayout></ProtectedRoute>} />
         </Routes>
       </HashRouter>
       </ErrorBoundary>
-    </ConfigProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,0 +1,153 @@
+# SEA(新加坡/泰国/马来西亚)食品健康宣称禁用词
+# 参考法规：
+#   Singapore: Sale of Food Act + Food Regulations (Health Claims)
+#   Thailand: Food Act B.E. 2522 + Ministry of Public Health notifications
+#   Malaysia: Food Act 1983 + Food Regulations 1985
+
+# 医疗治疗类（All SEA markets fully禁止）
+cure
+cures
+cured
+treat
+treats
+treatment
+treating
+heal
+heals
+healing
+healed
+prevent
+prevents
+prevention
+preventing
+remedy
+remedies
+medicine
+medication
+medicinal
+therapeutic
+therapy
+diagnose
+diagnosis
+prescription
+drug
+治疗
+治愈
+医治
+预防
+防止
+药物
+药品
+疗效
+药效
+医疗
+医学
+处方
+诊断
+
+# 减肥/瘦身类（需科学证据，不可随意宣称）
+slimming
+weight loss
+lose weight
+fat burner
+fat burning
+calorie burner
+appetite suppressant
+anti-obesity
+body slimming
+waist reduction
+belly fat
+快速减肥
+瘦身
+减肥
+燃脂
+消脂
+瘦腰
+减肚子
+纤体
+
+# 排毒类（需批准）
+detox
+detoxification
+detoxify
+body cleanse
+colon cleanse
+全身排毒
+清肠排毒
+净化排毒
+
+# 疾病相关（绝对禁止）
+disease
+illness
+sickness
+infection
+cancer
+anti-cancer
+cancer-fighting
+tumor
+diabetes
+blood sugar
+cholesterol lowering
+blood pressure
+hypertension
+heart disease
+cardiovascular
+immune boosting
+immunity
+antibacterial
+antiviral
+antifungal
+糖尿病
+高血压
+高血糖
+高血脂
+胆固醇
+抗癌
+抗肿瘤
+抗病毒
+抗菌
+消炎
+增强免疫力
+提高免疫力
+
+# 夸大宣传
+miracle
+miraculous
+magic
+wonder
+magical
+instant
+100% effective
+guaranteed
+clinically proven
+神奇
+神效
+奇效
+特效
+立竿见影
+立即见效
+百分百有效
+100%有效
+
+# 药品替代暗示
+alternative to medicine
+herbal cure
+traditional cure
+代替药物
+替代药品
+中药治疗
+草药治疗
+纯天然治疗
+无须吃药
+
+# 宗教/文化敏感词（SEA特定）
+halal
+清真
+pork free
+无猪肉
+lard free
+无猪油
+vegetarian
+素食
+vegan
+纯素

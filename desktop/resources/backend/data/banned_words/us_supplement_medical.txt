@@ -1,0 +1,231 @@
+# 美国膳食补充剂医疗宣称禁用词
+# 依据：DSHEA 1994 (膳食补充剂健康与教育法案)
+#        21 CFR 101 (食品标签 - 补充剂规定)
+#        21 CFR 111 (cGMP for 膳食补充剂)
+#        FTC Act (广告监管)
+# 补充剂不得宣称治疗、诊断、预防、治愈疾病
+# 允许结构/功能宣称(需免责声明)，禁止药品宣称
+
+# 绝对禁止 - 疾病治疗宣称（使产品成为未批准药品）
+cure
+cures
+cured
+curing
+treat
+treats
+treatment
+treating
+heal
+heals
+healing
+healed
+prevent
+prevents
+prevention
+preventing
+remedy
+remedies
+medicine
+medication
+medicinal
+therapeutic
+therapy
+diagnose
+diagnosis
+prescription
+drug
+pharmaceutical
+vaccine
+vaccination
+immunization
+
+# 禁止 - 具体疾病宣称
+cancer
+cancer-fighting
+anti-cancer
+cancer prevention
+tumor
+anti-tumor
+diabetes
+diabetic
+blood sugar disease
+heart disease
+cardiovascular disease
+hypertension
+blood pressure treatment
+cholesterol treatment
+arteriosclerosis
+stroke
+heart attack
+coronary
+alzheimer
+dementia
+parkinson
+osteoporosis treatment
+arthritis treatment
+joint disease
+thyroid disease
+liver disease
+kidney disease
+lung disease
+COPD
+asthma
+allergy treatment
+autoimmune disease
+multiple sclerosis
+fibromyalgia
+chronic fatigue
+ADHD
+depression treatment
+anxiety disorder
+bipolar
+schizophrenia
+PTSD
+insomnia treatment
+infection
+bacterial infection
+viral infection
+fungal infection
+HIV
+AIDS
+STD
+hepatitis
+herpes
+shingles
+urinary tract infection
+prostate disease
+ED treatment
+erectile dysfunction
+fertility treatment
+
+# 禁止 - 临床试验/批准暗示
+FDA approved
+FDA approved treatment
+FDA cleared
+FDA registered (for disease treatment)
+FDA certified
+government approved
+clinically proven (disease context)
+clinical trials prove
+clinical studies show (disease context)
+FDA reviewed
+FDA endorsed
+officially approved
+
+# 禁止 - 药品替代暗示
+alternative to medication
+alternative to prescription
+natural alternative to [drug]
+代替药物
+替代药品
+替代处方药
+natural cure
+herbal cure
+botanical cure
+替代药物
+无需吃药
+不吃药
+
+# 严重警告 - 禁止在OTC药品领域使用
+pain relief
+pain reliever
+pain killer
+headache relief
+migraine relief
+joint pain relief
+muscle pain relief
+back pain relief
+nerve pain relief
+inflammation relief
+anti-inflammatory
+fever reducer
+antipyretic
+cough suppressant
+cold remedy
+flu remedy
+ allergy relief
+sinus relief
+congestion relief
+sore throat relief
+antacid
+heartburn relief
+indigestion treatment
+nausea relief
+motion sickness
+diarrhea treatment
+constipation relief
+hemorrhoid treatment
+sleep aid
+sleeping pill
+sedative
+tranquilizer
+stimulant
+amphetamine
+止痛
+镇痛
+消炎
+退烧
+止咳
+感冒药
+安眠
+助眠
+兴奋剂
+
+# 夸大宣称
+miracle cure
+miracle supplement
+miraculous
+magic pill
+wonder drug
+breakthrough
+revolutionary
+secret formula
+ancient remedy
+guaranteed cure
+100% effective
+instant results
+overnight results
+life changing
+miracle cure
+神奇
+奇迹
+万能
+特效
+神效
+立竿见影
+立即见效
+药到病除
+根治
+
+# 禁止宣称体重减轻（除非有FDA批准的结构/功能宣称）
+weight loss supplement
+fat burner
+fat burning
+rapid weight loss
+dramatic weight loss
+lose weight fast
+weight loss miracle
+belly fat burner
+stomach fat loss
+appetite suppressant
+metabolism booster
+calorie burner
+slimming
+slimming pill
+瘦身
+减肥
+燃脂
+快速减肥
+急速瘦身
+
+# 运动员/兴奋剂暗示
+steroid alternative
+legal steroid
+testosterone booster (male enhancement)
+muscle building steroid
+HGH
+human growth hormone
+growth hormone releaser
+睾酮
+类固醇替代
+肌肉生长

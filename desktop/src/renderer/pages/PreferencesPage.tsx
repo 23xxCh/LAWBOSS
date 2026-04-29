@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Card, Input, Button, Space, Typography, Tag, Divider, message, Select, Popconfirm, Spin } from 'antd';
-import { CheckCircleOutlined, CloseCircleOutlined, ApiOutlined, RobotOutlined, KeyOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Card, Input, Button, Space, Typography, Tag, Divider, message, Select, Popconfirm, Spin, Switch } from 'antd';
+import { CheckCircleOutlined, CloseCircleOutlined, ApiOutlined, RobotOutlined, KeyOutlined, DeleteOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { updateBaseURL } from '../api/client';
 import { getLLMProviders, getLLMConfig, saveLLMConfig, deleteLLMConfig, testLLMConnection, type LLMProviderInfo } from '../api';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import { useTheme } from '../contexts/ThemeContext';
 
 const { Text, Title } = Typography;
 
 export default function PreferencesPage() {
   const { t } = useTranslation();
+  const { isDark, toggleTheme } = useTheme();
   const [apiUrl, setApiUrl] = useState(() => localStorage.getItem('crossguard_api_base') || 'http://127.0.0.1:8000');
   const [pingLoading, setPingLoading] = useState(false);
   const [pingResult, setPingResult] = useState<'success' | 'error' | null>(null);
@@ -257,9 +259,21 @@ export default function PreferencesPage() {
       </Card>
 
       <Card title="主题" style={{ marginBottom: 16 }}>
-        <Text>当前模式：亮色模式</Text>
-        <br />
-        <Text type="secondary" style={{ fontSize: 12 }}>深色模式将在后续版本支持。</Text>
+        <Space orientation="vertical" style={{ width: '100%' }} size="middle">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Space>
+              {isDark ? <MoonOutlined style={{ fontSize: 18 }} /> : <SunOutlined style={{ fontSize: 18 }} />}
+              <Text>{isDark ? '深色模式' : '亮色模式'}</Text>
+            </Space>
+            <Switch
+              checked={isDark}
+              onChange={toggleTheme}
+              checkedChildren={<MoonOutlined />}
+              unCheckedChildren={<SunOutlined />}
+            />
+          </div>
+          <Text type="secondary" style={{ fontSize: 12 }}>切换应用主题，更改后立即生效。</Text>
+        </Space>
       </Card>
 
       <Card title="关于" style={{ marginBottom: 16 }}>

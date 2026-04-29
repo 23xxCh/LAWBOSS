@@ -1,0 +1,199 @@
+# SEA(新加坡/泰国/马来西亚)膳食补充剂医疗宣称禁用词
+# 参考法规：
+#   Singapore: Health Products Act + Health Supplements Guidelines (HSA)
+#   Thailand: Food Act B.E. 2522 + Ministry of Public Health (补充剂监管)
+#   Malaysia: Control of Drugs and Cosmetics Regulations 1984 + NPRA
+#
+# 补充剂不得宣称治疗、诊断、预防、治愈疾病
+# 结构/功能宣称需有科学证据支持
+
+# 疾病治疗类（All SEA markets绝对禁止）
+cure
+cures
+cured
+curing
+treat
+treats
+treatment
+treating
+heal
+heals
+healing
+healed
+prevent
+prevents
+prevention
+preventing
+remedy
+remedies
+medicine
+medication
+medicinal
+therapeutic
+therapy
+diagnose
+diagnosis
+prescription
+drug
+pharmaceutical
+治疗
+治愈
+医治
+预防
+防止
+药物
+药品
+疗效
+药效
+医疗
+医学
+处方
+诊断
+疗法
+
+# 具体疾病宣称（绝对禁止）
+cancer
+cancer-fighting
+anti-cancer
+tumor
+anti-tumor
+diabetes
+diabetic
+hypertension
+blood pressure
+heart disease
+cardiovascular
+cholesterol
+stroke
+alzheimer
+dementia
+arthritis
+osteoporosis
+asthma
+allergy
+infection
+HIV
+hepatitis
+kidney disease
+liver disease
+thyroid
+糖尿病
+高血压
+高血脂
+高血糖
+胆固醇
+抗癌
+抗肿瘤
+心脏病
+中风
+老年痴呆
+关节炎
+骨质疏松
+哮喘
+过敏
+肝炎
+肾病
+肝病
+甲状腺
+
+# 减肥/瘦身类（需经批准的功能宣称）
+weight loss
+slimming
+fat burner
+fat burning
+lose weight
+weight reduction
+belly fat
+body slimming
+appetite suppressant
+calorie burner
+瘦身
+减肥
+减重
+燃脂
+消脂
+瘦腰
+减肚子
+纤体
+急速瘦身
+
+# 排毒类（补充剂不可宣称）
+detox
+detoxification
+detoxify
+body cleanse
+colon cleanse
+liver cleanse
+blood cleanse
+排毒
+清肠排毒
+净化排毒
+肝脏排毒
+
+# 批准/认证暗示
+FDA approved
+HSA approved
+NPRA approved
+Ministry of Health approved
+government approved
+clinically proven
+scientifically proven
+hospital tested
+doctor recommended
+officially approved
+certified treatment
+FDA批准
+卫生部批准
+HSA批准
+临床证明
+医生推荐
+医院验证
+
+# 药品替代暗示
+alternative to medicine
+natural cure
+herbal cure
+traditional cure
+代替药物
+替代药品
+中药治疗
+草药治疗
+天然治疗
+纯天然疗法
+无须吃药
+代替西药
+
+# 夸大效果
+miracle
+miraculous
+magic
+wonder
+magical
+instant
+instant results
+overnight results
+100% effective
+guaranteed
+breakthrough
+revolutionary
+神奇
+神效
+奇效
+特效
+万能
+立竿见影
+立即见效
+100%有效
+百分百有效
+药到病除
+根治
+
+# 宗教/文化敏感补充剂宣称（SEA特定）
+halal certified
+halal supplement
+清真认证
+清真
+pork gelatin free
+无猪明胶
+non-halal
+非清真

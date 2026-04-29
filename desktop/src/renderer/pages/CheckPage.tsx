@@ -16,6 +16,8 @@ import {
   Upload,
   Tabs,
   Tooltip,
+  Row,
+  Col,
 } from 'antd';
 import {
   SearchOutlined,
@@ -34,9 +36,13 @@ import {
   checkImage,
   getMarkets,
   submitFeedback,
+  checkComparison,
+  checkMultiMarket,
   type CheckResponse,
   type ViolationItem,
   type MarketResponse,
+  type ComparisonCheckResponse,
+  type MultiMarketCheckResponse,
 } from '../api';
 import { addCachedResult } from '../utils/cache';
 
@@ -220,6 +226,10 @@ export default function CheckPage() {
   const [result, setResult] = useState<CheckResponse | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [comparisonResult, setComparisonResult] = useState<ComparisonCheckResponse | null>(null);
+  const [comparisonLoading, setComparisonLoading] = useState(false);
+  const [multiMarketResult, setMultiMarketResult] = useState<MultiMarketCheckResponse | null>(null);
+  const [multiMarketLoading, setMultiMarketLoading] = useState(false);
 
   useEffect(() => {
     getMarkets().then((data) => {
@@ -239,6 +249,7 @@ export default function CheckPage() {
   const handleCheck = async () => {
     if (!description.trim()) return;
     setLoading(true);
+    setComparisonResult(null);
     try {
       const res = await checkCompliance({ description, category, market });
       setResult(res);
@@ -259,6 +270,34 @@ export default function CheckPage() {
       setResult(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleComparison = async () => {
+    if (!description.trim()) return;
+    setComparisonLoading(true);
+    setResult(null);
+    try {
+      const res = await checkComparison({ description, category, market });
+      setComparisonResult(res);
+    } catch {
+      setComparisonResult(null);
+    } finally {
+      setComparisonLoading(false);
+    }
+  };
+
+  const handleMultiMarket = async () => {
+    if (!description.trim()) return;
+    setMultiMarketLoading(true);
+    setMultiMarketResult(null);
+    try {
+      const res = await checkMultiMarket({ description, category, market });
+      setMultiMarketResult(res);
+    } catch {
+      message.error('跨市场对比请求失败');
+    } finally {
+      setMultiMarketLoading(false);
     }
   };
 
@@ -491,6 +530,25 @@ export default function CheckPage() {
                   >
                     开始检测
                   </Button>
+                  <Space style={{ marginTop: 8 }}>
+                    <Button
+                      icon={<RobotOutlined />}
+                      loading={comparisonLoading}
+                      onClick={handleComparison}
+                      disabled={!description.trim()}
+                    >
+                      对比演示模式
+                    </Button>
+                    <Button
+                      icon={<SearchOutlined />}
+                      loading={multiMarketLoading}
+                      onClick={handleMultiMarket}
+                      disabled={!description.trim()}
+                    >
+                      跨市场对比
+                    </Button>
+                    <Text type="secondary" style={{ fontSize: 12 }}>对比关键词规则 / AI 语义 / 混合引擎的检测结果</Text>
+                  </Space>
                 </Space>
               ),
             },
@@ -545,6 +603,164 @@ export default function CheckPage() {
       )}
 
       {resultSection}
+
+      {/* 对比模式结果 */}
+      {comparisonResult && !loading && !comparisonLoading && (
+        <Card
+          title={<Space><RobotOutlined /> 对比演示模式</Space>}
+          style={{ marginTop: 16 }}
+          extra={
+            <Tag color="purple">Compare: 关键词规则 vs AI 语义 vs 混合引擎</Tag>
+          }
+        >
+          <Row gutter={16}>
+            <Col span={8}>
+              <Card
+                type="inner"
+                title="关键词规则"
+                size="small"
+                extra={<Tag>{comparisonResult.keyword_result.violation_count} 项</Tag>}
+              >
+                <div style={{ textAlign: 'center', marginBottom: 12 }}>
+                  <Progress
+                    type="dashboard"
+                    percent={comparisonResult.keyword_result.risk_score}
+                    size={80}
+                    strokeColor={comparisonResult.keyword_result.risk_score >= 70 ? '#ff4d4f' : comparisonResult.keyword_result.risk_score >= 40 ? '#faad14' : '#52c41a'}
+                    format={(p) => <span style={{ fontSize: 16 }}>{p}</span>}
+                  />
+                  <div><Tag color={comparisonResult.keyword_result.risk_level === '高风险' ? 'red' : comparisonResult.keyword_result.risk_level === '中风险' ? 'orange' : 'green'}>{comparisonResult.keyword_result.risk_level}</Tag></div>
+                </div>
+                {comparisonResult.keyword_result.violations.map((v, i) => (
+                  <div key={i} style={{ fontSize: 12, padding: '4px 0', borderBottom: '1px solid #f0f0f0' }}>
+                    <Tag color={v.severity === 'high' ? 'red' : v.severity === 'medium' ? 'orange' : 'blue'} style={{ fontSize: 10 }}>{v.type_label}</Tag>
+                    <Text style={{ fontSize: 12 }}>{v.content}</Text>
+                  </div>
+                ))}
+                {comparisonResult.keyword_result.violation_count === 0 && (
+                  <Text type="secondary" style={{ fontSize: 12 }}>未检测到违规</Text>
+                )}
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card
+                type="inner"
+                title="AI 语义检测"
+                size="small"
+                extra={comparisonResult.ai_result ? <Tag>{comparisonResult.ai_result.violation_count} 项</Tag> : <Tag color="default">未启用</Tag>}
+              >
+                {comparisonResult.ai_result ? (
+                  <>
+                    <div style={{ textAlign: 'center', marginBottom: 12 }}>
+                      <Progress
+                        type="dashboard"
+                        percent={comparisonResult.ai_result.risk_score}
+                        size={80}
+                        strokeColor={comparisonResult.ai_result.risk_score >= 70 ? '#ff4d4f' : comparisonResult.ai_result.risk_score >= 40 ? '#faad14' : '#52c41a'}
+                        format={(p) => <span style={{ fontSize: 16 }}>{p}</span>}
+                      />
+                      <div><Tag color={comparisonResult.ai_result.risk_level === '高风险' ? 'red' : comparisonResult.ai_result.risk_level === '中风险' ? 'orange' : 'green'}>{comparisonResult.ai_result.risk_level}</Tag></div>
+                    </div>
+                    {comparisonResult.ai_result.violations.map((v, i) => (
+                      <div key={i} style={{ fontSize: 12, padding: '4px 0', borderBottom: '1px solid #f0f0f0' }}>
+                        <Tag color={v.severity === 'high' ? 'red' : v.severity === 'medium' ? 'orange' : 'blue'} style={{ fontSize: 10 }}>{v.type_label}</Tag>
+                        <Text style={{ fontSize: 12 }}>{v.content}</Text>
+                      </div>
+                    ))}
+                    {comparisonResult.ai_result.violation_count === 0 && (
+                      <Text type="secondary" style={{ fontSize: 12 }}>AI 未检测到额外违规</Text>
+                    )}
+                  </>
+                ) : (
+                  <div style={{ textAlign: 'center', padding: 20 }}>
+                    <RobotOutlined style={{ fontSize: 32, color: '#d9d9d9' }} />
+                    <br />
+                    <Text type="secondary">请在设置中配置 AI 模型以启用语义检测</Text>
+                  </div>
+                )}
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card
+                type="inner"
+                title="混合引擎 (关键词+AI)"
+                size="small"
+                extra={<Tag color="blue">{comparisonResult.hybrid_result.violation_count} 项</Tag>}
+              >
+                <div style={{ textAlign: 'center', marginBottom: 12 }}>
+                  <Progress
+                    type="dashboard"
+                    percent={comparisonResult.hybrid_result.risk_score}
+                    size={80}
+                    strokeColor={comparisonResult.hybrid_result.risk_score >= 70 ? '#ff4d4f' : comparisonResult.hybrid_result.risk_score >= 40 ? '#faad14' : '#52c41a'}
+                    format={(p) => <span style={{ fontSize: 16 }}>{p}</span>}
+                  />
+                  <div><Tag color={comparisonResult.hybrid_result.risk_level === '高风险' ? 'red' : comparisonResult.hybrid_result.risk_level === '中风险' ? 'orange' : 'green'}>{comparisonResult.hybrid_result.risk_level}</Tag></div>
+                </div>
+                {comparisonResult.hybrid_result.violations.map((v, i) => (
+                  <div key={i} style={{ fontSize: 12, padding: '4px 0', borderBottom: '1px solid #f0f0f0' }}>
+                    <Tag color={v.severity === 'high' ? 'red' : v.severity === 'medium' ? 'orange' : 'blue'} style={{ fontSize: 10 }}>{v.type_label}</Tag>
+                    <Text style={{ fontSize: 12 }}>{v.content}</Text>
+                  </div>
+                ))}
+                {comparisonResult.hybrid_result.violation_count === 0 && (
+                  <Text type="secondary" style={{ fontSize: 12 }}>未检测到违规</Text>
+                )}
+              </Card>
+            </Col>
+          </Row>
+        </Card>
+      )}
+
+      {/* 跨市场对比结果 */}
+      {multiMarketResult && !multiMarketLoading && (
+        <Card
+          title={<Space><WarningOutlined /> 跨市场对比结果</Space>}
+          style={{ marginTop: 16 }}
+          extra={
+            <Space>
+              <Tag color="green">最佳市场: {multiMarketResult.best_market}</Tag>
+              <Tag color="red">最差市场: {multiMarketResult.worst_market}</Tag>
+            </Space>
+          }
+        >
+          <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            {multiMarketResult.results.map((mr) => (
+              <Card
+                key={mr.market}
+                size="small"
+                type="inner"
+                title={
+                  <Space>
+                    <Text strong>{mr.market_name} ({mr.market})</Text>
+                    <Tag color={mr.risk_score >= 70 ? 'red' : mr.risk_score >= 40 ? 'orange' : 'green'}>
+                      风险 {mr.risk_score} 分 - {mr.risk_level}
+                    </Tag>
+                  </Space>
+                }
+              >
+                {mr.violations.length > 0 ? (
+                  <List
+                    size="small"
+                    dataSource={mr.violations}
+                    renderItem={(v) => (
+                      <List.Item>
+                        <Space>
+                          <Tag color={severityColor[v.severity]}>{v.severity_label}</Tag>
+                          <Text>{v.content}</Text>
+                          <Text type="secondary" style={{ fontSize: 12 }}>{v.type_label}</Text>
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
+                ) : (
+                  <Text type="success">未检测到违规</Text>
+                )}
+              </Card>
+            ))}
+          </Space>
+        </Card>
+      )}
     </div>
   );
 }
