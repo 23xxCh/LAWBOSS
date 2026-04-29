@@ -65,3 +65,4 @@ backend/data/patrols/
 *.tmp
 *.bak
 .gstack/
+backend/data/user_quotas.json
