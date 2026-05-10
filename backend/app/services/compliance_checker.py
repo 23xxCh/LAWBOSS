@@ -170,11 +170,57 @@ class MedicalClaimChecker(BaseChecker):
         },
     }
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, db=None):
         self.word_lists: Dict[str, List[str]] = {}  # key: market_category
+        self.db = db
         self._load_data(data_dir)
 
     def _load_data(self, data_dir: Path):
+        # 优先从数据库加载
+        if self.db is not None:
+            self._load_from_db()
+            if self.word_lists:
+                return  # 数据库有数据，使用数据库
+
+        # 回退到文件加载
+        self._load_from_files(data_dir)
+
+    def _load_from_db(self):
+        """从数据库加载禁用词（优先使用缓存）"""
+        try:
+            from ..models.rule import BannedWord
+            from .rule_cache import get_banned_words_from_cache, set_banned_words_to_cache
+
+            results = self.db.query(BannedWord).filter(
+                BannedWord.is_active == True,
+            ).all()
+
+            for row in results:
+                key = f"{row.market}_{row.category}"
+
+                # 尝试从缓存获取
+                cached = get_banned_words_from_cache(row.market, row.category, row.violation_type)
+                if cached is not None:
+                    self.word_lists[key] = cached
+                    continue
+
+                # 缓存未命中，从数据库加载
+                if key not in self.word_lists:
+                    self.word_lists[key] = []
+                self.word_lists[key].append(row.word)
+
+            # 写入缓存
+            for key, words in self.word_lists.items():
+                parts = key.split("_", 1)
+                if len(parts) == 2:
+                    market, category = parts
+                    set_banned_words_to_cache(market, category, "medical", words)
+
+        except Exception:
+            pass  # 数据库加载失败，回退到文件
+
+    def _load_from_files(self, data_dir: Path):
+        """从静态文件加载禁用词（回退方案）"""
         banned_dir = data_dir / "banned_words"
 
         # 动态加载所有 {market}_{category}_medical.txt 文件
@@ -238,15 +284,35 @@ class MedicalClaimChecker(BaseChecker):
 class AbsoluteTermChecker(BaseChecker):
     """绝对化用语检测器"""
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, db=None):
         self.words: List[str] = []
+        self.db = db
         self._load_data(data_dir)
 
     def _load_data(self, data_dir: Path):
+        # 优先从数据库加载
+        if self.db is not None:
+            self._load_from_db()
+            if self.words:
+                return
+
+        # 回退到文件加载
         banned_dir = data_dir / "banned_words"
         absolute_file = banned_dir / "absolute_terms.txt"
         if absolute_file.exists():
             self.words = _load_word_list(absolute_file)
+
+    def _load_from_db(self):
+        """从数据库加载绝对化词库"""
+        try:
+            from ..models.rule import BannedWord
+            results = self.db.query(BannedWord).filter(
+                BannedWord.violation_type == "absolute_term",
+                BannedWord.is_active == True,
+            ).all()
+            self.words = [row.word for row in results]
+        except Exception:
+            pass
 
     def check(self, description: str, category: str, market: str) -> List[Violation]:
         violations = []
@@ -540,11 +606,40 @@ class BannedIngredientChecker(BaseChecker):
         },
     }
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, db=None):
         self.ingredient_lists: Dict[str, List[str]] = {}
+        self.db = db
         self._load_data(data_dir)
 
     def _load_data(self, data_dir: Path):
+        # 优先从数据库加载
+        if self.db is not None:
+            self._load_from_db()
+            if self.ingredient_lists:
+                return
+
+        # 回退到文件加载
+        self._load_from_files(data_dir)
+
+    def _load_from_db(self):
+        """从数据库加载禁用成分"""
+        try:
+            from ..models.rule import BannedWord
+            results = self.db.query(BannedWord).filter(
+                BannedWord.violation_type == "banned_ingredient",
+                BannedWord.is_active == True,
+            ).all()
+
+            for row in results:
+                key = f"{row.market}_{row.category}"
+                if key not in self.ingredient_lists:
+                    self.ingredient_lists[key] = []
+                self.ingredient_lists[key].append(row.word)
+        except Exception:
+            pass
+
+    def _load_from_files(self, data_dir: Path):
+        """从静态文件加载禁用成分（回退方案）"""
         banned_dir = data_dir / "banned_words"
 
         # 动态加载所有 {market}_{category}_ingredients.txt 文件
@@ -605,10 +700,15 @@ class ComplianceChecker:
     """
     合规检测引擎
     通过注册 BaseChecker 检测器实现可插拔架构
+
+    数据加载优先级:
+    1. 数据库 (如有数据)
+    2. 静态文件 (回退)
     """
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, db=None):
         self.data_dir = data_dir
+        self.db = db  # 数据库会话 (可选)
         self.checkers: List[BaseChecker] = []
         self.replacements: Dict[str, str] = {}
         self._init_checkers()
@@ -618,11 +718,11 @@ class ComplianceChecker:
         """注册所有检测器（两级检测流水线：关键词初筛 + AI 深度复筛）"""
         # 第一级：关键词快速初筛
         self.checkers = [
-            MedicalClaimChecker(self.data_dir),
-            AbsoluteTermChecker(self.data_dir),
+            MedicalClaimChecker(self.data_dir, self.db),
+            AbsoluteTermChecker(self.data_dir, self.db),
             FalseAdChecker(),
             MissingLabelChecker(),
-            BannedIngredientChecker(self.data_dir),
+            BannedIngredientChecker(self.data_dir, self.db),
         ]
         # 第二级：AI 语义深度复筛（需配置 LLM_API_KEY 启用）
         try:
@@ -634,9 +734,7 @@ class ComplianceChecker:
             pass  # AI 检测器依赖可选，缺失时跳过
 
     def _load_replacements(self):
-        """加载替换映射（从数据文件，回退到内置默认）"""
-        replacements_dir = self.data_dir / "replacements"
-
+        """加载替换映射（优先数据库，回退到数据文件，最后内置默认）"""
         # 内置默认替换（权威来源，文件加载仅补充）
         defaults = {
             "治疗": "舒缓", "治愈": "改善", "最好": "优质", "最佳": "精选",
@@ -647,7 +745,22 @@ class ComplianceChecker:
         }
         self.replacements = dict(defaults)
 
-        # 从数据文件加载补充映射（不覆盖默认值）
+        # 优先从数据库加载
+        if self.db is not None:
+            try:
+                from ..models.rule import WordReplacement
+                results = self.db.query(WordReplacement).filter(
+                    WordReplacement.is_active == True,
+                ).all()
+                for row in results:
+                    if row.original_word not in self.replacements:
+                        self.replacements[row.original_word] = row.replacement
+                return
+            except Exception:
+                pass
+
+        # 回退到文件加载
+        replacements_dir = self.data_dir / "replacements"
         for f in replacements_dir.glob("*.json"):
             for k, v in _load_replacements(f).items():
                 if k not in self.replacements:
