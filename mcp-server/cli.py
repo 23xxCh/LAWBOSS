@@ -19,6 +19,7 @@ if str(_backend_dir) not in sys.path:
 
 from app.services.compliance_checker import ComplianceChecker
 from app.config import DATA_DIR
+from utils import report_to_dict
 
 
 def _risk_exit_code(risk_score: int) -> int:
@@ -32,34 +33,6 @@ def _risk_exit_code(risk_score: int) -> int:
     return 0
 
 
-def _report_to_dict(report) -> dict:
-    """将 ComplianceReport 转为 dict"""
-    return {
-        "risk_score": report.risk_score,
-        "risk_level": report.risk_level,
-        "risk_description": report.risk_description,
-        "market": report.market,
-        "category": report.category,
-        "violations": [
-            {
-                "type": v.type.value if hasattr(v.type, "value") else v.type,
-                "type_label": v.type_label,
-                "content": v.content,
-                "regulation": v.regulation,
-                "severity": v.severity.value if hasattr(v.severity, "value") else v.severity,
-                "severity_label": v.severity_label,
-                "suggestion": v.suggestion,
-                "score": v.score,
-            }
-            for v in report.violations
-        ],
-        "compliant_version": report.compliant_version,
-        "required_labels": report.required_labels,
-        "required_certifications": report.required_certifications,
-        "suggestions": report.suggestions,
-    }
-
-
 def cmd_check(args: argparse.Namespace, checker: ComplianceChecker) -> int:
     """执行单条检测"""
     report = checker.check_text(
@@ -69,7 +42,7 @@ def cmd_check(args: argparse.Namespace, checker: ComplianceChecker) -> int:
     )
 
     if args.json:
-        print(json.dumps(_report_to_dict(report), ensure_ascii=False, indent=2))
+        print(json.dumps(report_to_dict(report), ensure_ascii=False, indent=2))
     else:
         print(f"市场: {report.market}  类别: {report.category}")
         print(f"风险评分: {report.risk_score}/100 ({report.risk_level})")
@@ -129,7 +102,7 @@ def cmd_batch(args: argparse.Namespace, checker: ComplianceChecker) -> int:
                     product_category=item.get("category", "化妆品"),
                     target_market=item.get("market", "EU"),
                 )
-                results.append(_report_to_dict(report))
+                results.append(report_to_dict(report))
 
                 score = report.risk_score
                 if score >= 70:

@@ -19,6 +19,7 @@ if str(_backend_dir) not in sys.path:
 from mcp.server.fastmcp import FastMCP
 from app.services.compliance_checker import ComplianceChecker
 from app.config import SUPPORTED_MARKETS, SUPPORTED_CATEGORIES, DATA_DIR, REGULATIONS_DIR, CASES_DIR
+from utils import report_to_dict
 
 # 初始化合规检测引擎
 _checker = ComplianceChecker(data_dir=DATA_DIR)
@@ -37,35 +38,6 @@ CrossGuard (出海法盾) 跨境电商智能合规审查工具。支持以下市
 """)
 
 
-def _report_to_dict(report) -> dict:
-    """将 ComplianceReport 转为可 JSON 序列化的 dict"""
-    return {
-        "risk_score": report.risk_score,
-        "risk_level": report.risk_level,
-        "risk_description": report.risk_description,
-        "market": report.market,
-        "category": report.category,
-        "violations": [
-            {
-                "type": v.type.value if hasattr(v.type, "value") else v.type,
-                "type_label": v.type_label,
-                "content": v.content,
-                "regulation": v.regulation,
-                "regulation_detail": v.regulation_detail,
-                "severity": v.severity.value if hasattr(v.severity, "value") else v.severity,
-                "severity_label": v.severity_label,
-                "suggestion": v.suggestion,
-                "score": v.score,
-            }
-            for v in report.violations
-        ],
-        "compliant_version": report.compliant_version,
-        "required_labels": report.required_labels,
-        "required_certifications": report.required_certifications,
-        "suggestions": report.suggestions,
-    }
-
-
 @mcp.tool(description="检测产品描述在目标市场的合规性，返回风险评分、违规项、修改建议和合规版本")
 def check_compliance(
     description: str,
@@ -82,12 +54,29 @@ def check_compliance(
     Returns:
         JSON 格式的合规检测报告
     """
+    # 输入验证
+    if not description or not description.strip():
+        return json.dumps({"error": "description 不能为空", "code": "INVALID_INPUT"}, ensure_ascii=False)
+
+    if market not in SUPPORTED_MARKETS:
+        return json.dumps({
+            "error": f"不支持的市场: {market}",
+            "supported_markets": list(SUPPORTED_MARKETS),
+            "code": "INVALID_MARKET"
+        }, ensure_ascii=False)
+
+    if category not in SUPPORTED_CATEGORIES.get(market, []):
+        return json.dumps({
+            "error": f"市场 {market} 不支持类别: {category}",
+            "supported_categories": SUPPORTED_CATEGORIES.get(market, []),
+            "code": "INVALID_CATEGORY"
+        }, ensure_ascii=False)
     report = _checker.check_text(
         description=description,
         product_category=category,
         target_market=market,
     )
-    return json.dumps(_report_to_dict(report), ensure_ascii=False, indent=2)
+    return json.dumps(report_to_dict(report), ensure_ascii=False, indent=2)
 
 
 @mcp.tool(description="列出所有支持的目标市场及其产品类别，以及必需标签和认证信息")

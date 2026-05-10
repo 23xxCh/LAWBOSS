@@ -65,8 +65,9 @@ class FeedbackService:
     REWARD_INTERVAL = 10    # 每10次反馈
     REWARD_BONUS = 50       # 奖励50条检测额度
 
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path, db=None):
         self.data_dir = data_dir
+        self.db = db  # 数据库会话（可选）
         self.feedback_dir = data_dir / "feedbacks"
         self.feedback_dir.mkdir(exist_ok=True)
         self.quota_file = data_dir / "user_quotas.json"
@@ -83,6 +84,7 @@ class FeedbackService:
         category: str,
         original_description: str = "",
         risk_score: int = 0,
+        user_id: str = None,
     ) -> UserFeedback:
         """提交用户反馈"""
         feedback = UserFeedback(
@@ -99,13 +101,45 @@ class FeedbackService:
             created_at=datetime.now(timezone.utc).isoformat(),
         )
 
-        # 存储反馈
-        filepath = self.feedback_dir / f"fb_{feedback.id}.json"
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(asdict(feedback), f, ensure_ascii=False, indent=2)
+        # 存储到数据库（优先）
+        if self.db is not None:
+            self._save_to_db(feedback, user_id)
+        else:
+            # 回退到文件存储
+            filepath = self.feedback_dir / f"fb_{feedback.id}.json"
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(asdict(feedback), f, ensure_ascii=False, indent=2)
 
         logger.info(f"用户反馈: {feedback.feedback_type.value} on {violation_type}/{violation_content}")
         return feedback
+
+    def _save_to_db(self, feedback: UserFeedback, user_id: str = None):
+        """保存反馈到数据库"""
+        try:
+            from ..models.feedback import UserFeedbackDB
+            db_feedback = UserFeedbackDB(
+                id=str(uuid.uuid4()),
+                user_id=user_id,
+                report_id=feedback.report_id,
+                feedback_type=feedback.feedback_type.value,
+                violation_type=feedback.violation_type,
+                violation_content=feedback.violation_content,
+                user_comment=feedback.user_comment,
+                market=feedback.market,
+                category=feedback.category,
+                original_description=feedback.original_description,
+                risk_score=feedback.risk_score,
+                status="pending",
+                created_at=datetime.now(timezone.utc),
+            )
+            self.db.add(db_feedback)
+            self.db.commit()
+        except Exception as e:
+            logger.error(f"保存反馈到数据库失败: {e}")
+            # 回退到文件存储
+            filepath = self.feedback_dir / f"fb_{feedback.id}.json"
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(asdict(feedback), f, ensure_ascii=False, indent=2)
 
     def get_all_feedbacks(self, limit: int = 100) -> List[UserFeedback]:
         """获取所有反馈"""
@@ -180,8 +214,12 @@ class FeedbackService:
             "by_violation_type": by_type,
         }
 
-    def generate_optimization_suggestions(self) -> List[RuleOptimizationSuggestion]:
-        """基于反馈数据生成规则优化建议"""
+    def generate_optimization_suggestions(self, save_to_db: bool = True) -> List[RuleOptimizationSuggestion]:
+        """基于反馈数据生成规则优化建议
+
+        Args:
+            save_to_db: 是否保存到数据库（默认 True）
+        """
         feedbacks = self.get_all_feedbacks(limit=10000)
         suggestions = []
 
@@ -198,7 +236,7 @@ class FeedbackService:
         for key, fbs in fp_by_content.items():
             if len(fbs) >= 3:
                 vtype, content = key.split(":", 1)
-                suggestions.append(RuleOptimizationSuggestion(
+                suggestion = RuleOptimizationSuggestion(
                     id=str(uuid.uuid4())[:8],
                     violation_type=vtype,
                     content=content,
@@ -207,7 +245,12 @@ class FeedbackService:
                     confidence=min(len(fbs) / 10, 1.0),
                     feedback_count=len(fbs),
                     created_at=datetime.now(timezone.utc).isoformat(),
-                ))
+                )
+                suggestions.append(suggestion)
+
+                # 保存到数据库
+                if save_to_db and self.db is not None:
+                    self._save_suggestion_to_db(suggestion, [f.id for f in fbs])
 
         # 按违规类型聚合漏报
         fn_by_type: Dict[str, List[UserFeedback]] = {}
@@ -222,7 +265,7 @@ class FeedbackService:
             if len(fbs) >= 2:
                 # 收集用户提到的漏报内容
                 missed_contents = list(set(f.violation_content for f in fbs if f.violation_content))
-                suggestions.append(RuleOptimizationSuggestion(
+                suggestion = RuleOptimizationSuggestion(
                     id=str(uuid.uuid4())[:8],
                     violation_type=vtype,
                     content=", ".join(missed_contents[:5]),
@@ -231,9 +274,35 @@ class FeedbackService:
                     confidence=min(len(fbs) / 8, 1.0),
                     feedback_count=len(fbs),
                     created_at=datetime.now(timezone.utc).isoformat(),
-                ))
+                )
+                suggestions.append(suggestion)
+
+                # 保存到数据库
+                if save_to_db and self.db is not None:
+                    self._save_suggestion_to_db(suggestion, [f.id for f in fbs])
 
         return sorted(suggestions, key=lambda s: s.confidence, reverse=True)
+
+    def _save_suggestion_to_db(self, suggestion: RuleOptimizationSuggestion, feedback_ids: List[str]):
+        """保存优化建议到数据库"""
+        try:
+            from ..models.feedback import OptimizationSuggestionDB
+            db_suggestion = OptimizationSuggestionDB(
+                id=str(uuid.uuid4()),
+                violation_type=suggestion.violation_type,
+                content=suggestion.content,
+                suggestion_type=suggestion.suggestion_type,
+                reason=suggestion.reason,
+                confidence=suggestion.confidence,
+                feedback_count=suggestion.feedback_count,
+                feedback_ids=json.dumps(feedback_ids),
+                status="pending",
+                created_at=datetime.now(timezone.utc),
+            )
+            self.db.add(db_suggestion)
+            self.db.commit()
+        except Exception as e:
+            logger.error(f"保存优化建议到数据库失败: {e}")
 
     # ===== 反馈激励机制 =====
 

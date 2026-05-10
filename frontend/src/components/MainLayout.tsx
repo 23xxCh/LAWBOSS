@@ -9,6 +9,8 @@ import {
   UserOutlined,
   LogoutOutlined,
   DashboardOutlined,
+  SettingOutlined,
+  CrownOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../api/auth';
 import { useTranslation } from 'react-i18next';
@@ -30,7 +32,14 @@ export default function MainLayout({ children }: { children: ReactNode }) {
     { key: '/dashboard', icon: <DashboardOutlined />, label: t('nav.dashboard') },
   ];
 
-  const selectedKey = menuItems.find((item) =>
+  // Admin menu items
+  const adminItems = isAdmin ? [
+    { key: '/admin/rules', icon: <SettingOutlined />, label: '规则管理' },
+  ] : [];
+
+  const allMenuItems = [...menuItems, ...adminItems];
+
+  const selectedKey = allMenuItems.find((item) =>
     location.pathname.startsWith(item.key)
   )?.key || '/check';
 
@@ -41,6 +50,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
 
   const userMenuItems = [
     { key: 'profile', icon: <UserOutlined />, label: `${user?.username || '用户'} (${user?.role || '-'})` },
+    { key: 'billing', icon: <CrownOutlined />, label: '订阅管理' },
     { key: 'logout', icon: <LogoutOutlined />, label: '退出登录', danger: true },
   ];
 
@@ -64,7 +74,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
           theme="dark"
           mode="horizontal"
           selectedKeys={[selectedKey]}
-          items={menuItems}
+          items={allMenuItems}
           onClick={({ key }) => navigate(key)}
           style={{ flex: 1 }}
         />
@@ -76,6 +86,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
             items: userMenuItems,
             onClick: ({ key }) => {
               if (key === 'logout') handleLogout();
+              else if (key === 'billing') navigate('/billing');
             },
           }}
           placement="bottomRight"
