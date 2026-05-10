@@ -1,0 +1,97 @@
+name: Build MCP Binary
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build'
+        required: false
+        default: '0.2.0'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            ext: ''
+          - os: macos-latest
+            platform: macos
+            ext: ''
+          - os: windows-latest
+            platform: windows
+            ext: '.exe'
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install dependencies
+        working-directory: mcp-server
+        run: |
+          uv sync
+          uv pip install pyinstaller
+
+      - name: Build binary
+        working-directory: mcp-server
+        run: |
+          pyinstaller --onefile \
+            --name "crossguard-mcp-${{ inputs.version || '0.2.0' }}-${{ matrix.platform }}-x64${{ matrix.ext }}" \
+            --add-data "../backend/data:data" \
+            --hidden-import=mcp \
+            --hidden-import=mcp.server \
+            --hidden-import=mcp.server.fastmcp \
+            --hidden-import=httpx \
+            --hidden-import=app \
+            --hidden-import=app.services \
+            --hidden-import=app.services.compliance_checker \
+            --hidden-import=app.config \
+            --hidden-import=utils \
+            --clean \
+            --noconfirm \
+            crossguard_mcp_server.py
+
+      - name: Package data files
+        working-directory: backend
+        run: |
+          tar -czvf ../mcp-server/dist/crossguard-data-${{ inputs.version || '0.2.0' }}.tar.gz data/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crossguard-mcp-${{ matrix.platform }}
+          path: |
+            mcp-server/dist/crossguard-mcp-*
+            mcp-server/dist/*.tar.gz
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true
